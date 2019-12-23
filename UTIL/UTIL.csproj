@@ -43,6 +43,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Objetos\ObjetoMenu.cs" />
+    <Compile Include="Objetos\ObjetoFamilia.cs" />
+    <Compile Include="Objetos\ObjetoProducto.cs" />
     <Compile Include="Objetos\ObjetoUsuario.cs" />
     <Compile Include="Objetos\RespuestaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

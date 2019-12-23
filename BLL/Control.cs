@@ -20,5 +20,15 @@ namespace BLL
         {
             return Acceso.MenuUsuario(Perfil);
         }
+        
+        public List<ObjetoFamilia> ListadoFamilia()
+        {
+            return Acceso.ListadoFamilia();
+        }
+
+        public List<ObjetoProducto> ListadoProductos()
+        {
+            return Acceso.ListadoProductos();
+        }
     }
 }

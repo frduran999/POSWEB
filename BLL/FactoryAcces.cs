@@ -78,5 +78,60 @@ namespace BLL
             }
             return listadoMenu;
         }
+
+        public List<ObjetoFamilia> ListadoFamilia()
+        {
+            var Listado = new List<ObjetoFamilia>();
+            var data = new Conector().EjecutarProcedimiento("ListadoFamilia", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoFamilia();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdFamilia = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Familia");
+                    resultadoListado.Familia = validador != null ? data.Rows[i].Field<string>("Familia") : "NO ASIGNADO";
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
+        public List<ObjetoProducto> ListadoProductos()
+        {
+            var Listado = new List<ObjetoProducto>();
+            var data = new Conector().EjecutarProcedimiento("ListadoProductos", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoProducto();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdFamilia = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Producto");
+                    resultadoListado.Producto = validador != null ? data.Rows[i].Field<string>("Producto") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("Familia");
+                    resultadoListado.Familia = validador != null ? data.Rows[i].Field<string>("Familia") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("UnidadMedida");
+                    resultadoListado.UnidadMedida = validador != null ? data.Rows[i].Field<string>("UnidadMedida") : "NO ASIGNADO";
+
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
     }
 }

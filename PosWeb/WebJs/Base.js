@@ -27,6 +27,9 @@ $(document).ready(function () {
     try {
         $('#dataTable').DataTable({
             ordering: false,
+            //responsive: true,
+            //bAutoWidth: true,
+            //autoWidth: true, 
             language: {
                 "sProcessing": "Procesando...",
                 "sLengthMenu": "Mostrar _MENU_ Registros",
