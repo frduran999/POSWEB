@@ -215,7 +215,8 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="WebJs\Base.js" />
     <Content Include="WebJs\Login\Login.js" />
-    <Content Include="WebJs\Productos\Productos.js" />
+    <Content Include="WebJs\Productos\AgregarFamilia.js" />
+    <Content Include="WebJs\Productos\AgregarProducto.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

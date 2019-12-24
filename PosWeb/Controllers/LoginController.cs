@@ -47,7 +47,8 @@ namespace PosWeb.Controllers
 
         public ActionResult LogOut()
         {
-            return null;
+            SessionVariables.Session_Datos_Usuarios = null;
+            return RedirectToAction("Login","Login");
         }
     }
 }

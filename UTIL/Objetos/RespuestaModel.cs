@@ -10,8 +10,10 @@ namespace UTIL.Objetos
     {
         private bool _Verificador;
         private string _Mensaje;
+        private int _NumInt;
 
         public bool Verificador { get => _Verificador; set => _Verificador = value; }
         public string Mensaje { get => _Mensaje; set => _Mensaje = value; }
+        public int NumInt { get => _NumInt; set => _NumInt = value; }
     }
 }

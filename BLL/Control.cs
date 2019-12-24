@@ -30,5 +30,25 @@ namespace BLL
         {
             return Acceso.ListadoProductos();
         }
+
+        public List<ObjetoPerfil> ListadoPerfil()
+        {
+            return Acceso.ListadoPerfil();
+        }
+
+        public int AgregarFamilia(string Familia, string Impresora)
+        {
+            return Acceso.AgregarFamilia(Familia, Impresora);
+        }
+
+        public List<ObjetoFamilia> ObtenerFamilia(string IdFamilia)
+        {
+            return Acceso.ObtenerFamilia(IdFamilia);
+        }
+
+        public RespuestaModel EliminarFamilia(ObjetoFamilia Familia)
+        {
+            return Acceso.EliminarFamilia(Familia);
+        }
     }
 }
