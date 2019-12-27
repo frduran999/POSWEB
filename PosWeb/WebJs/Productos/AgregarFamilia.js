@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    $('.combobox').combobox();
     $("#CrearFamilia").click(function () {
         var receta = 0;
         var familia = $("#Familia").val();
