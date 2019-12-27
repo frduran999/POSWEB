@@ -1,0 +1,453 @@
+﻿<!-- ================== BEGIN PAGE CSS STYLE ================== -->
+<link href="~/Content/assets/plugins/x-editable-bs4/dist/bootstrap4-editable/css/bootstrap-editable.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/address/address.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
+<link href="~/Content/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
+<!-- ================== END PAGE CSS STYLE ================== -->
+<!-- begin page-header -->
+<h1 class="page-header">Nota de Venta <small>Creacion nota de venta</small></h1>
+<!-- end page-header -->
+<!-- begin row -->
+    <div class="row col-lg-12">
+        <div class="col-lg-12">
+            <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Datos del Cliente</h4>
+                    <div class="panel-heading-btn">
+                        <!--<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>-->
+                        <!--<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-redo"></i></a>-->
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <!--<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>-->
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
+                    <div class="table-responsive form-inline">
+                        <table class="table table-profile">
+                            <tbody>
+                                <tr class="highlight">
+                                    <td>Cod. Cliente</td>
+                                    <td>
+                                        <input type="text" name="nombreCliente" id="nombreCliente" class="form-control" readonly="readonly" tabindex="-1" />
+                                        <input type="hidden" name="txtcliente" id="txtcliente" readonly="readonly" />
+                                    </td>
+                                    <td nowrap="nowrap">Vendedor</td>
+                                    <td>
+                                        <input type="text" value="hola"  name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
+                                    </td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td nowrap="nowrap">Contacto</td>
+                                    <td>
+                                        <select name="txtcontacto" id="txtcontacto" class="form-control">
+                                                        <option selected value=""> -- Seleccione Contacto -- </option>
+                                                        
+                                                                <option value="" selected> opcion1 </option>
+                                                       
+                                                    </select>
+                                    </td>
+                                    <td nowrap="nowrap">Cond. Venta</td>
+                                    <td>
+                                        <select name="cbxconven" id="cbxconven" class="form-control" tabindex="4">
+                                            <option selected value="00"> -- Seleccione Cond. Vta -- </option>
+                                           
+                                                    <option selected value=""> pcion1</option>
+                                                
+                                        </select>
+                                    </td>
+                                    <td nowrap="nowrap">Lista de Precio</td>
+                                    <td>
+                                        <select name="cbxlista" class="form-control" id="cbxlista" tabindex="7">
+                                            <option selected value=""> -- Seleccione Lista De Precio -- </option>
+                                          
+                                                    <option value="" selected> hola1 </option>
+                                             
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td nowrap="nowrap">Fecha Pedido</td>
+                                    <td><input type="date" class="form-control" name="txtfechapedido" value="" id="txtfechapedido" readonly="readonly" /></td>
+                                    <td nowrap="nowrap">Fecha Entrega</td>
+                                    <td><input type="date" class="form-control" name="txtfechaentrega" id="txtfechaentrega" /></td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td nowrap="nowrap">Observaci&oacute;n</td>
+                                    <td><textarea class="form-control" name="txtobservacion" id="txtobservacion" rows="2"> </textarea></td>
+                                    <td nowrap="nowrap">Centro de Costo</td>
+                                    <td>
+                                        <select class="form-control" name="cbxccosto" id="cbxccosto" tabindex="9">
+                                            <option selected value="00"> -- Seleccione Centro de Costo -- </option>
+                                            
+                                                    <option selected value=""> hola2 </option>
+                                              
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>Credito</td>
+                                    <td>
+                                        <label id="lblDeudaVencida">dedede</label>
+                                    </td>
+                                    <td>Disponible</td>
+                                    <td>
+                                        <label id="lblDeudaTotal">dedede</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Dirección de Despacho</td>
+                                    <td colspan="5">
+                                        <div class="row">
+                                            <div class="col-lg-10">
+                                               
+                                                            <select class="form-control" name="cbxDireccion" id="cbxDireccion" tabindex="9">
+                                                                <option selected value="00"> -- Seleccione Dirección de Despacho -- </option>
+                                                               
+                                                                        <option selected value=""> demodemo </option>
+                                                                
+
+                                                            </select>
+                                                       
+                                                         
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <div class="col-lg-12">
+            <div class="panel panel-inverse" data-sortable-id="ui-widget-2">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Agregar Producto</h4>
+                    <div class="panel-heading-btn">
+                      </div>
+                </div>
+                <div class="panel-body">
+                    <table id="user" class="table table-condensed table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Cod. Rap.</th>
+                                <th style=" width: 450px !important">Descripcion/Codigo</th>
+                                <th>Cant.</th>
+                                
+                                    <th>Stock</th>
+                               
+                                    <th>U. deM</th>
+                                
+                                <th>Neto</th>
+                                <th>Sub Total</th>
+                                
+                                    <th>Descuento Atributo</th>
+                                
+                                <th>Descuen.(%)</th>
+                                <th>Total</th>
+                                <th>Accion</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><a href="javascript:;" id="txtIngresoCodigoRapido" data-type="text" data-pk="1" data-title="Cod Rap"></a></td>
+                                <td data-select2-id="277"><a href="javascript:;" id="txtIngresoDescripcionCodigo" data-type="select2" data-pk="2" data-value="BS" data-title="Seleccione Producto" class="editable editable-click" style=""></a></td>
+                                <td style="text-align: right"><a href="javascript:;" id="txtIngresoCantidad" data-type="text" data-pk="3" data-title="Cantidad">1</a></td>
+                                <td style="text-align: right; "><a href="javascript:;" id="txtIngresoStock" data-type="text" data-pk="4" data-title="Stock">0</a></td>
+                                <td style="text-align: right;"><a href="javascript:;" id="txtIngresoUnidadDeMedida" data-type="text" data-pk="4" data-title="Unidad Medida"></a></td>
+                                <td style="text-align: right"><a href="javascript:;" id="txtIngresoNeto" data-type="text" data-pk="4" data-title="Neto">0</a></td>
+                                <td style="text-align: right"><a href="javascript:;" id="txtIngresoSubTotal" data-type="text" data-pk="4" data-title="Sub Total">0</a></td>
+                                <td style="text-align: right; "><a href="javascript:;" id="txtIngresoDescuentoAtributo" data-type="text" data-pk="4" data-title="Descuento Atributo">0</a></td>
+                                <td style="text-align: right">
+                                    <a href="javascript:;" id="txtIngresoDescuento" data-pk="4" data-title="Descuento"></a>
+                                    <a href="javascript:;" id="txtIngresoDescuentoModal" style="display: none">Seleccionar Descuentos</a>
+                                </td>
+                                <td style="text-align: right"><a href="javascript:;" id="txtIngresoTotal" data-type="text" data-pk="4" data-title="Total">0</a></td>
+                                <td>
+                                    <input class="btn btn-primary" type="button" name="Agregar" value="(+)" onclick="addRow();">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row col-lg-12">
+        <div class="col-lg-9">
+            <div class="panel panel-inverse" data-sortable-id="ui-widget-3">
+                <div class="panel-heading">
+                    <h4 class="panel-title">Productos ingresados</h4>
+                    <div class="panel-heading-btn">
+
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <!-- begin table-responsive -->
+                    <div class="table-responsive">
+                        <table id="table" class="table">
+                            <thead>
+                                <tr>
+                                    <th nowrap="" class="codigoTh">C&oacute;digo</th>
+                                    <th nowrap="" class="descripcionTh">Descripci&oacute;n</th>
+                                    <th nowrap="" class="tallaTh" >Talla</th>
+                                    <th nowrap="" class="ColorTh" >Color</th>
+                                    <th nowrap="" class="cantidadTh">Cantidad</th>
+                                    <th nowrap="" class="unimedTh" >Unidad Medida </th>
+                                    <th nowrap="" classnowrap="" class="precioTh">Precio Unit Neto</th>
+                                    <th nowrap="" class="subTotalTh">Subtotal Neto</th>
+                                    <th nowrap="" class="unimedTh" >Descuento Atributo</th>
+                                    <th nowrap="" class="subTotalTh">Descu. (%)</th>
+                                    <th nowrap="" class="subTotalTh">Total</th>
+                                    <th nowrap="" class="accionesTh">&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody id="generaTabla"></tbody>
+                        </table>
+                    </div>
+                    <!-- end table-responsive -->
+                </div>
+                <!-- end panel-body -->
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <div class="panel panel-inverse" data-sortable-id="ui-widget-4">
+                <div class="panel-heading">
+                    <h4 class="panel-title">TOTALES</h4>
+                    <div class="panel-heading-btn">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="table-responsive">
+                            <table id="user" class="table table-condensed table-bordered">
+                                <tbody>
+                                    <tr>
+                                        <td class="tg-0lax">
+                                            <input type="hidden" id="contador_registros" name="contador_registros" >
+                                            <b><span> Sub-Total Neto</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <h4><label id="lbtotal">0</label></h4>
+                                            <input type="hidden" id="txttotal" name="txttotal" >
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax">
+                                            <b><span> Impuesto</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <h4><label id="lbimpuesto">0</label></h4>
+                                            <input type="hidden" id="txtimpuesto" name="txtimpuesto">
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none" id="trDescuento1">
+                                        <td class="tg-0lax">
+                                            <b><span> Descuento N°1</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <input class="form-control input-sm" type="text" id="txtDescuentoTotal1" value="0" />
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none" id="trDescuento2">
+                                        <td class="tg-0lax">
+                                            <b><span> Descuento N°2</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <input class="form-control" type="text" id="txtDescuentoTotal2" value="0" />
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none" id="trDescuento3">
+                                        <td class="tg-0lax">
+                                            <b><span> Descuento N°3</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <input class="form-control" type="text" id="txtDescuentoTotal3" value="0" />
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none" id="trDescuento4">
+                                        <td class="tg-0lax">
+                                            <b><span> Descuento N°4</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <input class="form-control" type="text" id="txtDescuentoTotal4" value="0" />
+                                        </td>
+                                    </tr>
+                                    <tr style="display: none" id="trDescuento5">
+                                        <td class="tg-0lax">
+                                            <b><span> Descuento N°5</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <input class="form-control" type="text" id="txtDescuentoTotal5" value="0" />
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="tg-0lax">
+                                            <b><span> Total Final</span></b>
+                                        </td>
+                                        <td style="text-align: right" class="tg-0lax">
+                                            <h4><label id="lbtotalfinal">0</label></h4>
+                                            <input type="hidden" id="txttotalfinal" name="txttotalfinal">
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row text-center">
+                        <input class="btn btn-primary" id="btnCot" type="submit" value="Genera Cotización" onclick="agregarnotadeventa();">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="divAlertaOkGeneracionNV" style="display: none" class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Nota de Venta Generada</h4>
+    <p>Nota de venta a sido generada con exito <label id="divAlertaOkGeneracionNVPendiente">(enviado a aprobacion)</label></p>
+    @*<div id="divAlertaOkGeneracionNVSoftland">
+            <p>N° Nota de venta (Softland): <label id="divAlertaOkGeneracionNVIdSoftland"></label></p>
+        </div>*@
+    <div id="divAlertaOkGeneracionNVInterno">
+        <p>N° Nota de venta (Interno): <label id="divAlertaOkGeneracionNVIdInterno"></label></p>
+    </div>
+    <hr>
+    <p class="mb-0">Para volver a generar una nueva nota de venta, presione <a href="javascript:location.reload()">aqui</a>.</p>
+</div>
+<a id="aModalTallaColor" style="display: none" href="#modalTallaColor" class="btn btn-sm btn-success" data-toggle="modal">Talla Color</a>
+<div class="modal fade" id="modalTallaColor">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese Talla y Color</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3">Bodegas</div>
+                    <div class="col-lg-9">
+                        <select id="modalTallaColorBodegas" class="form-control" style="display: none"></select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="modalTallaColorControles"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="modalTallaColorAgregarTallaColor" href="javascript:;" class="btn btn-success">Agregar Talla y Color</a>
+                <a id="modalTallaColorCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="aModalDescuentos" style="display: none" href="#modalDescuentos" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
+<div class="modal fade" id="modalDescuentos">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese descuentos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalDescuentosControles"></div>
+            </div>
+            <div class="modal-footer">
+                <a id="modalDescuentosAgregarDescuentos" href="javascript:;" class="btn btn-success">Agregar Descuentos</a>
+                <a id="modalDescuentosCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="aModalDescuentosRealizados" style="display: none" href="#modalDescuentosRealizados" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
+<div class="modal fade" id="modalDescuentosRealizados">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese descuentos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalDescuentosRealizadosControles"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<a id="aModalAgregarDireccionDespacho" style="display: none" href="#modalAgregarDireccionDespacho" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
+<div class="modal fade" id="modalAgregarDireccionDespacho">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese Direccion Despacho</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive form-inline">
+                    <table class="table table-profile">
+                        <tbody>
+                            <tr class="highlight">
+                                <td>Codigo Cliente</td>
+                                <td><label id="modalAgregarDireccionDespachoCodigoCliente">asdasd</label></td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Direccion</td>
+                                <td>
+                                    <input type="text" id="modalAgregarDireccionDespachoDireccion" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Ciudad</td>
+                                <td>
+                                   
+                                </td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Comuna</td>
+                                <td>
+                                   
+                                </td>
+                            </tr>
+                            <tr class="highlight">
+                                <td colspan="2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="modalAgregarDireccionDespachoAgregar" href="javascript:;" class="btn btn-success">Agregar Direccion Despacho</a>
+                <a id="modalAgregarDireccionDespachoCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- end page container -->
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
+<script src="~/Content/assets/plugins/x-editable-bs4/dist/bootstrap4-editable/js/bootstrap-editable.min.js"></script>
+<script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/address/address.js"></script>
+<script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/typeaheadjs/lib/typeahead.js"></script>
+<script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/typeaheadjs/typeaheadjs.js"></script>
+<script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/wysihtml5/wysihtml5.js"></script>
+<script src="~/Content/assets/plugins/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="~/Content/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+<script src="~/Content/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="~/Content/assets/plugins/select2/dist/js/select2.full.min.js"></script>
+<script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
+<script src="~/Content/assets/plugins/moment/moment.js"></script>
+
+<!-- ================== END PAGE LEVEL JS ================== -->

@@ -21,24 +21,26 @@ namespace BLL
             return Acceso.MenuUsuario(Perfil);
         }
         
-        public List<ObjetoFamilia> ListadoFamilia()
-        {
-            return Acceso.ListadoFamilia();
-        }
-
         public List<ObjetoProducto> ListadoProductos()
         {
             return Acceso.ListadoProductos();
         }
 
+        #region Familia
+
+        public List<ObjetoFamilia> ListadoFamilia()
+        {
+            return Acceso.ListadoFamilia();
+        }
+
         public List<ObjetoPerfil> ListadoPerfil()
         {
             return Acceso.ListadoPerfil();
-        }
+        } //IMPRESORA
 
-        public int AgregarFamilia(string Familia, string Impresora)
+        public int AgregarFamilia(string Familia, string Impresora,int Receta)
         {
-            return Acceso.AgregarFamilia(Familia, Impresora);
+            return Acceso.AgregarFamilia(Familia, Impresora, Receta);
         }
 
         public List<ObjetoFamilia> ObtenerFamilia(string IdFamilia)
@@ -50,5 +52,12 @@ namespace BLL
         {
             return Acceso.EliminarFamilia(Familia);
         }
+
+        public RespuestaModel EditarFamilia(ObjetoFamilia Familia)
+        {
+            return Acceso.EditarFamilia(Familia);
+        }
+
+        #endregion
     }
 }

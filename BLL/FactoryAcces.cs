@@ -42,43 +42,7 @@ namespace BLL
             return DatosLogin;
         }
 
-        public RespuestaModel EliminarFamilia(ObjetoFamilia Familia)
-        {
-            RespuestaModel resp = new RespuestaModel();
-            try
-            {
-                var data = new Conector().EjecutarProcedimiento("EliminarFamilia", new System.Collections.Hashtable()
-                {
-                    { "Id", Familia.IdFamilia},
-                });
-
-
-                if (data.Rows.Count > 0)
-                {
-                    for (var i = 0; i < data.Rows.Count; i++)
-                    {
-                        var validador = new object();
-
-                        validador = data.Rows[i].Field<object>("Verificador");
-                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
-
-                        validador = data.Rows[i].Field<object>("Mensaje");
-                        resp.Mensaje = validador != null ? data.Rows[i].Field<string>("Mensaje") : "NO ASIGNADO";
-                    }
-                }
-                else
-                {
-                    resp = null;
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return resp;
-        }
-
-        public List<ObjetoMenu> MenuUsuario (int Perfil)
+        public List<ObjetoMenu> MenuUsuario(int Perfil)
         {
             var listadoMenu = new List<ObjetoMenu>();
             var data = new Conector().EjecutarProcedimiento("SP_GET_Menu", new System.Collections.Hashtable()
@@ -115,30 +79,6 @@ namespace BLL
             return listadoMenu;
         }
 
-        public List<ObjetoFamilia> ListadoFamilia()
-        {
-            var Listado = new List<ObjetoFamilia>();
-            var data = new Conector().EjecutarProcedimiento("ListadoFamilia", new System.Collections.Hashtable());
-
-            if (data.Rows.Count > 0)
-            {
-                for (var i = 0; i < data.Rows.Count; i++)
-                {
-                    var validador = new object();
-                    var resultadoListado = new ObjetoFamilia();
-
-                    validador = data.Rows[i].Field<object>("Id");
-                    resultadoListado.IdFamilia = validador != null ? data.Rows[i].Field<int>("Id") : -1;
-
-                    validador = data.Rows[i].Field<object>("Familia");
-                    resultadoListado.Familia = validador != null ? data.Rows[i].Field<string>("Familia") : "NO ASIGNADO";
-
-                    Listado.Add(resultadoListado);
-                }
-            }
-            return Listado;
-        }
-
         public List<ObjetoProducto> ListadoProductos()
         {
             var Listado = new List<ObjetoProducto>();
@@ -170,6 +110,105 @@ namespace BLL
             return Listado;
         }
 
+        #region Familia
+
+        public RespuestaModel EliminarFamilia(ObjetoFamilia Familia)
+        {
+            RespuestaModel resp = new RespuestaModel();
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("EliminarFamilia", new System.Collections.Hashtable()
+                {
+                    { "Id", Familia.IdFamilia},
+                });
+
+
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+
+                        validador = data.Rows[i].Field<object>("Verificador");
+                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
+
+                        validador = data.Rows[i].Field<object>("Mensaje");
+                        resp.Mensaje = validador != null ? data.Rows[i].Field<string>("Mensaje") : "NO ASIGNADO";
+                    }
+                }
+                else
+                {
+                    resp = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return resp;
+        }
+
+        public RespuestaModel EditarFamilia(ObjetoFamilia Familia)
+        {
+            RespuestaModel resp = new RespuestaModel();
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("EditarFamilia", new System.Collections.Hashtable()
+                {
+                    { "Id", Familia.IdFamilia},
+                    { "Familia", Familia.Familia},
+                    { "Impresora", Familia.Impresora},
+                });
+
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+
+                        validador = data.Rows[i].Field<object>("Verificador");
+                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
+
+                        validador = data.Rows[i].Field<object>("Mensaje");
+                        resp.Mensaje = validador != null ? data.Rows[i].Field<string>("Mensaje") : "NO ASIGNADO";
+                    }
+                }
+                else
+                {
+                    resp = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return resp;
+        }
+
+        public List<ObjetoFamilia> ListadoFamilia()
+        {
+            var Listado = new List<ObjetoFamilia>();
+            var data = new Conector().EjecutarProcedimiento("ListadoFamilia", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoFamilia();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdFamilia = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Familia");
+                    resultadoListado.Familia = validador != null ? data.Rows[i].Field<string>("Familia") : "NO ASIGNADO";
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         public List<ObjetoPerfil> ListadoPerfil()
         {
             var Listado = new List<ObjetoPerfil>();
@@ -192,7 +231,7 @@ namespace BLL
                 }
             }
             return Listado;
-        }
+        } //Impresora
 
         public List<ObjetoFamilia> ObtenerFamilia(string IdFamilia)
         {
@@ -224,8 +263,7 @@ namespace BLL
             return Listado;
         }
 
-
-        public int AgregarFamilia(string Familia, string Impresora)
+        public int AgregarFamilia(string Familia, string Impresora, int Receta)
         {
             int respuesta = 0;
             try
@@ -233,11 +271,11 @@ namespace BLL
                 var data = new Conector().EjecutarProcedimiento("AgregarFamilia", new System.Collections.Hashtable()
                                                                                             {
                                                                                                 {"Familia", Familia},
-                                                                                                {"Impresora", Impresora}                                                                                                
+                                                                                                {"Impresora", Impresora},                                                                                             
+                                                                                                {"Receta", Receta}                                                                                                
                 });
                 if (data.Rows.Count > 0)
                 {
-                    //  respuesta = true;
                     respuesta = int.Parse(data.Rows[0][0].ToString());
                 }
             }
@@ -248,7 +286,7 @@ namespace BLL
             return respuesta;
         }
 
-
+        #endregion
 
     }
 }

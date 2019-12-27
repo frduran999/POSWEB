@@ -1,15 +1,24 @@
 ﻿$(document).ready(function () {
-
     $("#CrearFamilia").click(function () {
+        var receta = 0;
         var familia = $("#Familia").val();
         var impresora = $("#Impresora").val();
+        var check = document.getElementById("TipoProd").checked;
+        console.log(check);
+        if (check) {
+           receta = 1;
+        }
+        else {
+            receta = 0;
+        }
 
         $.ajax({
             type: "POST",
             url: "AgregarFamilia",
             data: {
                 _Familia: familia,
-                _Impresora: impresora
+                _Impresora: impresora,
+                _Receta:receta
             },
             async: true,
             success: function (data) {
@@ -48,7 +57,8 @@ function ObtenerDatosFamilia(IdFamilia) {
             $.each(data, function (index, value) {
                 $.each(this, function (name, value) {
                     $("#modFamilia").val(value.Familia);
-                    $("#modImpresora").append('<option value="' + value.Impresora + '">'+value.Impresora+'</option>');
+                    $("#modImpresora").append('<option value="' + value.Impresora + '">' + value.Impresora + '</option>');
+                    $("#IdFamilia").val(value.IdFamilia);
                 });
             });
         }
@@ -81,6 +91,27 @@ function EliminarFamilia(IdFamilia, Estado) {
     }
 }
 
+function EditarFamilia() {
+    var familia = $("#modFamilia").val();
+    var idFamilia = $("#IdFamilia").val();
+    var impresora = $("#modImpresora").val();
+
+    $.ajax({
+        type: "POST",
+        url: "EditarFamilia",
+        data: { _Familia: familia, _IdFamilia: idFamilia, _Impresora: impresora },
+        async: true,
+        success: function (data) {
+            if (data = 1) {
+                alert("Familia fue Editado");
+                location.reload();
+            }
+            else {
+                alert("NO");
+            }
+        }
+    });
+}
 
 
 

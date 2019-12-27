@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UTIL;
 using UTIL.Objetos;
 
 namespace PosWeb.Controllers
@@ -16,6 +17,13 @@ namespace PosWeb.Controllers
         {
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
             ViewBag.ListadoProductos = ListaProductos;
+
+            IEnumerable<SelectListItem> ListaFamilia = Acceso.ListadoFamilia().Select(c => new SelectListItem()
+            {
+                Text = c.Familia,
+                Value = c.IdFamilia.ToString()
+            }).ToList();
+            ViewBag.Familia = ListaFamilia;
 
             return View();
         }
@@ -36,14 +44,21 @@ namespace PosWeb.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult CrearReceta()
+        {
+            return View();
+        }
+
         [HttpPost]
-        public JsonResult AgregarFamilia(string _Familia, string _Impresora)
+        public JsonResult AgregarFamilia(string _Familia, string _Impresora, int _Receta)
         {
             ObjetoFamilia lfamilia = new ObjetoFamilia();
             lfamilia.Familia = _Familia;
             lfamilia.Impresora = _Impresora;
+            lfamilia.Receta = _Receta;
 
-            var resultado = Acceso.AgregarFamilia(lfamilia.Familia,lfamilia.Impresora);
+            var resultado = Acceso.AgregarFamilia(lfamilia.Familia,lfamilia.Impresora,lfamilia.Receta);
 
             if (resultado > 0)
             {
@@ -70,6 +85,26 @@ namespace PosWeb.Controllers
             RespuestaModel result = Acceso.EliminarFamilia(Familia);
 
             return (Json(result));
+        }
+
+        public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora)
+        {
+            var validador = 0;
+            ObjetoFamilia lfamialia = new ObjetoFamilia();
+            lfamialia.Familia = _Familia;
+            lfamialia.IdFamilia = int.Parse(_IdFamilia);
+            lfamialia.Impresora = _Impresora;
+
+            RespuestaModel resultado = Acceso.EditarFamilia(lfamialia);
+            if (resultado.Verificador == true)
+            {
+                validador = 1;
+                return Json(validador);
+            }
+            else
+            {
+                return Json(validador);
+            }            
         }
 
     }
