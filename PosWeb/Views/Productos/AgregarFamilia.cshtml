@@ -1,169 +1,215 @@
-﻿@using UTIL.Objetos;
-@using UTIL;
-@{
-    ViewBag.Title = "AgregarFamilia";
-    List<ObjetoFamilia> ListaFamilia = ViewBag.ListadoFamilia;
-}
+﻿<div>
+    @using UTIL.Objetos;
+    @using UTIL;
+    @{
+        ViewBag.Title = "AgregarFamilia";
+        List<ObjetoFamilia> ListaFamilia = ViewBag.ListadoFamilia;
+    }
 
-<link href="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet" />
+    <link href="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet" />
 
-<div class="panel panel-inverse table-responsive">
-    <div class="panel-heading">
-        <h4 class="panel-title">Listado Familia</h4>
-        <div class="panel-heading-btn">
-            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-        </div>
-    </div>
-    <div>
-        <br />
-        <div>
-            <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AgregarFamilia">Agregar Familia</button>
+    <div class="panel panel-inverse table-responsive">
+        <div class="panel-heading">
+            <h4 class="panel-title">Listado Familia</h4>
+            <div class="panel-heading-btn">
+                <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
             </div>
         </div>
-    </div>
-    <br />
-    <div class="table-responsive ">
-        @{
-            var grid = new WebGrid(ListaFamilia, canPage: false);
-        }
-        @grid.GetHtml(
-        htmlAttributes: new { id = "dataTable" },
-        tableStyle: "table table-bordered",
-        columns:
-        grid.Columns(
-        grid.Column(columnName: "IdFamilia", header: "IdFamilia", format: @<text>@item.IdFamilia</text>),
-                              grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
-                                                   grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarFamilia" onclick="ObtenerDatosFamilia(@item.IdFamilia)">
-                                                    Editar
-                                                    <span class="fa fa-pencil"></span>
-                                                </button>),
-                                                                         grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 0 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 0 ? "Deshabilitar":"Habilitar")"
-                                                                                                                                                  onclick="EliminarFamilia(@item.IdFamilia,@item.Estado, @Html.Raw(item.Estado == 0 ? "false":"true"))">
-                                                                            @Html.Raw(item.Estado == 0 ? "Deshabilitar" : "Habilitar")<span class="fa fa-trash"></span>
-                                                                        </button>)))
-    </div>
-
-    <div id="AgregarFamilia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Agregar Familia</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
+        <div>
+            <br />
+            <div>
+                <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AgregarFamilia">Agregar Familia</button>
                 </div>
-                <div class="modal-body">
-                    <div class="x_content">
-                        <br />
-                        <div class="form-horizontal form-label-left input_mask">
+            </div>
+        </div>
+        <br />
+        <div>
+            <div class="table-responsive ">
+                @{
+                    var grid = new WebGrid(ListaFamilia, canPage: false);
+                }
+                @grid.GetHtml(
+                htmlAttributes: new { id = "dataTable" },
+                tableStyle: "table table-bordered",
+                columns:
+                grid.Columns(
+                 grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
+                     grid.Column(columnName: "Impresora", header: "Impresora", format: @<text>@item.Impresora</text>),
+                 grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarFamilia" onclick="ObtenerDatosFamilia(@item.IdFamilia)">
+                    Editar<span class="fa fa-pencil"></span>
+                </button>),
+                 grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 0 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 0 ? "Deshabilitar":"Habilitar")"
+                                                                                          onclick="EliminarFamilia(@item.IdFamilia,@item.Estado, @Html.Raw(item.Estado == 0 ? "false":"true"))">
+                    @Html.Raw(item.Estado == 0 ? "Deshabilitar" : "Habilitar")<span class="fa fa-trash"></span>
+                </button>)))
+            </div>
+        </div>
+
+        <div id="AgregarFamilia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-primary">Agregar Familia</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="x_content">
+                            <br />
+                            <div class="form-horizontal form-label-left input_mask">
                                 <form class="form-horizontal form-bordered">
                                     <div class="form-group row">
-                                        <label class="col-form-label">Familia</label>
+                                        <label class="col-xs-2 col-form-label">Familia</label>
                                         <div class="">
                                             <input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">
                                         </div>
                                     </div>
                                 </form>
-                            <form class="form-horizontal form-bordered">
-                                <div class="form-group row">
-                                    <label class=" col-form-label">Receta</label>
-                                    <div class="col-lg-8">
-                                        <div class="switcher">
-                                            <input type="checkbox" class=" switcher-success" switcher name="TipoProd" id="TipoProd">
-                                            <label for="TipoProd"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-
-                            <div class="panel-body panel-form">
                                 <form class="form-horizontal form-bordered">
                                     <div class="form-group row">
-                                        <label class="col-form-label">Seleccione Impresora</label>
+                                        <label class="col-xs-2 col-form-label"> Receta</label>
                                         <div class="">
-                                            @Html.DropDownList("Perfil", (IEnumerable<SelectListItem>)ViewBag.Perfil, "Seleccione...", new { @class = "combobox", @ID = "Impresora", @Name = "Impresora" })
+                                            <div class="switcher">
+                                                <input type="checkbox" class=" switcher-success" switcher name="TipoProd" id="TipoProd">
+                                                <label for="TipoProd"></label>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>
-                            </div>
 
-                            <div class="ln_solid"></div>
-                            <div class="form-group">
-                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                    <button class="btn btn-primary" type="submit" id="CrearFamilia">Grabar</button>
+                                <div class="panel-body panel-form">
+                                    <form class="form-horizontal form-bordered">
+                                        <div class="form-group row">
+                                            <label class="col-xs-2 col-form-label">Impresora</label>
+                                            <div>
+                                                <div class="">
+                                                    <div>
+                                                        <select name="Impresora" id="Impresora" class="combobox">
+                                                            @{
+                                                                foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+                                                                {
+                                                                    <option value="@strPrinter" selected>@strPrinter</option>
+                                                                }
+                                                            }
+                                                            <option selected value=""> -- Seleccione Impresora -- </option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+                                        <button class="btn btn-primary" type="submit" id="CrearFamilia">Grabar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div id="modalEditarFamilia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Editar Familia</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="x_content">
-                        <br />
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3  col-xs-12">Nombre Familia</label>
-                            <div class="col-md-9 col-sm-9 col-xs-12">
-                                <input type="text" required class="form-control has-feedback-left" id="modFamilia" name="modFamilia" placeholder="Familia">
-                                <input type="text" style="display:none" class="form-control has-feedback-left" id="IdFamilia" name="IdFamilia">
-                            </div>
+        <div id="modalEditarFamilia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="text-warning">Editar Familia</h4>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="x_content">
                             <br />
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3  col-xs-12">Seleccione Impresora **</label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    @Html.DropDownList("Perfil", (IEnumerable<SelectListItem>)ViewBag.Perfil, "Seleccione...", new { @class = "form-control", @ID = "modImpresora", @Name = "modImpresora" })
-                                </div>
-                            </div>
+                            <div class="form-horizontal form-label-left input_mask">
+                                <form class="form-horizontal form-bordered">
+                                    <div class="form-group row">
+                                        <label class="col-xs-2 col-form-label">Familia</label>
+                                        <div class="">
+                                            <input type="text" required class="form-control has-feedback-left" id="modFamilia" name="Familia" placeholder="Familia">
+                                            <input type="text" required style="display:none" id="IdFamilia" name="IdFamilia">
+                                        </div>
+                                    </div>
+                                </form>
+                                <form class="form-horizontal form-bordered">
+                                    <div class="form-group row">
+                                        <label class="col-xs-2 col-form-label"> Receta</label>
+                                        <div class="">
+                                            <div class="switcher">
+                                                <input type="checkbox" class="switcher-success" switcher name="modTipoProd" id="modTipoProd">
+                                                <label for="modTipoProd"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
 
-                            <div class="ln_solid"></div>
-                            <div class="form-group">
-                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                    <button class="btn btn-warning" type="submit" id="EditarFamilia" onclick="EditarFamilia()">Editar</button>
+                                <div class="panel-body panel-form">
+                                    <form class="form-horizontal form-bordered">
+                                        <div class="form-group row">
+                                            <label class="col-xs-2 col-form-label">Impresora</label>
+                                            <div>
+                                                <div class="">
+                                                    <div>
+                                                        <select name="modImpresora" id="modImpresora" class="combobox">
+                                                            <option value=""> -- Seleccione Impresora -- </option>
+                                                            @{
+                                                                foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+                                                                {
+                                                                    <option value="@strPrinter">@strPrinter</option>
+                                                                }
+                                                            }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+
+                                <div class="ln_solid"></div>
+                                <div class="form-group">
+                                    <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+                                        <button class="btn btn-warning" type="submit" id="ModificarFamilia" onclick="ModificarFamilia()">Modificar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <a id="aModalErrorLogin" style="display: none" href="#modalErrorLogin" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
-    <div class="modal fade" id="modalErrorLogin">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Error de Acceso</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                </div>
-                <div class="modal-body text-center">
-                    <h4 class="" style="color: red" id="modalErrorLoginMensaje"></h4>
-                </div>
-                <div class="modal-footer">
-                    <a id="aModalErrorLogin" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                    <div class="modal-footer">
+                        <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+        <a id="aModalErrorLogin" style="display: none" href="#modalErrorLogin" class="btn btn-sm btn-success" data-toggle="modal">Agregar Familia</a>
+        <div class="modal fade" id="modalErrorLogin">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Familia Creada</h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <h4 class="" style="color: green" id="modalErrorLoginMensaje"></h4>
+                    </div>
+                    <div class="modal-footer">
+                        <a id="aModalErrorLogin" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>
 <script src="~/WebJs/Productos/AgregarFamilia.js"></script>
 <script src="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/js/bootstrap-combobox.js"></script>

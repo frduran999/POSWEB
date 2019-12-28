@@ -26,18 +26,23 @@ namespace BLL
             return Acceso.ListadoProductos();
         }
 
+        public List<ObjetoReceta> ListadoReceta()
+        {
+            return Acceso.ListadoReceta();
+        }
+
+        public int AgregarProducto(ObjetoProducto producto)
+        {
+            return Acceso.AgregarProducto(producto);
+        }
+
         #region Familia
 
         public List<ObjetoFamilia> ListadoFamilia()
         {
             return Acceso.ListadoFamilia();
         }
-
-        public List<ObjetoPerfil> ListadoPerfil()
-        {
-            return Acceso.ListadoPerfil();
-        } //IMPRESORA
-
+        
         public int AgregarFamilia(string Familia, string Impresora,int Receta)
         {
             return Acceso.AgregarFamilia(Familia, Impresora, Receta);

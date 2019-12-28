@@ -14,6 +14,8 @@ namespace UTIL.Objetos
         private string _UnidadMedida;
         private int _Estado;
         private string _Familia;
+        private double _Precio;
+        private int _IdReceta;
 
         public int IdProducto { get => _IdProducto; set => _IdProducto = value; }
         public string Producto { get => _Producto; set => _Producto = value; }
@@ -21,5 +23,7 @@ namespace UTIL.Objetos
         public string UnidadMedida { get => _UnidadMedida; set => _UnidadMedida = value; }
         public int Estado { get => _Estado; set => _Estado = value; }
         public string Familia { get => _Familia; set => _Familia = value; }
+        public double Precio { get => _Precio; set => _Precio = value; }
+        public int IdReceta { get => _IdReceta; set => _IdReceta = value; }
     }
 }

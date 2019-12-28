@@ -13,6 +13,7 @@ namespace PosWeb.Controllers
     {
         Control Acceso = new Control();
 
+        [HttpGet]
         public ActionResult AgregarProductos()
         {
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
@@ -25,21 +26,29 @@ namespace PosWeb.Controllers
             }).ToList();
             ViewBag.Familia = ListaFamilia;
 
+            IEnumerable<SelectListItem> ListaReceta = Acceso.ListadoReceta().Select(c => new SelectListItem()
+            {
+                Text = c.Nombre,
+                Value = c.IdReceta.ToString()
+            }).ToList();
+            ViewBag.Receta = ListaReceta;
+
             return View();
         }
 
         [HttpGet]
         public ActionResult AgregarFamilia()
         {
+            List<string> Impresoras = new List<string>();
+            foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            {
+                Impresoras.Add(strPrinter);
+            }
+            
+            ViewBag.Impresoras = Impresoras;
+            
             IEnumerable<ObjetoFamilia> ListaFamilia = Acceso.ListadoFamilia();
             ViewBag.ListadoFamilia = ListaFamilia;
-
-            IEnumerable<SelectListItem> ListaPerfil = Acceso.ListadoPerfil().Select(c => new SelectListItem()
-            {
-                Text = c.Descripcion,
-                Value = c.Id.ToString()
-            }).ToList();
-            ViewBag.Perfil = ListaPerfil;
 
             return View();
         }
@@ -47,6 +56,8 @@ namespace PosWeb.Controllers
         [HttpGet]
         public ActionResult CrearReceta()
         {
+            IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
+            ViewBag.ListadoReceta = ListaReceta;
             return View();
         }
 
@@ -62,14 +73,34 @@ namespace PosWeb.Controllers
 
             if (resultado > 0)
             {
-                return Json(new RespuestaModel() { Verificador = true, Mensaje = "Familia creada correctamente",NumInt = resultado
- });
+                return Json(new RespuestaModel() { Verificador = true, Mensaje = "Familia creada correctamente",NumInt = resultado});
             }
             else
             {
                 return Json(new RespuestaModel() { Verificador = false, Mensaje = "Error" });
             }
-            
+        }
+
+        [HttpPost]
+        public JsonResult AgregarProductos(string _Producto, string _Familia, string _Umedida, int _Precio, int _Receta)
+        {
+            ObjetoProducto producto = new ObjetoProducto();
+            producto.Producto = _Producto;
+            producto.Familia = _Familia;
+            producto.UnidadMedida = _Umedida;
+            producto.Precio = _Precio;
+            producto.IdReceta = _Receta;
+
+            var resultado = Acceso.AgregarProducto(producto);
+
+            if (resultado > 0)
+            {
+                return Json(new RespuestaModel() { Verificador = true, Mensaje = "Producto creada correctamente", NumInt = resultado });
+            }
+            else
+            {
+                return Json(new RespuestaModel() { Verificador = false, Mensaje = "Error" });
+            }
         }
 
         public JsonResult ObtenerFamilia (string _IdFamilia)
@@ -87,13 +118,14 @@ namespace PosWeb.Controllers
             return (Json(result));
         }
 
-        public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora)
+        public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora, int _Receta)
         {
             var validador = 0;
             ObjetoFamilia lfamialia = new ObjetoFamilia();
             lfamialia.Familia = _Familia;
             lfamialia.IdFamilia = int.Parse(_IdFamilia);
             lfamialia.Impresora = _Impresora;
+            lfamialia.Receta = _Receta;
 
             RespuestaModel resultado = Acceso.EditarFamilia(lfamialia);
             if (resultado.Verificador == true)

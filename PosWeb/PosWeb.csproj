@@ -721,6 +721,7 @@
     <Content Include="Content\assets\plugins\danielfarrell\bootstrap-combobox\less\combobox.less" />
     <Content Include="Content\assets\plugins\danielfarrell\bootstrap-combobox\package.json" />
     <Content Include="Content\assets\plugins\danielfarrell\bootstrap-combobox\README.md" />
+    <Content Include="WebJs\Productos\CrearReceta.js" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

@@ -4,8 +4,8 @@
     ViewBag.Title = "AgregarProductos";
     List<ObjetoProducto> ListaProductos = ViewBag.ListadoProductos;
 }
-
-<script src="~/WebJs/Productos/Productos.js"></script>
+<script src="~/WebJs/Productos/AgregarProducto.js"></script>
+<link href="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet" />
 
 <div class="panel panel-inverse table-responsive">
     <div class="panel-heading">
@@ -31,24 +31,25 @@
         tableStyle: "table",
         columns:
         grid.Columns(
-        grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.Id</text>),
-                     grid.Column(columnName: "Producto", header: "Producto", format: @<text>@item.Producto</text>),
-                                 grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
-                                             grid.Column(columnName: "Unidad Medida", header: "Unidad Medida", format: @<text>@item.UnidadMedida</text>),
-                                                         grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarUsuario" onclick="ObtenerDatosUsuario(@item.id)">
-                                                            <span class="fas fa-pencil-alt fa-fw"></span>
-                                                        </button>),
-                                                                     grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 1 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 1 ? "Deshabilitar":"Habilitar")"
-                                                                                                                                              onclick="EliminarUsuario(@item.id,@item.Estado, @Html.Raw(item.Estado == 1 ? "false":"true"))">
-                                                                        @Html.Raw(item.Estado == 1 ? "Deshabilitar" : "Habilitar")
-                                                                    </button>)))
+        grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.IdProducto</text>),
+                          grid.Column(columnName: "Producto", header: "Producto", format: @<text>@item.Producto</text>),
+                                         grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
+                                                         grid.Column(columnName: "Unidad Medida", header: "Unidad Medida", format: @<text>@item.UnidadMedida</text>),
+                            grid.Column(columnName: "Precio", header: "Precio", format: @<text>@item.Precio</text>),
+                                                                              grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarUsuario" onclick="ObtenerDatosUsuario(@item.IdProducto)">
+                                                                                Editar<span class="fa fa-pencil"></span>
+                                                                            </button>),
+                                                                                             grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 1 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 1 ? "Deshabilitar":"Habilitar")"
+                                                                                                                                                                      onclick="EliminarUsuario(@item.IdProducto,@item.Estado, @Html.Raw(item.Estado == 1 ? "false":"true"))">
+                                                                                                @Html.Raw(item.Estado == 1 ? "Deshabilitar" : "Habilitar")<span class="fa fa-trash"></span>
+                                                                                            </button>)))
     </div>
 
     <div id="AgregarProducto" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">Agregar Producto</h4>
+                    <h4 class="text-primary">Agregar Producto</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -57,21 +58,54 @@
                     <div class="x_content">
                         <br />
                         <div class="form-horizontal form-label-left input_mask">
-                            <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-                                <input type="text" required="required" class="form-control has-feedback-left" id="Producto" name="Producto" placeholder="Producto">
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label col-md-3 col-sm-3  col-xs-12">Seleccione Familia **</label>
-                                <div class="col-md-9 col-sm-9 col-xs-12">
-                                    @Html.DropDownList("Familia", (IEnumerable<SelectListItem>)ViewBag.Familia, "Seleccione...", new { @class = "form-control", @ID = "Familia", @Name = "Familia" })
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label">Producto</label>
+                                    <div class="">
+                                        <input type="text" required class="form-control has-feedback-left" id="Producto" name="Producto" placeholder="Producto">
+                                    </div>
                                 </div>
-                            </div>
-
+                            </form>
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label"> Familia</label>
+                                    <div class="">
+                                        @Html.DropDownList("Familia", (IEnumerable<SelectListItem>)ViewBag.Familia, "Seleccione...", new { @class = "combobox", @ID = "Familia", @Name = "Familia" })
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label">U.Medida</label>
+                                    <div class="">
+                                        <select id="Umedida" class="combobox">
+                                            <option value="gr">Gramos</option>
+                                            <option value="un">Unidad</option>
+                                            <option selected value="">-- Seleccione --</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label">Precio</label>
+                                    <div class="">
+                                        <input type="number" required class="form-control has-feedback-left" id="Precio" name="Precio" placeholder="Precio">
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label"> Receta</label>
+                                    <div class="">
+                                        @Html.DropDownList("Receta", (IEnumerable<SelectListItem>)ViewBag.Receta, "Seleccione...", new { @class = "combobox", @ID = "Receta", @Name = "Receta" })
+                                    </div>
+                                </div>
+                            </form>
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-3">
-                                    <button class="btn btn-success" type="submit" id="CrearFamilia">Grabar</button>
+                                <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+                                    <button class="btn btn-primary" type="submit" id="CrearProducto">Grabar</button>
                                 </div>
                             </div>
                         </div>
@@ -84,3 +118,5 @@
         </div>
     </div>
 </div>
+
+<script src="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/js/bootstrap-combobox.js"></script>

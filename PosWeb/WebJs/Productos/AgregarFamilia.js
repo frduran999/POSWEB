@@ -34,7 +34,6 @@
                             $("#modalErrorLoginMensaje").html(data.Mensaje);
                             $("#aModalErrorLogin").click();
                             location.reload();
-                            //TablaFamilia(data.NumInt);
                         }
                     }
                 }
@@ -58,8 +57,14 @@ function ObtenerDatosFamilia(IdFamilia) {
             $.each(data, function (index, value) {
                 $.each(this, function (name, value) {
                     $("#modFamilia").val(value.Familia);
-                    $("#modImpresora").append('<option value="' + value.Impresora + '">' + value.Impresora + '</option>');
+                    //$("#modImpresora").append('<option selected value="' + value.Impresora + '">' +
+                    //    value.Impresora + '</option>');
+                    //$("#modImpresora").val(value.Impresora);
+                    document.getElementById("modImpresoraundefined").value = value.Impresora;
                     $("#IdFamilia").val(value.IdFamilia);
+                    if (value.Receta > 0) {
+                        document.getElementById("modTipoProd").checked = 1;
+                    }
                 });
             });
         }
@@ -92,15 +97,19 @@ function EliminarFamilia(IdFamilia, Estado) {
     }
 }
 
-function EditarFamilia() {
+function ModificarFamilia() {
     var familia = $("#modFamilia").val();
     var idFamilia = $("#IdFamilia").val();
-    var impresora = $("#modImpresora").val();
-
+    var impresora = $("#modImpresoraundefined").val();
+    var check = document.getElementById("modTipoProd").checked;
+    var receta = 0;
+    if (check) {
+        receta = 1;
+    }
     $.ajax({
         type: "POST",
         url: "EditarFamilia",
-        data: { _Familia: familia, _IdFamilia: idFamilia, _Impresora: impresora },
+        data: { _Familia: familia, _IdFamilia: idFamilia, _Impresora: impresora,_Receta:receta},
         async: true,
         success: function (data) {
             if (data = 1) {
