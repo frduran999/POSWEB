@@ -47,7 +47,7 @@
 });
 
 function ObtenerDatosFamilia(IdFamilia) {
-    $("#modImpresora").empty();
+    $("#modImpresoraundefined").empty();
     $.ajax({
         type: "GET",
         url: "ObtenerFamilia",

@@ -32,15 +32,15 @@
         <div id="header" class="header navbar-default">
             <!-- begin navbar-header -->
             <div class="navbar-header">
-
+                <a href="@Url.Action("Index", "Home")" class="navbar-brand"><span class="navbar-logo"></span><b>Pizzeria</b></a>
                 @*@if (@NotaVenta.UTIL.SessionVariables.SESSION_DATOS_USUARIO.TipoUsuario == -1)
-                    {
-                        <a href="@Url.Action("Parametros", "Administracion")" class="navbar-brand"><span class="navbar-logo"></span><b>Nota de Venta</b></a>
-                    }
-                    else
-                    {
-                        <a href="@Url.Action("Index", "Home")" class="navbar-brand"><span class="navbar-logo"></span><b>Nota de Venta</b></a>
-                    }*@
+        {
+            <a href="@Url.Action("Parametros", "Administracion")" class="navbar-brand"><span class="navbar-logo"></span><b>Nota de Venta</b></a>
+        }
+        else
+        {
+            <a href="@Url.Action("Index", "Home")" class="navbar-brand"><span class="navbar-logo"></span><b>Nota de Venta</b></a>
+        }*@
                 <button type="button" class="navbar-toggle" data-click="top-menu-toggled">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>

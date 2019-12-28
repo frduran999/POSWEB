@@ -109,6 +109,22 @@ namespace PosWeb.Controllers
             return Json(new { list = lfamilia }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ObtenerProductos(int _IdProducto)
+        {
+            List<ObjetoProducto> lproducto = Acceso.ObtenerProducto(_IdProducto);
+            return Json(new { list = lproducto }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult EliminarProducto(int _IdProducto)
+        {
+            ObjetoProducto Producto = new ObjetoProducto();
+            Producto.IdProducto = _IdProducto;
+            RespuestaModel result = Acceso.EliminarProducto(Producto);
+
+            return (Json(result));
+        }
+
+
         public JsonResult EliminarFamilia(string _IdFamilia)
         {
             ObjetoFamilia Familia = new ObjetoFamilia();
@@ -139,5 +155,26 @@ namespace PosWeb.Controllers
             }            
         }
 
+        public JsonResult EditarProducto(string _IdProducto, string _Producto, string _IdFamilia, string _Umedida, string _Precio)
+        {
+            var validador = 0;
+            ObjetoProducto lproducto = new ObjetoProducto();
+            lproducto.IdProducto = int.Parse(_IdProducto);
+            lproducto.Producto = _Producto;
+            lproducto.IdFamilia = int.Parse(_IdFamilia);
+            lproducto.UnidadMedida = _Umedida;
+            lproducto.Precio = double.Parse(_Precio);
+
+            RespuestaModel resultado = Acceso.EditarProducto(lproducto);
+            if (resultado.Verificador == true)
+            {
+                validador = 1;
+                return Json(validador);
+            }
+            else
+            {
+                return Json(validador);
+            }
+        }
     }
 }

@@ -3,10 +3,18 @@
     ViewBag.Title = "Punto de Venta";
 }
 
-<center><h1>Bienvenido @SessionVariables.Session_Datos_Usuarios.Usuario</h1></center>
+<style>
+    body {
+        background: url('/Content/assets/img/FotosPizzeria/menu-pizza-fondo-pizarra_1284-11715.jpg');
+        background-repeat: no-repeat;
+        background-size:cover;
+        background-position:center;
+    }
+</style>
+    <center><h1 style="color:white">Bienvenido @SessionVariables.Session_Datos_Usuarios.Usuario</h1></center>
     <div class="container">
         <div class="row">
-            <div id="carousel" class="carousel slide" data-ride="carousel">
+            @*<div id="carousel" class="carousel slide" data-ride="carousel">
                 <ol class="carousel-indicators">
                     <li data-target="#carousel" data-slide-to="0" class=""></li>
                     <li data-target="#carousel" data-slide-to="1" class="active"></li>
@@ -15,18 +23,19 @@
                     <div class="carousel-item">
                         <div class="d-none d-lg-block">
                             <div class="slide-box">
-                                <img src="https://picsum.photos/285/200/?image=0&amp;random" alt="First slide">
-                                <img src="https://picsum.photos/285/200/?image=1&amp;random" alt="First slide">
-                                <img src="https://picsum.photos/285/200/?image=2&amp;random" alt="First slide">
+                                <img width="350" height="250" src="~/Content/assets/img/FotosPizzeria/03_promo_familiar_bebida.jpg" alt="First slide">
+                                <img width="350" height="250" src="~/Content/assets/img/FotosPizzeria/909281-7d0fbbd8-9d91-4551-969d-b1854f692d1f.png" alt="First slide">
+                                <img width="350" height="250" src="~/Content/assets/img/FotosPizzeria/familiar-2bebidas.jpg" alt="First slide">
+
                             </div>
                         </div>
                     </div>
                     <div class="carousel-item active">
                         <div class="d-none d-lg-block">
                             <div class="slide-box">
-                                <img src="https://picsum.photos/285/200/?image=4&amp;random" alt="Second slide">
-                                <img src="https://picsum.photos/285/200/?image=5&amp;random" alt="Second slide">
-                                <img src="https://picsum.photos/285/200/?image=6&amp;random" alt="Second slide">
+                                <img width="350" height="250" src="~/Content/assets/img/FotosPizzeria/mediana-bebida1litro-500x412.jpg" alt="Second slide">
+                                <img width="350" height="250" src="~/Content/assets/img/FotosPizzeria/Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-receta-pizza-pizza-receta-pizza-mozzarella-pizza-mozzarella.jpg" alt="Second slide">
+                                <img width="350" height="250" src="~/Content/assets/img/FotosPizzeria/03_promo_familiar_bebida.jpg" alt="Second slide">
                             </div>
                         </div>
                     </div>
@@ -39,6 +48,6 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="sr-only">Next</span>
                 </a>
-            </div>
+            </div>*@
         </div>
     </div>

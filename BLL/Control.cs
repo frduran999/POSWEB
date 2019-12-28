@@ -36,6 +36,21 @@ namespace BLL
             return Acceso.AgregarProducto(producto);
         }
 
+        public List<ObjetoProducto> ObtenerProducto(int IdProducto)
+        {
+            return Acceso.ObtenerProducto(IdProducto);
+        }
+
+        public RespuestaModel EliminarProducto(ObjetoProducto Producto)
+        {
+            return Acceso.EliminarProducto(Producto);
+        }
+
+        public RespuestaModel EditarProducto(ObjetoProducto producto)
+        {
+            return Acceso.EditarProducto(producto);
+        }
+
         #region Familia
 
         public List<ObjetoFamilia> ListadoFamilia()

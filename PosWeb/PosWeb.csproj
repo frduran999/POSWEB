@@ -179,6 +179,13 @@
     <Content Include="Content\assets\css\default\theme\red.min.css" />
     <Content Include="Content\assets\css\default\theme\teal.min.css" />
     <Content Include="Content\assets\css\default\theme\yellow.min.css" />
+    <Content Include="Content\assets\img\FotosPizzeria\03_promo_familiar_bebida.jpg" />
+    <Content Include="Content\assets\img\FotosPizzeria\909281-7d0fbbd8-9d91-4551-969d-b1854f692d1f.png" />
+    <Content Include="Content\assets\img\FotosPizzeria\dominos-pizza-caracol.jpg" />
+    <Content Include="Content\assets\img\FotosPizzeria\familiar-2bebidas.jpg" />
+    <Content Include="Content\assets\img\FotosPizzeria\mediana-bebida1litro-500x412.jpg" />
+    <Content Include="Content\assets\img\FotosPizzeria\menu-pizza-fondo-pizarra_1284-11715.jpg" />
+    <Content Include="Content\assets\img\FotosPizzeria\Receta-recetas-locos-x-la-parrilla-locosxlaparrilla-receta-pizza-pizza-receta-pizza-mozzarella-pizza-mozzarella.jpg" />
     <Content Include="Content\assets\img\user\3d4929d289ad98ad71637d5c257d2f08-logo-de-pizza-1-by-vexels.png" />
     <Content Include="Content\assets\img\user\Portada.jpg" />
     <Content Include="Content\assets\img\user\user-1.jpg" />
