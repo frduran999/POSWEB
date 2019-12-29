@@ -33,6 +33,9 @@ namespace BLL
 
                     validador = data.Rows[i].Field<object>("Perfil");
                     DatosLogin.Perfil = validador != null ? data.Rows[i].Field<int>("Perfil") : 0;
+
+                    validador = data.Rows[i].Field<object>("Verificador");
+                    DatosLogin.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
                 }
             }
             else
@@ -79,6 +82,41 @@ namespace BLL
             return listadoMenu;
         }
 
+        public List<ObjetoReceta> ListadoReceta()
+        {
+            var Listado = new List<ObjetoReceta>();
+            var data = new Conector().EjecutarProcedimiento("ListadoReceta", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoReceta();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdReceta = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Nombre");
+                    resultadoListado.Nombre = validador != null ? data.Rows[i].Field<string>("Nombre") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("IdProducto");
+                    resultadoListado.IdProducto = validador != null ? data.Rows[i].Field<int>("IdProducto") : -1;
+
+                    validador = data.Rows[i].Field<object>("Cantidad");
+                    resultadoListado.Cantidad = validador != null ? data.Rows[i].Field<int>("Cantidad") : -1;
+
+                    validador = data.Rows[i].Field<object>("Estado");
+                    resultadoListado.Estado = validador != null ? data.Rows[i].Field<int>("Estado") : -1;
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
+        #region Productos
+        
         public List<ObjetoProducto> ObtenerProducto(int IdProducto)
         {
             var Listado = new List<ObjetoProducto>();
@@ -121,7 +159,6 @@ namespace BLL
             return Listado;
         }
 
-
         public List<ObjetoProducto> ListadoProductos()
         {
             var Listado = new List<ObjetoProducto>();
@@ -154,39 +191,6 @@ namespace BLL
 
                     validador = data.Rows[i].Field<object>("Precio");
                     resultadoListado.Precio = validador != null ? data.Rows[i].Field<double>("Precio") : 0;
-
-                    Listado.Add(resultadoListado);
-                }
-            }
-            return Listado;
-        }
-
-        public List<ObjetoReceta> ListadoReceta()
-        {
-            var Listado = new List<ObjetoReceta>();
-            var data = new Conector().EjecutarProcedimiento("ListadoReceta", new System.Collections.Hashtable());
-
-            if (data.Rows.Count > 0)
-            {
-                for (var i = 0; i < data.Rows.Count; i++)
-                {
-                    var validador = new object();
-                    var resultadoListado = new ObjetoReceta();
-
-                    validador = data.Rows[i].Field<object>("Id");
-                    resultadoListado.IdReceta = validador != null ? data.Rows[i].Field<int>("Id") : -1;
-
-                    validador = data.Rows[i].Field<object>("Nombre");
-                    resultadoListado.Nombre = validador != null ? data.Rows[i].Field<string>("Nombre") : "NO ASIGNADO";
-
-                    validador = data.Rows[i].Field<object>("IdProducto");
-                    resultadoListado.IdProducto = validador != null ? data.Rows[i].Field<int>("IdProducto") : -1;
-
-                    validador = data.Rows[i].Field<object>("Cantidad");
-                    resultadoListado.Cantidad = validador != null ? data.Rows[i].Field<int>("Cantidad") : -1;
-
-                    validador = data.Rows[i].Field<object>("Estado");
-                    resultadoListado.Estado = validador != null ? data.Rows[i].Field<int>("Estado") : -1;
 
                     Listado.Add(resultadoListado);
                 }
@@ -263,7 +267,7 @@ namespace BLL
                 var data = new Conector().EjecutarProcedimiento("EditarProducto", new System.Collections.Hashtable()
                 {
                     { "IdProducto", Producto.IdProducto},
-                    { "IdFamilia", Producto.IdFamilia},
+                    { "Familia", Producto.Familia},
                     { "Producto", Producto.Producto},
                     { "UnidadMedida", Producto.UnidadMedida},
                     { "Precio", Producto.Precio},
@@ -295,6 +299,7 @@ namespace BLL
             return resp;
         }
 
+        #endregion
 
         #region Familia
 
@@ -398,31 +403,7 @@ namespace BLL
             }
             return Listado;
         }
-
-        public List<ObjetoPerfil> ListadoPerfil()
-        {
-            var Listado = new List<ObjetoPerfil>();
-            var data = new Conector().EjecutarProcedimiento("ListadoPerfil", new System.Collections.Hashtable());
-
-            if (data.Rows.Count > 0)
-            {
-                for (var i = 0; i < data.Rows.Count; i++)
-                {
-                    var validador = new object();
-                    var resultadoListado = new ObjetoPerfil();
-
-                    validador = data.Rows[i].Field<object>("Id");
-                    resultadoListado.Id = validador != null ? data.Rows[i].Field<int>("Id") : -1;
-
-                    validador = data.Rows[i].Field<object>("Descripcion");
-                    resultadoListado.Descripcion = validador != null ? data.Rows[i].Field<string>("Descripcion") : "NO ASIGNADO";
-                    
-                    Listado.Add(resultadoListado);
-                }
-            }
-            return Listado;
-        } //Impresora
-
+        
         public List<ObjetoFamilia> ObtenerFamilia(string IdFamilia)
         {
             var Listado = new List<ObjetoFamilia>();

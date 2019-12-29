@@ -51,24 +51,24 @@ function ObtenerProductos(IdProducto) {
         data: { _IdProducto: IdProducto },
         async: true,
         success: function (data) {
-            $.each(data, function (index, value) {
-                $.each(this, function (name, value) {
-                    $("#modProducto").val(value.Producto);
-                    document.getElementById("modFamiliaundefined").value = value.Familia;
-                    if (value.UnidadMedida == 'gr') {
-                        value.UnidadMedida = 'Gramos';
-                    } else {
-                        value.UnidadMedida = 'Receta';
-                    }
-                    document.getElementById("modUmedidaundefined").value = value.UnidadMedida;
-                    $("#modPrecio").val(value.Precio);
-                    if (value.Receta == undefined) {
-                        value.Receta = 'SinReceta';
-                    }
-                    document.getElementById("modRecetaundefined").value = value.Receta;
-                    $("#IdProducto").val(value.IdProducto);
+            if (data = 0) {
+                alert("Debe Ingresar Campos Obligatorios");
+            } else {
+                $.each(data, function (index, value) {
+                    $.each(this, function (name, value) {
+                        $("#modProducto").val(value.Producto);
+                        $("#modFamilia").value = value.Familia;
+                        document.getElementById("modFamiliaundefined").value = value.Familia;
+                        document.getElementById("modUmedidaundefined").value = value.UnidadMedida;
+                        $("#modPrecio").val(value.Precio);
+                        if (value.Receta == undefined) {
+                            value.Receta = 'SinReceta';
+                        }
+                        document.getElementById("modRecetaundefined").value = value.Receta;
+                        $("#IdProducto").val(value.IdProducto);
+                    });
                 });
-            });
+            }
         }
     });
 }
@@ -101,8 +101,8 @@ function EliminarProducto(IdProducto) {
 
 function ModificarProducto() {
     var producto = $("#modProducto").val();
-    var idfamilia = $("#modFamilia").val();
-    var umedida = $("#modUmedida").val();
+    var familia = $("#modFamiliaundefined").val();
+    var umedida = $("#modUmedidaundefined").val();
     var precio = $("#modPrecio").val();
     var idproducto = $("#IdProducto").val();
     var receta = $("#modReceta").val();
@@ -112,15 +112,18 @@ function ModificarProducto() {
     $.ajax({
         type: "POST",
         url: "EditarProducto",
-        data: { _IdProducto: idproducto, _Producto: producto, _IdFamilia: idfamilia, _Umedida:umedida, _Precio:precio},
+        data: { _IdProducto: idproducto, _Producto: producto, _Familia: familia, _Umedida:umedida, _Precio:precio},
         async: true,
         success: function (data) {
             if (data = 1) {
                 alert("Producto fue Editado");
                 location.reload();
             }
-            else {
-                alert("NO");
+            if (data = 2) {
+                alert("Error");
+            }
+            if (data = 0) {
+                alert("Debe Completar Los Datos");
             }
         }
     });

@@ -12,10 +12,17 @@ namespace PosWeb.Controllers
     public class ProductosController : Controller
     {
         Control Acceso = new Control();
+        
+        #region Vistas
 
         [HttpGet]
         public ActionResult AgregarProductos()
         {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada","Error");
+            }
+
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
             ViewBag.ListadoProductos = ListaProductos;
 
@@ -39,14 +46,19 @@ namespace PosWeb.Controllers
         [HttpGet]
         public ActionResult AgregarFamilia()
         {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
             List<string> Impresoras = new List<string>();
             foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
             {
                 Impresoras.Add(strPrinter);
             }
-            
+
             ViewBag.Impresoras = Impresoras;
-            
+
             IEnumerable<ObjetoFamilia> ListaFamilia = Acceso.ListadoFamilia();
             ViewBag.ListadoFamilia = ListaFamilia;
 
@@ -56,125 +68,248 @@ namespace PosWeb.Controllers
         [HttpGet]
         public ActionResult CrearReceta()
         {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
             IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
             ViewBag.ListadoReceta = ListaReceta;
             return View();
         }
 
+        #endregion
+
+        #region Familia
+
         [HttpPost]
-        public JsonResult AgregarFamilia(string _Familia, string _Impresora, int _Receta)
+        public JsonResult AgregarFamilia(string _Familia, string _Impresora, string _Receta)
         {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
             ObjetoFamilia lfamilia = new ObjetoFamilia();
-            lfamilia.Familia = _Familia;
-            lfamilia.Impresora = _Impresora;
-            lfamilia.Receta = _Receta;
-
-            var resultado = Acceso.AgregarFamilia(lfamilia.Familia,lfamilia.Impresora,lfamilia.Receta);
-
-            if (resultado > 0)
+            if (!string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_Impresora) && !string.IsNullOrEmpty(_Receta))
             {
-                return Json(new RespuestaModel() { Verificador = true, Mensaje = "Familia creada correctamente",NumInt = resultado});
+                lfamilia.Familia = _Familia;
+                lfamilia.Impresora = _Impresora;
+                lfamilia.Receta = int.Parse(_Receta);
+
+                var resultado = Acceso.AgregarFamilia(lfamilia.Familia, lfamilia.Impresora, lfamilia.Receta);
+
+                if (resultado > 0)
+                {
+                    return Json(new RespuestaModel() { Verificador = true, Mensaje = "Familia creada correctamente", NumInt = resultado });
+                }
+                else
+                {
+                    return Json(new RespuestaModel() { Verificador = false, Mensaje = "Error" });
+                }
             }
             else
             {
-                return Json(new RespuestaModel() { Verificador = false, Mensaje = "Error" });
+                var validador = 0;
+                return Json(validador);
             }
+            
         }
+
+        public JsonResult ObtenerFamilia(string _IdFamilia)
+        {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            if (!string.IsNullOrEmpty(_IdFamilia))
+            {
+                List<ObjetoFamilia> lfamilia = Acceso.ObtenerFamilia(_IdFamilia);
+                return Json(new { list = lfamilia }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var validador = 0;
+                return Json(validador);
+            }
+            
+        }
+
+        public JsonResult EliminarFamilia(string _IdFamilia)
+        {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            if (!string.IsNullOrEmpty(_IdFamilia))
+            {
+                ObjetoFamilia Familia = new ObjetoFamilia();
+                Familia.IdFamilia = int.Parse(_IdFamilia);
+                RespuestaModel result = Acceso.EliminarFamilia(Familia);
+
+                return (Json(result));
+            }
+            else
+            {
+                var validador = 0;
+                return Json(validador);
+            }
+            
+        }
+
+        public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora, string _Receta)
+        {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            var validador = 0;
+            if (!string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_IdFamilia) && !string.IsNullOrEmpty(_Impresora) && !string.IsNullOrEmpty(_Receta))
+            {
+                ObjetoFamilia lfamialia = new ObjetoFamilia();
+                lfamialia.Familia = _Familia;
+                lfamialia.IdFamilia = int.Parse(_IdFamilia);
+                lfamialia.Impresora = _Impresora;
+                lfamialia.Receta = int.Parse(_Receta);
+
+                RespuestaModel resultado = Acceso.EditarFamilia(lfamialia);
+                if (resultado.Verificador == true)
+                {
+                    validador = 1;
+                    return Json(validador);
+                }
+                else
+                {
+                    validador = 2;
+                    return Json(validador);
+                }
+            }
+            else
+            {
+                return Json(validador);
+            }
+            
+        }
+
+        #endregion
+
+        #region Poductos
 
         [HttpPost]
-        public JsonResult AgregarProductos(string _Producto, string _Familia, string _Umedida, int _Precio, int _Receta)
+        public JsonResult AgregarProductos(string _Producto, string _Familia, string _Umedida, string _Precio, string _Receta)
         {
-            ObjetoProducto producto = new ObjetoProducto();
-            producto.Producto = _Producto;
-            producto.Familia = _Familia;
-            producto.UnidadMedida = _Umedida;
-            producto.Precio = _Precio;
-            producto.IdReceta = _Receta;
-
-            var resultado = Acceso.AgregarProducto(producto);
-
-            if (resultado > 0)
+            if (SessionVariables.Session_Datos_Usuarios == null)
             {
-                return Json(new RespuestaModel() { Verificador = true, Mensaje = "Producto creada correctamente", NumInt = resultado });
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            ObjetoProducto producto = new ObjetoProducto();
+            if (!string.IsNullOrEmpty(_Producto) && !string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_Umedida) && !string.IsNullOrEmpty(_Precio) && !string.IsNullOrEmpty(_Receta))
+            {
+                producto.Producto = _Producto;
+                producto.Familia = _Familia;
+                producto.UnidadMedida = _Umedida;
+                producto.Precio = int.Parse(_Precio);
+                producto.IdReceta = int.Parse(_Receta);
+
+                var resultado = Acceso.AgregarProducto(producto);
+                if (resultado > 0)
+                {
+                    return Json(new RespuestaModel() { Verificador = true, Mensaje = "Producto creada correctamente", NumInt = resultado });
+                }
+                else
+                {
+                    return Json(new RespuestaModel() { Verificador = false, Mensaje = "Error" });
+                }
             }
             else
             {
-                return Json(new RespuestaModel() { Verificador = false, Mensaje = "Error" });
+                return Json(new RespuestaModel() { Verificador = false, Mensaje = "Debe Ingresar Campos Obligatorios" });
             }
-        }
-
-        public JsonResult ObtenerFamilia (string _IdFamilia)
-        {
-            List<ObjetoFamilia> lfamilia = Acceso.ObtenerFamilia(_IdFamilia);
-            return Json(new { list = lfamilia }, JsonRequestBehavior.AllowGet);
         }
 
         public JsonResult ObtenerProductos(int _IdProducto)
         {
-            List<ObjetoProducto> lproducto = Acceso.ObtenerProducto(_IdProducto);
-            return Json(new { list = lproducto }, JsonRequestBehavior.AllowGet);
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            if (_IdProducto != 0)
+            {
+                List<ObjetoProducto> lproducto = Acceso.ObtenerProducto(_IdProducto);
+                return Json(new { list = lproducto }, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                var validador = 0;
+                return Json(validador);
+            }
+            
         }
 
         public JsonResult EliminarProducto(int _IdProducto)
         {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
             ObjetoProducto Producto = new ObjetoProducto();
-            Producto.IdProducto = _IdProducto;
-            RespuestaModel result = Acceso.EliminarProducto(Producto);
-
-            return (Json(result));
-        }
-
-
-        public JsonResult EliminarFamilia(string _IdFamilia)
-        {
-            ObjetoFamilia Familia = new ObjetoFamilia();
-            Familia.IdFamilia = int.Parse(_IdFamilia);
-            RespuestaModel result = Acceso.EliminarFamilia(Familia);
-
-            return (Json(result));
-        }
-
-        public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora, int _Receta)
-        {
-            var validador = 0;
-            ObjetoFamilia lfamialia = new ObjetoFamilia();
-            lfamialia.Familia = _Familia;
-            lfamialia.IdFamilia = int.Parse(_IdFamilia);
-            lfamialia.Impresora = _Impresora;
-            lfamialia.Receta = _Receta;
-
-            RespuestaModel resultado = Acceso.EditarFamilia(lfamialia);
-            if (resultado.Verificador == true)
+            if (_IdProducto != 0)
             {
-                validador = 1;
-                return Json(validador);
+                Producto.IdProducto = _IdProducto;
+                RespuestaModel result = Acceso.EliminarProducto(Producto);
+
+                return (Json(result));
             }
             else
             {
+                var validador = 0;
                 return Json(validador);
-            }            
+            }
         }
 
-        public JsonResult EditarProducto(string _IdProducto, string _Producto, string _IdFamilia, string _Umedida, string _Precio)
+        public JsonResult EditarProducto(string _IdProducto, string _Producto, string _Familia, string _Umedida, string _Precio)
         {
-            var validador = 0;
-            ObjetoProducto lproducto = new ObjetoProducto();
-            lproducto.IdProducto = int.Parse(_IdProducto);
-            lproducto.Producto = _Producto;
-            lproducto.IdFamilia = int.Parse(_IdFamilia);
-            lproducto.UnidadMedida = _Umedida;
-            lproducto.Precio = double.Parse(_Precio);
-
-            RespuestaModel resultado = Acceso.EditarProducto(lproducto);
-            if (resultado.Verificador == true)
+            if (SessionVariables.Session_Datos_Usuarios == null)
             {
-                validador = 1;
-                return Json(validador);
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            var validador = 0;
+            if (!string.IsNullOrEmpty(_IdProducto) && !string.IsNullOrEmpty(_Producto) && !string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_Umedida) && !string.IsNullOrEmpty(_Precio))
+            {
+                ObjetoProducto lproducto = new ObjetoProducto();
+                lproducto.IdProducto = int.Parse(_IdProducto);
+                lproducto.Producto = _Producto;
+                lproducto.Familia = _Familia;
+                lproducto.UnidadMedida = _Umedida;
+                lproducto.Precio = double.Parse(_Precio);
+
+                RespuestaModel resultado = Acceso.EditarProducto(lproducto);
+                if (resultado.Verificador == true)
+                {
+                    validador = 1;
+                    return Json(validador);
+                }
+                else
+                {
+                    validador = 2;
+                    return Json(validador);
+                }
             }
             else
             {
                 return Json(validador);
             }
+            
         }
+
+        #endregion
+
     }
 }

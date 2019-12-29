@@ -15,6 +15,7 @@ namespace UTIL.Objetos
         private int _Perfil;
         private string _Nombre;
         private int _Estado;
+        private bool _Verificador;
 
         public int IdUsuario { get => _IdUsuario; set => _IdUsuario = value; }
         public string Usuario { get => _Usuario; set => _Usuario = value; }
@@ -23,5 +24,6 @@ namespace UTIL.Objetos
         public int Perfil { get => _Perfil; set => _Perfil = value; }
         public string Nombre { get => _Nombre; set => _Nombre = value; }
         public int Estado { get => _Estado; set => _Estado = value; }
+        public bool Verificador { get => _Verificador; set => _Verificador = value; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿$(document).ready(function () {
     $('.combobox').combobox();
+
     $("#CrearFamilia").click(function () {
         var receta = 0;
         var familia = $("#Familia").val();
@@ -25,6 +26,11 @@
             success: function (data) {
                 try {
                     if (data.Verificador !== undefined) {
+                        if (data == 0) {
+                            $("#modalErrorLoginMensaje").html("Debe Ingresar Campos Obligatorios");
+                            $("#aModalErrorLogin").click();
+                            return;
+                        }
                         if (!data.Verificador) {
                             $("#modalErrorLoginMensaje").html(data.Mensaje);
                             $("#aModalErrorLogin").click();
@@ -54,27 +60,29 @@ function ObtenerDatosFamilia(IdFamilia) {
         data: { _IdFamilia: IdFamilia },
         async: true,
         success: function (data) {
-            $.each(data, function (index, value) {
-                $.each(this, function (name, value) {
-                    $("#modFamilia").val(value.Familia);
-                    //$("#modImpresora").append('<option selected value="' + value.Impresora + '">' +
-                    //    value.Impresora + '</option>');
-                    //$("#modImpresora").val(value.Impresora);
-                    document.getElementById("modImpresoraundefined").value = value.Impresora;
-                    $("#IdFamilia").val(value.IdFamilia);
-                    if (value.Receta > 0) {
-                        document.getElementById("modTipoProd").checked = 1;
-                    }
+            if (data == 0) {
+                alert("Error");
+            } else {
+                $.each(data, function (index, value) {
+                    $.each(this, function (name, value) {
+                        $("#modFamilia").val(value.Familia);
+                        document.getElementById("modImpresoraundefined").value = value.Impresora;
+                        $("#IdFamilia").val(value.IdFamilia);
+                        if (value.Receta > 0) {
+                            document.getElementById("modTipoProd").checked = 1;
+                        }
+                    });
                 });
-            });
+            }
         }
     });
 }
 
-function EliminarFamilia(IdFamilia, Estado) {
-    var mensaje;
-    var opcion = confirm("Desea Eliminar Familia?");
-    if (opcion == true) {
+function EliminarFamilia(IdFamilia) {
+
+    $('#ModalEliminar').modal('show');
+
+    $("#EliminarFamilia").click(function () {
         $.ajax({
             type: 'POST',
             url: 'EliminarFamilia',
@@ -82,8 +90,13 @@ function EliminarFamilia(IdFamilia, Estado) {
                 _IdFamilia: IdFamilia,
             },
             success: function (data) {
+                if (data == 0) {
+                    alert("Error");
+                    return; 
+                }
                 if (data.Verificador) {
-                    alert(data.Mensaje);
+                    $('#lblpre').hide();
+                    $('#lblEliminar').show();
                     location.reload();
                 }
                 else {
@@ -91,10 +104,7 @@ function EliminarFamilia(IdFamilia, Estado) {
                 }
             }
         });
-    }
-    else {
-        mensaje = "Has clickado Cancelar";
-    }
+    });
 }
 
 function ModificarFamilia() {
@@ -116,8 +126,11 @@ function ModificarFamilia() {
                 alert("Familia fue Editado");
                 location.reload();
             }
-            else {
-                alert("NO");
+            if (data = 2) {
+                alert("Familia no Encontrada");
+            }
+            if (data = 0) {
+                alert("Debe Ingresar Datos Debe COmpletar los Datos");
             }
         }
     });

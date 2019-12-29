@@ -27,14 +27,13 @@ namespace PosWeb.Controllers
             SessionVariables.Session_Datos_Usuarios = null;
             var validador = 0;
             datosUsuario.Usuario = _Nombre;
-            datosUsuario.Contrasena = _Contrasena;
-            datosUsuario.Contrasena = HashMd5.GetMD5(datosUsuario.Contrasena);
-
+            datosUsuario.Contrasena = HashMd5.GetMD5(_Contrasena);
+            
             var resultado = Acceso.LoginUsuario(datosUsuario);
 
             SessionVariables.Session_Datos_Usuarios = resultado;
 
-            if (resultado != null)
+            if (resultado.Verificador != false)
             {
                 validador = 2;
                 return Json(validador);

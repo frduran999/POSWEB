@@ -1,4 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using  UTIL
+@{ 
+    if (SessionVariables.Session_Datos_Usuarios.Usuario == null)
+    {
+        Response.Redirect("SesionExpirada/Error");
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
