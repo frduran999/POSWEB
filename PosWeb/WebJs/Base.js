@@ -109,20 +109,55 @@ $(document).ready(function () {
 });
 
 
-var tipoAlert = 2;
+var tipoAlert = 1;
 
 function abrirError(titulo, mensaje, callBackOK) {
+    callBackOK = (callBackOK === undefined || callBackOK === null) ? function () { } : callBackOK;
     if (tipoAlert === 1) {
-        $("#btnModalError").click();
-
-        $("#modalErrorMensaje").html(mensaje);
-        $("#modalErrorTitulo").html(titulo);
-        $("#modalErrorAceptar").click(function () {
-            if (callBackOK !== null && callBackOK !== undefined && (callBackOK instanceof Function)) {
+        swal({
+            title: titulo,
+            text: mensaje,
+            icon: 'error',
+            buttons: {
+                confirm: {
+                    text: 'Aceptar',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-danger',
+                    closeModal: true
+                }
+            }
+        }).then((value) => {
+            if (value === true) {
                 callBackOK();
             }
+        });
+    }
+    else {
+        alert(mensaje);
+    }
+}
 
-            $("#modalErrorCerrar").click();
+function abrirAprobacion(titulo, mensaje, callBackOK) {
+    callBackOK = (callBackOK === undefined || callBackOK === null) ? function () { } : callBackOK;
+    if (tipoAlert === 1) {
+        swal({
+            title: titulo,
+            text: mensaje,
+            icon: 'success',
+            buttons: {
+                confirm: {
+                    text: 'Aceptar',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-success',
+                    closeModal: true
+                }
+            }
+        }).then((value) => {
+            if (value === true) {
+                callBackOK();
+            }
         });
     }
     else {
@@ -131,17 +166,25 @@ function abrirError(titulo, mensaje, callBackOK) {
 }
 
 function abrirInformacion(titulo, mensaje, callBackOK) {
+    callBackOK = (callBackOK === undefined || callBackOK === null) ? function () { } : callBackOK;
     if (tipoAlert === 1) {
-        $("#btnModalInformacion").click();
-
-        $("#modalInformacionMensaje").html(mensaje);
-        $("#modalInformacionTitulo").html(titulo);
-        $("#modalInformacionAceptar").click(function () {
-            if (callBackOK !== null && callBackOK !== undefined && (callBackOK instanceof Function)) {
+        swal({
+            title: titulo,
+            text: mensaje,
+            icon: 'info',
+            buttons: {
+                confirm: {
+                    text: 'Aceptar',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-info',
+                    closeModal: true
+                }
+            }
+        }).then((value) => {
+            if (value === true) {
                 callBackOK();
             }
-
-            $("#modalInformacionCerrar").click();
         });
     }
     else {
@@ -149,25 +192,37 @@ function abrirInformacion(titulo, mensaje, callBackOK) {
     }
 }
 
-function abrirConfirmacion(titulo, mensaje, callBackOK, callBackCancel) {
+function abrirConfirmacion(titulo, mensaje, callBackOK, callBackCancel, esError) {
+    callBackOK = (callBackOK === undefined || callBackOK === null) ? function () { } : callBackOK;
+    callBackCancel = (callBackCancel === undefined || callBackCancel === null) ? function () { } : callBackCancel;
     if (tipoAlert === 1) {
-        $("#btnModalConfirmacion").click();
-
-        $("#modalConfirmacionMensaje").html(mensaje);
-        $("#modalConfirmacionTitulo").html(titulo);
-        $("#modalConfirmacionAceptar").click(function () {
-            if (callBackOK !== null && callBackOK !== undefined && (callBackOK instanceof Function)) {
+        swal({
+            title: titulo,
+            text: mensaje,
+            icon: (esError ? 'error' : 'info'),
+            buttons: {
+                cancel: {
+                    text: 'Cancelar',
+                    value: null,
+                    visible: true,
+                    className: 'btn btn-default',
+                    closeModal: true,
+                },
+                confirm: {
+                    text: 'Confirmar',
+                    value: true,
+                    visible: true,
+                    className: 'btn btn-success',
+                    closeModal: true
+                }
+            }
+        }).then((value) => {
+            if (value === true) {
                 callBackOK();
             }
-
-            $("#modalConfirmacionCerrar").click();
-        });
-        $("#modalConfirmacionCancelar").click(function () {
-            if (callBackCancel !== null && callBackCancel !== undefined && (callBackCancel instanceof Function)) {
+            else {
                 callBackCancel();
             }
-
-            $("#modalConfirmacionCerrar").click();
         });
     }
     else {

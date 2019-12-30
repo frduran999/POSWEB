@@ -74,9 +74,7 @@ function ObtenerProductos(IdProducto) {
 }
 
 function EliminarProducto(IdProducto) {
-    var mensaje;
-    var opcion = confirm("Desea Eliminar Producto?");
-    if (opcion == true) {
+    abrirConfirmacion('Eliminar', '¿Desea Eliminar Producto?', function () {
         $.ajax({
             type: 'POST',
             url: 'EliminarProducto',
@@ -85,19 +83,13 @@ function EliminarProducto(IdProducto) {
             },
             success: function (data) {
                 if (data.Verificador) {
-                    alert(data.Mensaje);
                     location.reload();
-                }
-                else {
-                    alert("Usuario No Encontrado");
                 }
             }
         });
-    }
-    else {
-        mensaje = "Has clickado Cancelar";
-    }
-}
+
+    }, true);
+};
 
 function ModificarProducto() {
     var producto = $("#modProducto").val();

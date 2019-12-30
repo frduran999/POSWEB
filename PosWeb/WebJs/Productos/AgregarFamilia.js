@@ -79,10 +79,7 @@ function ObtenerDatosFamilia(IdFamilia) {
 }
 
 function EliminarFamilia(IdFamilia) {
-
-    $('#ModalEliminar').modal('show');
-
-    $("#EliminarFamilia").click(function () {
+    abrirConfirmacion('Eliminar', '¿Desea Eliminar Familia?', function () {
         $.ajax({
             type: 'POST',
             url: 'EliminarFamilia',
@@ -91,12 +88,9 @@ function EliminarFamilia(IdFamilia) {
             },
             success: function (data) {
                 if (data == 0) {
-                    alert("Error");
-                    return; 
+                    return;
                 }
                 if (data.Verificador) {
-                    $('#lblpre').hide();
-                    $('#lblEliminar').show();
                     location.reload();
                 }
                 else {
@@ -104,7 +98,11 @@ function EliminarFamilia(IdFamilia) {
                 }
             }
         });
-    });
+    }, function () { alert('Prueba'); }, true);
+
+    //$("#EliminarFamilia").click(function () {
+        
+    //});
 }
 
 function ModificarFamilia() {
@@ -135,6 +133,7 @@ function ModificarFamilia() {
         }
     });
 }
+
 
 
 
