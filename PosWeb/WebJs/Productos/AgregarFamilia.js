@@ -53,6 +53,7 @@
 });
 
 //prueba
+//prueba2
 function ObtenerDatosFamilia(IdFamilia) {
     $("#modImpresoraundefined").empty();
     $.ajax({
