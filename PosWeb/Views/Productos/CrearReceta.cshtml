@@ -17,7 +17,7 @@
         <br />
         <div>
             <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AgregarFamilia">Agregar Receta</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCrearReceta">Crear Receta</button>
             </div>
         </div>
     </div>
@@ -34,21 +34,22 @@
             grid.Columns(
              grid.Column(columnName: "Nombre", header: "Nombre", format: @<text>@item.Nombre</text>),
                  grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.IdProducto</text>),
-             grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarFamilia" onclick="ObtenerDatosFamilia(@item.IdFamilia)">
+                grid.Column(columnName: "Cantidad", header: "Cantidad", format: @<text>@item.Cantidad</text>),
+              grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modaEditarReceta" onclick="ObtenerReceta(@item.IdReceta)">
                 Editar<span class="fa fa-pencil"></span>
             </button>),
              grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 0 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 0 ? "Deshabilitar":"Habilitar")"
-                                                                                      onclick="EliminarFamilia(@item.IdFamilia,@item.Estado, @Html.Raw(item.Estado == 0 ? "false":"true"))">
+                                                                                      onclick="EliminarFamilia(@item.IdReceta,@item.Estado, @Html.Raw(item.Estado == 0 ? "false":"true"))">
                 @Html.Raw(item.Estado == 0 ? "Deshabilitar" : "Habilitar")<span class="fa fa-trash"></span>
             </button>)))
         </div>
     </div>
 
-    <div id="AgregarFamilia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modalCrearReceta" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="text-primary">Agregar Familia</h4>
+                    <h4 class="text-primary">Crear Receta</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -59,20 +60,36 @@
                         <div class="form-horizontal form-label-left input_mask">
                             <form class="form-horizontal form-bordered">
                                 <div class="form-group row">
-                                    <label class="col-xs-2 col-form-label">Familia</label>
+                                    <label class="col-xs-2 col-form-label">Receta</label>
                                     <div class="">
-                                        <input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">
+                                        <input type="text" required class="form-control has-feedback-left" id="Receta" name="Receta" placeholder="Nombre Receta">
+                                    </div>
+                                    <div class="col-lg-6 col-xs-2">
+                                        <table id="tablaIngredientes" class="table-responsive-sm table-bordered dataTables-example dataTable"></table>
                                     </div>
                                 </div>
                             </form>
                             <form class="form-horizontal form-bordered">
                                 <div class="form-group row">
-                                    <label class="col-xs-2 col-form-label"> Receta</label>
+                                    <label class="col-xs-2 col-form-label">Ingredientes</label>
                                     <div class="">
-                                        <div class="switcher">
-                                            <input type="checkbox" class=" switcher-success" switcher name="TipoProd" id="TipoProd">
-                                            <label for="TipoProd"></label>
-                                        </div>
+                                        @Html.DropDownList("Ingredientes", (IEnumerable<SelectListItem>)ViewBag.Ingredientes, "Seleccione...", new { @class = "combobox", @ID = "Ingredientes", @Name = "Ingredientes" })
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label">Cantidad</label>
+                                    <div class="col-xs-2">
+                                        <input type="text" required class="form-control" id="Cantidad" name="Cantidad">
+                                    </div>
+                                </div>
+                            </form>
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <label class="col-xs-2 col-form-label"></label>
+                                    <div class="col-xs-2">
+                                        <center><button class="btn-xs btn btn-info" id="agregarIngrediente">Agregar</button></center>
                                     </div>
                                 </div>
                             </form>
@@ -80,7 +97,7 @@
                             <div class="ln_solid"></div>
                             <div class="form-group">
                                 <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                                    <button class="btn btn-primary" type="submit" id="CrearFamilia">Grabar</button>
+                                    <button class="btn btn-primary" type="submit" id="CrearReceta">Grabar</button>
                                 </div>
                             </div>
                         </div>
@@ -93,11 +110,11 @@
         </div>
     </div>
 
-    <div id="modalEditarFamilia" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div id="modaEditarReceta" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="text-warning">Editar Familia</h4>
+                    <h4 class="text-warning">Editar Receta</h4>
                     <button type="button" class="close" data-dismiss="modal">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -106,15 +123,7 @@
                     <div class="x_content">
                         <br />
                         <div class="form-horizontal form-label-left input_mask">
-                            <form class="form-horizontal form-bordered">
-                                <div class="form-group row">
-                                    <label class="col-xs-2 col-form-label">Familia</label>
-                                    <div class="">
-                                        <input type="text" required class="form-control has-feedback-left" id="modFamilia" name="Familia" placeholder="Familia">
-                                        <input type="text" required style="display:none" id="IdFamilia" name="IdFamilia">
-                                    </div>
-                                </div>
-                            </form>
+                            
                             <form class="form-horizontal form-bordered">
                                 <div class="form-group row">
                                     <label class="col-xs-2 col-form-label"> Receta</label>
@@ -143,7 +152,7 @@
         </div>
     </div>
 
-    <a id="aModalErrorLogin" style="display: none" href="#modalErrorLogin" class="btn btn-sm btn-success" data-toggle="modal">Agregar Familia</a>
+    <a id="aModalErrorLogin" style="display: none" href="#modalErrorLogin" class="btn btn-sm btn-success" data-toggle="modal">Crear Familia</a>
     <div class="modal fade" id="modalErrorLogin">
         <div class="modal-dialog">
             <div class="modal-content">

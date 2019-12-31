@@ -115,8 +115,32 @@ namespace BLL
             return Listado;
         }
 
+        public List<ObjetoProducto> ListaIngredientes()
+        {
+            var Listado = new List<ObjetoProducto>();
+            var data = new Conector().EjecutarProcedimiento("ListarIngredientes", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoProducto();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdProducto = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Producto");
+                    resultadoListado.Producto = validador != null ? data.Rows[i].Field<string>("Producto") : "NO ASIGNADO";
+                    
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         #region Productos
-        
+
         public List<ObjetoProducto> ObtenerProducto(int IdProducto)
         {
             var Listado = new List<ObjetoProducto>();

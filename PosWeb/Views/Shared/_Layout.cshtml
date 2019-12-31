@@ -1,8 +1,8 @@
 ﻿@using  UTIL
 @{ 
-    if (SessionVariables.Session_Datos_Usuarios.Usuario == null)
+    if (SessionVariables.Session_Datos_Usuarios == null)
     {
-        Response.Redirect("SesionExpirada/Error");
+        @Url.Action("SesionExpirada","Error");
     }
 }
 

@@ -75,6 +75,15 @@ namespace PosWeb.Controllers
 
             IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
             ViewBag.ListadoReceta = ListaReceta;
+
+
+            IEnumerable<SelectListItem> ListaIngredientes = Acceso.ListaIngredientes().Select(c => new SelectListItem()
+            {
+                Text = c.Producto,
+                Value = c.IdProducto.ToString()
+            }).ToList();
+            ViewBag.Ingredientes = ListaIngredientes;
+
             return View();
         }
 
