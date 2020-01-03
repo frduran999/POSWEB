@@ -12,7 +12,7 @@ namespace PosWeb.Controllers
     public class ProductosController : Controller
     {
         Control Acceso = new Control();
-        
+
         #region Vistas
 
         [HttpGet]
@@ -20,7 +20,7 @@ namespace PosWeb.Controllers
         {
             if (SessionVariables.Session_Datos_Usuarios == null)
             {
-                RedirectToAction("SesionExpirada","Error");
+                RedirectToAction("SesionExpirada", "Error");
             }
 
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
@@ -122,7 +122,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult ObtenerFamilia(string _IdFamilia)
@@ -142,7 +142,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult EliminarFamilia(string _IdFamilia)
@@ -165,7 +165,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora, string _Receta)
@@ -200,7 +200,7 @@ namespace PosWeb.Controllers
             {
                 return Json(validador);
             }
-            
+
         }
 
         #endregion
@@ -257,7 +257,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult EliminarProducto(int _IdProducto)
@@ -315,7 +315,23 @@ namespace PosWeb.Controllers
             {
                 return Json(validador);
             }
-            
+
+        }
+
+        #endregion
+
+        #region Receta
+        [HttpPost]
+        public JsonResult CrearReceta(List<ObjetoReceta> listIngredientes, string _Receta)
+        {
+            ObjetoReceta receta = new ObjetoReceta();
+            foreach (var item in listIngredientes)
+            {
+                receta.IdReceta = item.IdReceta;
+                receta.Cantidad = item.Cantidad;
+            }
+
+            return Json(1);
         }
 
         #endregion

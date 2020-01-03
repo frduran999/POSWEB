@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using UTIL;
 
 namespace PosWeb.Controllers
 {
@@ -11,6 +12,10 @@ namespace PosWeb.Controllers
         // GET: Ventas
         public ActionResult Ventas()
         {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
             return View();
         }
         

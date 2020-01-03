@@ -17,7 +17,7 @@
         <br />
         <div>
             <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalCrearReceta">Crear Receta</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" id="McrearReceta" data-target="#modalCrearReceta">Crear Receta</button>
             </div>
         </div>
     </div>
@@ -51,7 +51,7 @@
                 <div class="modal-header">
                     <h4 class="text-primary">Crear Receta</h4>
                     <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
+                        <span aria-hidden="true" id="cerrar">×</span>
                     </button>
                 </div>
                 <div class="modal-body">
@@ -83,23 +83,24 @@
                                     <div class="col-xs-2">
                                         <button class="btn btn-info" id="agregarIngrediente">Agregar</button>
                                     </div>
-                                    <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                                        <button class="btn btn-primary" type="submit" id="CrearReceta">Grabar</button>
-                                    </div>
                                 </div>
                             </div>
                             <div class="col-lg-6 col-xs-2">
                                 <table id="tablaIngredientes" class="table-responsive-sm table-bordered dataTables-example dataTable"></table>
                             </div>
+                            <br />
+                            <div class="">    @*<div style="display:flex;align-items:flex-end;justify-content:flex-end;">*@
+                                <center><button class="btn btn-primary" type="submit" id="CrearReceta">Grabar</button></center>
+                            </div>
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                    <button type="button" id="cerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
