@@ -58,47 +58,42 @@
                     <div class="x_content">
                         <br />
                         <div class="form-horizontal form-label-left input_mask">
-                            <form class="form-horizontal form-bordered">
+                            <div class="form-horizontal form-bordered">
                                 <div class="form-group row">
                                     <label class="col-xs-2 col-form-label">Receta</label>
                                     <div class="">
                                         <input type="text" required class="form-control has-feedback-left" id="Receta" name="Receta" placeholder="Nombre Receta">
                                     </div>
-                                    <div class="col-lg-6 col-xs-2">
-                                        <table id="tablaIngredientes" class="table-responsive-sm table-bordered dataTables-example dataTable"></table>
-                                    </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal form-bordered">
-                                <div class="form-group row">
                                     <label class="col-xs-2 col-form-label">Ingredientes</label>
                                     <div class="">
                                         @Html.DropDownList("Ingredientes", (IEnumerable<SelectListItem>)ViewBag.Ingredientes, "Seleccione...", new { @class = "combobox", @ID = "Ingredientes", @Name = "Ingredientes" })
                                     </div>
                                 </div>
-                            </form>
-                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row">
+
+                                </div>
+                            </div>
+                            <div class="form-horizontal form-bordered">
                                 <div class="form-group row">
                                     <label class="col-xs-2 col-form-label">Cantidad</label>
                                     <div class="col-xs-2">
                                         <input type="text" required class="form-control" id="Cantidad" name="Cantidad">
                                     </div>
-                                </div>
-                            </form>
-                            <form class="form-horizontal form-bordered">
-                                <div class="form-group row">
                                     <label class="col-xs-2 col-form-label"></label>
                                     <div class="col-xs-2">
-                                        <center><button class="btn-xs btn btn-info" id="agregarIngrediente">Agregar</button></center>
+                                        <button class="btn btn-info" id="agregarIngrediente">Agregar</button>
+                                    </div>
+                                    <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+                                        <button class="btn btn-primary" type="submit" id="CrearReceta">Grabar</button>
                                     </div>
                                 </div>
-                            </form>
-
+                            </div>
+                            <div class="col-lg-6 col-xs-2">
+                                <table id="tablaIngredientes" class="table-responsive-sm table-bordered dataTables-example dataTable"></table>
+                            </div>
                             <div class="ln_solid"></div>
                             <div class="form-group">
-                                <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
-                                    <button class="btn btn-primary" type="submit" id="CrearReceta">Grabar</button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
