@@ -73,8 +73,9 @@ namespace PosWeb.Controllers
                 RedirectToAction("SesionExpirada", "Error");
             }
 
-            IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
-            ViewBag.ListadoReceta = ListaReceta;
+            //AQUIIII CAMBIAAAAR LISTADOOOOOO COMBOBOX
+            //IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
+            //ViewBag.ListadoReceta = ListaReceta;
 
 
             IEnumerable<SelectListItem> ListaIngredientes = Acceso.ListaIngredientes().Select(c => new SelectListItem()
@@ -325,13 +326,20 @@ namespace PosWeb.Controllers
         public JsonResult CrearReceta(List<ObjetoReceta> listIngredientes, string _Receta)
         {
             ObjetoReceta receta = new ObjetoReceta();
+            var resultado = Acceso.grabaReceta(_Receta);
+            var idDetalle = 0;
             foreach (var item in listIngredientes)
             {
-                receta.IdReceta = item.IdReceta;
+                receta.IdProducto = item.IdProducto;
                 receta.Cantidad = item.Cantidad;
+                receta.IdReceta = resultado;
+                idDetalle = Acceso.grabaDetalleReceta(receta);
             }
-
-            return Json(1);
+            if (idDetalle > 0)
+            {
+                return Json(idDetalle);
+            }
+            return Json(-1);
         }
 
         #endregion

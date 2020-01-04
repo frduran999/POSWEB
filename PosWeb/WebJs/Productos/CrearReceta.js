@@ -5,7 +5,7 @@
     document.getElementById("agregarIngrediente").onclick = function () {
         var ingredientes = $("#Ingredientes").val();
         var cantidad = $("#Cantidad").val();
-        ingredientesList.push({ IdReceta: ingredientes, Cantidad: cantidad});
+        ingredientesList.push({ IdProducto: ingredientes, Cantidad: cantidad});
 
         var html = "<tr><td>" + ingredientes + "</td><td>" + cantidad + "</td>" +
             "<td><button class='btn btn-xs btn-danger'>eliminar</button></td></tr>";//<button class='btn btn-xs btn-warning'>Modificar</button>
@@ -22,8 +22,12 @@
             data: { listIngredientes: ingredientesList, _Receta: nombreReceta },
             async: true,
             success: function (data) {
-                $("#tablaIngredientes").empty();
-                location.reload();
+                if (data > 0) {
+                    alert("Se Grabo Detalle");
+                    $("#tablaIngredientes").empty();
+                    location.reload();
+                }
+                
             }
         });
     }

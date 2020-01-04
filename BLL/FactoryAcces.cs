@@ -100,14 +100,8 @@ namespace BLL
                     validador = data.Rows[i].Field<object>("Nombre");
                     resultadoListado.Nombre = validador != null ? data.Rows[i].Field<string>("Nombre") : "NO ASIGNADO";
 
-                    validador = data.Rows[i].Field<object>("IdProducto");
-                    resultadoListado.IdProducto = validador != null ? data.Rows[i].Field<int>("IdProducto") : -1;
-
-                    validador = data.Rows[i].Field<object>("Cantidad");
-                    resultadoListado.Cantidad = validador != null ? data.Rows[i].Field<int>("Cantidad") : -1;
-
-                    validador = data.Rows[i].Field<object>("Estado");
-                    resultadoListado.Estado = validador != null ? data.Rows[i].Field<int>("Estado") : -1;
+                    validador = data.Rows[i].Field<object>("activo");
+                    resultadoListado.Estado = validador != null ? data.Rows[i].Field<int>("activo") : -1;
 
                     Listado.Add(resultadoListado);
                 }
@@ -137,6 +131,52 @@ namespace BLL
                 }
             }
             return Listado;
+        }
+
+        public int grabaReceta(string receta)
+        {
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("grabaReceta", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"nombre", receta}
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
+
+        public int grabaDetalleReceta(ObjetoReceta detalleReceta)
+        {
+
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("grabaDetalleReceta", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"idReceta", detalleReceta.IdReceta},
+                                                                                                {"cantidad", detalleReceta.Cantidad},
+                                                                                                {"idProducto", detalleReceta.IdProducto}
+                });
+
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
         }
 
         #region Productos

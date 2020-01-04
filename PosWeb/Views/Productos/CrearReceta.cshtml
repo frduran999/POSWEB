@@ -33,8 +33,6 @@
             columns:
             grid.Columns(
              grid.Column(columnName: "Nombre", header: "Nombre", format: @<text>@item.Nombre</text>),
-                 grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.IdProducto</text>),
-                grid.Column(columnName: "Cantidad", header: "Cantidad", format: @<text>@item.Cantidad</text>),
               grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modaEditarReceta" onclick="ObtenerReceta(@item.IdReceta)">
                 Editar<span class="fa fa-pencil"></span>
             </button>),

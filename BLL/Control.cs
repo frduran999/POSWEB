@@ -79,6 +79,8 @@ namespace BLL
 
         #endregion
 
+
+
         public List<ObjetoReceta> ListadoReceta()
         {
             return Acceso.ListadoReceta();
@@ -89,5 +91,14 @@ namespace BLL
             return Acceso.ListaIngredientes();
         }
 
+        public int grabaReceta(string receta)
+        {
+            return Acceso.grabaReceta(receta);
+        }
+
+        public int grabaDetalleReceta(ObjetoReceta detalleReceta)
+        {
+            return Acceso.grabaDetalleReceta(detalleReceta);
+        }
     }
 }
