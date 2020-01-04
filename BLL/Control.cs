@@ -11,7 +11,8 @@ namespace BLL
     {
         private FactoryAcces Acceso = new FactoryAcces();
 
-       public ObjetoUsuario LoginUsuario(ObjetoUsuario usuario)
+        #region Login
+        public ObjetoUsuario LoginUsuario(ObjetoUsuario usuario)
         {
             return Acceso.LoginUsuario(usuario);
         }
@@ -20,15 +21,12 @@ namespace BLL
         {
             return Acceso.MenuUsuario(Perfil);
         }
-        
+        #endregion
+
+        #region Productos
         public List<ObjetoProducto> ListadoProductos()
         {
             return Acceso.ListadoProductos();
-        }
-
-        public List<ObjetoReceta> ListadoReceta()
-        {
-            return Acceso.ListadoReceta();
         }
 
         public int AgregarProducto(ObjetoProducto producto)
@@ -50,6 +48,7 @@ namespace BLL
         {
             return Acceso.EditarProducto(producto);
         }
+        #endregion
 
         #region Familia
 
@@ -79,5 +78,27 @@ namespace BLL
         }
 
         #endregion
+
+
+
+        public List<ObjetoReceta> ListadoReceta()
+        {
+            return Acceso.ListadoReceta();
+        }
+
+        public List<ObjetoProducto> ListaIngredientes()
+        {
+            return Acceso.ListaIngredientes();
+        }
+
+        public int grabaReceta(string receta)
+        {
+            return Acceso.grabaReceta(receta);
+        }
+
+        public int grabaDetalleReceta(ObjetoReceta detalleReceta)
+        {
+            return Acceso.grabaDetalleReceta(detalleReceta);
+        }
     }
 }

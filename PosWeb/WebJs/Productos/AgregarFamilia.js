@@ -52,8 +52,11 @@
     });
 });
 
+<<<<<<< HEAD
 //prueba
 //prueba2
+=======
+>>>>>>> fco
 function ObtenerDatosFamilia(IdFamilia) {
     $("#modImpresoraundefined").empty();
     $.ajax({
@@ -100,11 +103,7 @@ function EliminarFamilia(IdFamilia) {
                 }
             }
         });
-    }, function () { alert('Prueba'); }, true);
-
-    //$("#EliminarFamilia").click(function () {
-        
-    //});
+    },function(){},true);
 }
 
 function ModificarFamilia() {
@@ -135,9 +134,6 @@ function ModificarFamilia() {
         }
     });
 }
-
-
-
 
 
 
