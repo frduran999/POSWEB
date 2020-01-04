@@ -12,7 +12,7 @@ namespace PosWeb.Controllers
     public class ProductosController : Controller
     {
         Control Acceso = new Control();
-        
+
         #region Vistas
 
         [HttpGet]
@@ -20,7 +20,7 @@ namespace PosWeb.Controllers
         {
             if (SessionVariables.Session_Datos_Usuarios == null)
             {
-                RedirectToAction("SesionExpirada","Error");
+                RedirectToAction("SesionExpirada", "Error");
             }
 
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
@@ -73,8 +73,18 @@ namespace PosWeb.Controllers
                 RedirectToAction("SesionExpirada", "Error");
             }
 
-            IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
-            ViewBag.ListadoReceta = ListaReceta;
+            //AQUIIII CAMBIAAAAR LISTADOOOOOO COMBOBOX
+            //IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
+            //ViewBag.ListadoReceta = ListaReceta;
+
+
+            IEnumerable<SelectListItem> ListaIngredientes = Acceso.ListaIngredientes().Select(c => new SelectListItem()
+            {
+                Text = c.Producto,
+                Value = c.IdProducto.ToString()
+            }).ToList();
+            ViewBag.Ingredientes = ListaIngredientes;
+
             return View();
         }
 
@@ -113,7 +123,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult ObtenerFamilia(string _IdFamilia)
@@ -133,7 +143,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult EliminarFamilia(string _IdFamilia)
@@ -156,7 +166,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora, string _Receta)
@@ -191,7 +201,7 @@ namespace PosWeb.Controllers
             {
                 return Json(validador);
             }
-            
+
         }
 
         #endregion
@@ -248,7 +258,7 @@ namespace PosWeb.Controllers
                 var validador = 0;
                 return Json(validador);
             }
-            
+
         }
 
         public JsonResult EliminarProducto(int _IdProducto)
@@ -306,7 +316,30 @@ namespace PosWeb.Controllers
             {
                 return Json(validador);
             }
-            
+
+        }
+
+        #endregion
+
+        #region Receta
+        [HttpPost]
+        public JsonResult CrearReceta(List<ObjetoReceta> listIngredientes, string _Receta)
+        {
+            ObjetoReceta receta = new ObjetoReceta();
+            var resultado = Acceso.grabaReceta(_Receta);
+            var idDetalle = 0;
+            foreach (var item in listIngredientes)
+            {
+                receta.IdProducto = item.IdProducto;
+                receta.Cantidad = item.Cantidad;
+                receta.IdReceta = resultado;
+                idDetalle = Acceso.grabaDetalleReceta(receta);
+            }
+            if (idDetalle > 0)
+            {
+                return Json(idDetalle);
+            }
+            return Json(-1);
         }
 
         #endregion

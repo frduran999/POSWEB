@@ -51,7 +51,7 @@ function ObtenerProductos(IdProducto) {
         data: { _IdProducto: IdProducto },
         async: true,
         success: function (data) {
-            if (data = 0) {
+            if (data == 0) {
                 alert("Debe Ingresar Campos Obligatorios");
             } else {
                 $.each(data, function (index, value) {
