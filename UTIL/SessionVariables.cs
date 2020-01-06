@@ -15,5 +15,11 @@ namespace UTIL
             get { return (ObjetoUsuario)HttpContext.Current.Session["VariableSesionUsuario"]; }
             set { HttpContext.Current.Session["VariableSesionUsuario"] = value; }
         }
+
+        public static ObjetoCaja Session_Datos_Caja
+        {
+            get { return (ObjetoCaja)HttpContext.Current.Session["VariablesSesionCaja"]; }
+            set { HttpContext.Current.Session["VariablesSesionCaja"] = value; }
+        }
     }
 }

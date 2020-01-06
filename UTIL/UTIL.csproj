@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objetos\ObjetoCaja.cs" />
     <Compile Include="Objetos\ObjetoImpresora.cs" />
     <Compile Include="Objetos\ObjetoMenu.cs" />
     <Compile Include="Objetos\ObjetoFamilia.cs" />

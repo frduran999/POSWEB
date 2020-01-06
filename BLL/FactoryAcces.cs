@@ -179,6 +179,81 @@ namespace BLL
             return respuesta;
         }
 
+        public List<ObjetoFamilia> grillaFamilia()
+        {
+            var Listado = new List<ObjetoFamilia>();
+            
+                var data = new Conector().EjecutarProcedimiento("grillaFamilia", new System.Collections.Hashtable() { });
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+                        var resultadoListado = new ObjetoFamilia();
+
+                        validador = data.Rows[i].Field<object>("Id");
+                        resultadoListado.IdFamilia = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                        validador = data.Rows[i].Field<object>("Familia");
+                        resultadoListado.Familia = validador != null ? data.Rows[i].Field<string>("Familia") : "NO ASIGNADO";
+
+                        Listado.Add(resultadoListado);
+                    }
+                }
+            return Listado;
+        }
+
+        public List<ObjetoProducto> grillaProductos(int idFamilia)
+        {
+            var Listado = new List<ObjetoProducto>();
+
+            var data = new Conector().EjecutarProcedimiento("grillaProductos", new System.Collections.Hashtable() {
+                {"idFamilia",idFamilia }
+            });
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoProducto();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdProducto = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Producto");
+                    resultadoListado.Producto = validador != null ? data.Rows[i].Field<string>("Producto") : "NO ASIGNADO";
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
+        public int aperturaCaja(ObjetoCaja caja)
+        {
+            int respuesta = 0;
+            try
+            {
+                var Listado = new List<ObjetoProducto>();
+                var data = new Conector().EjecutarProcedimiento("aperturaCaja", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"idUsuario", caja.IdUsuario},
+                                                                                                {"montoApertura", caja.Monto},
+                                                                                                {"glosaApertura", caja.Glosa},
+                                                                                                {"idSucursal", caja.IdSucursal}
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
+
         #region Productos
 
         public List<ObjetoProducto> ObtenerProducto(int IdProducto)
