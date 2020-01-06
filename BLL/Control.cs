@@ -100,5 +100,20 @@ namespace BLL
         {
             return Acceso.grabaDetalleReceta(detalleReceta);
         }
+
+        public int aperturaCaja(ObjetoCaja caja)
+        {
+            return Acceso.aperturaCaja(caja);
+        }
+
+        public List<ObjetoFamilia> grillaFamilia()
+        {
+            return Acceso.grillaFamilia();
+        }
+
+        public List<ObjetoProducto> grillaProductos(int idFamilia)
+        {
+            return Acceso.grillaProductos(idFamilia);
+        }
     }
 }

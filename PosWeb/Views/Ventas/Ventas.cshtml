@@ -1,12 +1,4 @@
 ﻿<!-- ================== BEGIN PAGE CSS STYLE ================== -->
-<link href="~/Content/assets/plugins/x-editable-bs4/dist/bootstrap4-editable/css/bootstrap-editable.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/address/address.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/typeaheadjs/lib/typeahead.js-bootstrap.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.min.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css" rel="stylesheet" />
-<link href="~/Content/assets/plugins/select2/dist/css/select2.min.css" rel="stylesheet" />
 <!-- ================== END PAGE CSS STYLE ================== -->
 <!-- begin page-header -->
 <h1 class="page-header">Ventas</h1>
@@ -16,6 +8,9 @@
         <div class="col-lg-12">
             <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
                 <div class="panel-heading">
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
+                </div>
+                <div class="panel-heading">
                     <h4 class="panel-title">Familias</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
@@ -24,30 +19,13 @@
                 <div class="panel-body">
                     <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
                     <div class="table-responsive form-inline">
-                        <table class="table table-profile">
-                            <tbody>
-                                <tr class="highlight">
-                                    <td>
-                                        <input type="button" value="FamiliaProducto1" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                    <td>
-                                        <input type="button" value="FamiliaProducto2" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                    <td>
-                                        <input type="button" value="FamiliaProducto3" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                    <td>
-                                        <input type="button" value="FamiliaProducto4" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <table id="tablaFamilia" class="table table-profile"></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <div class="row col-lg-12">
         <div class="col-lg-12">
             <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
@@ -60,25 +38,93 @@
                 <div class="panel-body">
                     <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
                     <div class="table-responsive form-inline">
-                        <table class="table table-profile">
-                            <tbody>
-                                <tr class="highlight">
-                                    <td>
-                                        <input type="button" value="Producto1" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                    <td>
-                                        <input type="button" value="Producto2" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                    <td>
-                                        <input type="button" value="Producto3" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                    <td>
-                                        <input type="button" value="Producto4" name="txtnomvendedor" class="form-control" id="txtnomvendedor" readonly="readonly" tabindex="-1" />
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <table id="tablaProductos" class="table table-profile"></table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="modalOpcCaja" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="text-primary">Opciones Caja</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="x_content">
+                        <br />
+                        <div class="form-horizontal form-label-left input_mask">
+                            <div class="form-horizontal form-bordered">
+                                <div class="form-group row">
+                                    <div class="col-3">
+                                        <button class="form-control has-feedback-left btn btn-primary" id="aperturaCaja">Apertura Caja</button>
+                                        @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
+                                    </div>
+                                    <div class="col-2">
+                                        <button class="form-control has-feedback-left btn btn-primary" id="retirarCaja">Retiro Caja</button>
+                                        @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
+                                    </div>
+                                    <div class="col-2">
+                                        <button class="form-control has-feedback-left btn btn-primary" id="cerrarCaja">Cierre Caja</button>
+                                        @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <form class="form-horizontal form-bordered">
+                                <div class="form-group row" style="display:none" id="modalApertura">
+                                    <div class="col-lg-12">
+                                        <center><h4 class="text-warning">Apertura</h4></center>
+                                    </div>
+                                    <label class="col-xs-2 col-form-label">Monto</label>
+                                    <div class="">
+                                        <input type="number" required class="form-control has-feedback-left" id="montoApertura" name="montoApertura" placeholder="Monto Apertura">
+                                    </div>
+                                    <div class="">
+                                        <input type="text" required class="form-control has-feedback-left" id="glosaApertura" name="glosaApertura" placeholder="Glosa">
+                                    </div>
+                                    <div class="">
+                                        <button class="form-control has-feedback-left btn btn-info" id="abrirCaja">Abrir Caja</button>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="display:none" id="modalRetiro">
+                                    <div class="col-lg-12">
+                                        <center><h4 class="text-warning">Retiro</h4></center>
+                                    </div>
+                                    <label class="col-xs-2 col-form-label">Monto</label>
+                                    <div class="">
+                                        <input type="number" required class="form-control has-feedback-left" id="montoRetiro" name="montoRetiro" placeholder="Monto Retiro">
+                                    </div>
+                                    <div class="">
+                                        <input type="text" required class="form-control has-feedback-left" id="glosaRetiro" name="glosaRetiro" placeholder="Glosa">
+                                    </div>
+                                    <div class="">
+                                        <button class="form-control has-feedback-left btn btn-info" id="retiroCaja">Retiro Caja</button>
+                                    </div>
+                                </div>
+                                <div class="form-group row" style="display:none" id="modalCierre">
+                                    <div class="col-lg-12">
+                                        <center><h4 class="text-warning">Cierre Caja</h4></center>
+                                    </div>
+                                    <label class="col-xs-2 col-form-label">Monto</label>
+                                    <div class="">
+                                        <input type="text" required class="form-control has-feedback-left" id="glosaCierre" name="glosaCierre" placeholder="Glosa">
+                                    </div>
+                                    <div class="">
+                                        <button class="form-control has-feedback-left btn btn-info" id="cierreCaja">Cerrar Caja</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div class="ln_solid"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -109,6 +155,7 @@
                                 </tr>
                             </thead>
                             <tbody id="generaTabla"></tbody>
+                            
                         </table>
                     </div>
                     
@@ -276,16 +323,7 @@
         <!-- end page container -->
         <!-- ================== BEGIN PAGE LEVEL JS ================== -->
         <script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
-        <script src="~/Content/assets/plugins/x-editable-bs4/dist/bootstrap4-editable/js/bootstrap-editable.min.js"></script>
-        <script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/address/address.js"></script>
-        <script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/typeaheadjs/lib/typeahead.js"></script>
-        <script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/typeaheadjs/typeaheadjs.js"></script>
-        <script src="~/Content/assets/plugins/x-editable-bs4/dist/inputs-ext/wysihtml5/wysihtml5.js"></script>
-        <script src="~/Content/assets/plugins/bootstrap3-wysihtml5-bower/dist/bootstrap3-wysihtml5.all.min.js"></script>
-        <script src="~/Content/assets/plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-        <script src="~/Content/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-        <script src="~/Content/assets/plugins/select2/dist/js/select2.full.min.js"></script>
         <script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
         <script src="~/Content/assets/plugins/moment/moment.js"></script>
-
+        <script src="~/WebJs/Ventas/Ventas.js"></script>
         <!-- ================== END PAGE LEVEL JS ================== -->

@@ -134,39 +134,3 @@ function ModificarFamilia() {
         }
     });
 }
-
-
-
-
-//function TablaFamilia(IdFamilia) {
-//    $.ajax({
-//        type: 'GET',
-//        url: "ConsultaContratos2",
-//        data: {
-//            _IdContrato: idContrato
-//        },
-//        success: function (data) {
-
-//            var table = $("#tbladeproductos");
-//            var html = "<thead><tr><th>Nro Servicio</th><th>Servicio</th><th>Ruta</th><th>Unidad Medida</th><th>Valor</th></thead>";
-
-//            $.each(data, function (index, value) {
-
-//                $.each(this, function (name, value) {
-//                    html += "<tr><td>" + value.IdServicio + "</td><td>" + value.Servicio + "</td><td>" + value.Ruta + "</td><td>" + value.UnidadMedida + "</td><td>" + value.Valor + "</td></tr>";
-//                });
-//            });
-
-//            table.html(html);
-
-//            $("#txtRuta").val("");
-//            $("#txtCantidad").val("");
-//            $("#txtValor").val("");
-//            $("#txtDetalle").val("");
-//            $("#UnidadMedida").val("");
-//            $("#TxtIdContrato").val(idContrato);
-//            $("#txtServicio").val("");
-
-//        }
-//    });
-//}
