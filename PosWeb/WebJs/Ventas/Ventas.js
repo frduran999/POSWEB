@@ -1,8 +1,19 @@
 ﻿$(document).ready(function () {
+    var tablaMesas = $("#tablaMesas");
+    var cont = 0;
+    for (var i = 0; i < 2; i++) {
+        var htmlMesas = "<tr id='linea" + i + "'>";
+        for (var j = 0; j < 4; j++) {
+            cont += j;
+            htmlMesas += "<td><button id='mesa" + cont + "' class='btn-lg btn btn - primary myButton' onclick='guardarMesa("+cont+")'>mesa " + cont + "</button></td>";
+        }
+        htmlMesas += "</tr>";
+        tablaMesas.append(htmlMesas);
+    }
+    
     $("#modalMesas").show();
     var tablaFamilia = $("#tablaFamilia");
-    //var htmlFamilia = "<tr>";
-    //tablaFamilia.append(htmlFamilia);
+    $("#tablaDetalle").html("");
     $.ajax({
         type: "GET",
         url: "grillaFamilia",
@@ -113,7 +124,6 @@
         });
     }
     //--- FUNCIONES CAJA ----------
-
    
 });
 
@@ -140,10 +150,45 @@ function getProductos(idFamilia) {
                     tablaProductos.append(htmlBotonesProd);
                 });
                 htmlProductos = "</tr>"
-                htmlBotonesProd.append(htmlFamilia);
+                htmlBotonesProd.append(htmlProductos);
             }
         }
     });
+}
+
+var linea = 1;
+
+function detalleVenta(idProducto) {
+    var tablaDetalle = $("#tablaDetalle");
+    var cantidad = 1;
+    $.ajax({
+        type: "POST",
+        url: "detalleVenta",
+        data: { _idProducto: idProducto },
+        async: true,
+        success: function (data) {
+            if (data == 0) {
+                alert("Error");
+            } 
+            else {
+                $.each(data.list, function (index, value) {
+                    var total = value.Precio * cantidad;
+                    var htmlGrillaDetalle = "<tr id='linea" + linea + "'><td>" + value.IdProducto + "</td>" +
+                        "<td>" + value.Producto + "</td><td>" + cantidad + "</td>" +
+                        "<td>" + value.UnidadMedida + "</td><td>" + value.Precio + "</td>" +
+                        "<td>" + total + "</td>" +
+                        "<td><button class='btn btn-xs btn-danger' onclick='eliminarFila(" + linea + ")'>Eliminar</button></td></tr>";
+                    linea++;
+                    tablaDetalle.append(htmlGrillaDetalle);
+                });
+            }
+            
+        }
+    });
+}
+
+function eliminarFila(linea) {
+    $('#linea' + linea).remove();
 }
 
 function cerrarModal() {

@@ -290,6 +290,47 @@ namespace BLL
             return resp;
         }
 
+        public List<ObjetoProducto> tablaDetalleVenta(int idProducto)
+        {
+            var Listado = new List<ObjetoProducto>();
+
+            var data = new Conector().EjecutarProcedimiento("tablaDetalleVenta", new System.Collections.Hashtable() {
+                {"idProducto",idProducto }
+            });
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoProducto();
+
+                    validador = data.Rows[i].Field<object>("Id");
+                    resultadoListado.IdProducto = validador != null ? data.Rows[i].Field<int>("Id") : -1;
+
+                    validador = data.Rows[i].Field<object>("Producto");
+                    resultadoListado.Producto = validador != null ? data.Rows[i].Field<string>("Producto") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("IdFamilia");
+                    resultadoListado.IdFamilia = validador != null ? data.Rows[i].Field<int>("IdFamilia") : -1;
+
+                    validador = data.Rows[i].Field<object>("UnidadMedida");
+                    resultadoListado.UnidadMedida = validador != null ? data.Rows[i].Field<string>("UnidadMedida") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("Estado");
+                    resultadoListado.Estado = validador != null ? data.Rows[i].Field<int>("Estado") : -1;
+
+                    validador = data.Rows[i].Field<object>("Precio");
+                    resultadoListado.Precio = validador != null ? data.Rows[i].Field<double>("Precio") : 0;
+
+                    validador = data.Rows[i].Field<object>("IdReceta");
+                    resultadoListado.IdReceta = validador != null ? data.Rows[i].Field<int>("IdReceta") : -1;
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         #region Productos
 
         public List<ObjetoProducto> ObtenerProducto(int IdProducto)

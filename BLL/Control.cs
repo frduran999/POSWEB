@@ -116,6 +116,12 @@ namespace BLL
             return Acceso.grillaProductos(idFamilia);
         }
 
+        public List<ObjetoProducto> tablaDetalleVenta(int idProducto)
+        {
+            return Acceso.tablaDetalleVenta(idProducto);
+        }
+
+
         public RespuestaModel eliminarReceta(ObjetoReceta receta)
         {
             return Acceso.eliminarReceta(receta);

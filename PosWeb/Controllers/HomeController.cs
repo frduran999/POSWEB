@@ -11,7 +11,7 @@ namespace PosWeb.Controllers
     {
         public ActionResult Index()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
+            if (SessionVariables.Session_Datos_Usuarios.Perfil == 0)
             {
                 RedirectToAction("SesionExpirada", "Error");
             }
