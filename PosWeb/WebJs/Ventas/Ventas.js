@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     var tablaFamilia = $("#tablaFamilia");
-    var htmlFamilia = "<tr>";
-    tablaFamilia.append(htmlFamilia);
+    //var htmlFamilia = "<tr>";
+    //tablaFamilia.append(htmlFamilia);
     $.ajax({
         type: "GET",
         url: "grillaFamilia",
@@ -13,13 +13,13 @@
                 $("#tablaFamilia").html("");
                 $.each(data.list, function (index, value) {
                     var familia = value.Familia.replace(" ","");
-                    var htmlBotones = "<td>" +
+                    var htmlBotones = "<tr><td>" +
                         "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary' onclick='getProductos("+value.IdFamilia+")'" +
-                        "id='"+familia+"' > " + value.Familia + "</button ></td >";
+                        "id='"+familia+"' > " + value.Familia + "</button ></td ></tr>";
                     tablaFamilia.append(htmlBotones);
                 });
-                htmlFamilia = "</tr>"
-                tablaFamilia.append(htmlFamilia);
+                //htmlFamilia = "</tr>"
+                //tablaFamilia.append(htmlFamilia);
             }
         }
     });

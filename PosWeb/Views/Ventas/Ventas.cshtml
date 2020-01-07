@@ -4,163 +4,173 @@
 <h1 class="page-header">Ventas</h1>
 <!-- end page-header -->
 <!-- begin row -->
-    <div class="row col-lg-12">
-        <div class="col-lg-12">
-            <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
-                <div class="panel-heading">
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
-                </div>
-                <div class="panel-heading">
-                    <h4 class="panel-title">Familias</h4>
-                    <div class="panel-heading-btn">
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
-                    <div class="table-responsive form-inline">
-                        <table id="tablaFamilia" class="table table-profile"></table>
-                    </div>
+
+
+<div class="row col-lg-12">
+    <div class="col-1">
+        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button><br /><br />
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button><br /><br />
+        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button><br /><br />
+        <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button><br /><br />
+        <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button><br /><br />
+    </div>
+    <div class="col-5">
+        <div class="panel-heading">
+            <h4 class="panel-title" style="background-color:white">Productos ingresados</h4>
+            <div class="panel-heading-btn">
+                <div class="table-responsive table-bordered">
+                    <table id="table" class="table" style="background-color:white">
+                        <thead>
+                            <tr>
+                                <th nowrap="" class="codigoTh">C&oacute;digo</th>
+                                <th nowrap="" class="descripcionTh">Descripci&oacute;n</th>
+                                <th nowrap="" class="cantidadTh">Cantidad</th>
+                                <th nowrap="" class="unimedTh">Unidad Medida </th>
+                                <th nowrap="" classnowrap="" class="precioTh">Precio</th>
+                                <th nowrap="" class="subTotalTh">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="generaTabla"></tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row col-lg-12">
+    <div class="col-2">
+        <div class="panel panel-inverse" data-sortable-id="">
+            <div class="panel-heading">
+                <h4 class="panel-title">Familias</h4>
+                <div class="panel-heading-btn">
+                    <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                </div>
+            </div>
+            <div class="panel-body col-12">
+                <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
+                <div class="table-responsive">
+                    <table id="tablaFamilia" class="table table-profile">
+                        <tr></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
         <div class="col-lg-12">
-            <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
+            <div class="panel panel-inverse">
                 <div class="panel-heading">
                     <h4 class="panel-title">Productos</h4>
                     <div class="panel-heading-btn">
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+                        @*<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>*@
                     </div>
                 </div>
                 <div class="panel-body">
                     <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
-                    <div class="table-responsive form-inline">
+                    <div class="table-responsive">
                         <table id="tablaProductos" class="table table-profile"></table>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <div id="modalOpcCaja" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="text-primary">Opciones Caja</h4>
-                    <button type="button" class="close" data-dismiss="modal">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="x_content">
-                        <br />
-                        <div class="form-horizontal form-label-left input_mask">
-                            <div class="form-horizontal form-bordered">
-                                <div class="form-group row">
-                                    <div class="col-3">
-                                        <button class="form-control has-feedback-left btn btn-primary" id="aperturaCaja">Apertura Caja</button>
-                                        @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
-                                    </div>
-                                    <div class="col-2">
-                                        <button class="form-control has-feedback-left btn btn-primary" id="retirarCaja">Retiro Caja</button>
-                                        @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
-                                    </div>
-                                    <div class="col-2">
-                                        <button class="form-control has-feedback-left btn btn-primary" id="cerrarCaja">Cierre Caja</button>
-                                        @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
-                                    </div>
+
+
+<div id="modalOpcCaja" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-primary">Opciones Caja</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="x_content">
+                    <br />
+                    <div class="form-horizontal form-label-left input_mask">
+                        <div class="form-horizontal form-bordered">
+                            <div class="form-group row">
+                                <div class="col-3">
+                                    <button class="form-control has-feedback-left btn btn-primary" id="aperturaCaja">Apertura Caja</button>
+                                    @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
+                                </div>
+                                <div class="col-2">
+                                    <button class="form-control has-feedback-left btn btn-primary" id="retirarCaja">Retiro Caja</button>
+                                    @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
+                                </div>
+                                <div class="col-2">
+                                    <button class="form-control has-feedback-left btn btn-primary" id="cerrarCaja">Cierre Caja</button>
+                                    @*<input type="text" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Familia">*@
                                 </div>
                             </div>
-                            <hr />
-                            <form class="form-horizontal form-bordered">
-                                <div class="form-group row" style="display:none" id="modalApertura">
-                                    <div class="col-lg-12">
-                                        <center><h4 class="text-warning">Apertura</h4></center>
-                                    </div>
-                                    <label class="col-xs-2 col-form-label">Monto</label>
-                                    <div class="">
-                                        <input type="number" required class="form-control has-feedback-left" id="montoApertura" name="montoApertura" placeholder="Monto Apertura">
-                                    </div>
-                                    <div class="">
-                                        <input type="text" required class="form-control has-feedback-left" id="glosaApertura" name="glosaApertura" placeholder="Glosa">
-                                    </div>
-                                    <div class="">
-                                        <button class="form-control has-feedback-left btn btn-info" id="abrirCaja">Abrir Caja</button>
-                                    </div>
-                                </div>
-                                <div class="form-group row" style="display:none" id="modalRetiro">
-                                    <div class="col-lg-12">
-                                        <center><h4 class="text-warning">Retiro</h4></center>
-                                    </div>
-                                    <label class="col-xs-2 col-form-label">Monto</label>
-                                    <div class="">
-                                        <input type="number" required class="form-control has-feedback-left" id="montoRetiro" name="montoRetiro" placeholder="Monto Retiro">
-                                    </div>
-                                    <div class="">
-                                        <input type="text" required class="form-control has-feedback-left" id="glosaRetiro" name="glosaRetiro" placeholder="Glosa">
-                                    </div>
-                                    <div class="">
-                                        <button class="form-control has-feedback-left btn btn-info" id="retiroCaja">Retiro Caja</button>
-                                    </div>
-                                </div>
-                                <div class="form-group row" style="display:none" id="modalCierre">
-                                    <div class="col-lg-12">
-                                        <center><h4 class="text-warning">Cierre Caja</h4></center>
-                                    </div>
-                                    <label class="col-xs-2 col-form-label">Monto</label>
-                                    <div class="">
-                                        <input type="text" required class="form-control has-feedback-left" id="glosaCierre" name="glosaCierre" placeholder="Glosa">
-                                    </div>
-                                    <div class="">
-                                        <button class="form-control has-feedback-left btn btn-info" id="cierreCaja">Cerrar Caja</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <div class="ln_solid"></div>
                         </div>
+                        <hr />
+                        <form class="form-horizontal form-bordered">
+                            <div class="form-group row" style="display:none" id="modalApertura">
+                                <div class="col-lg-12">
+                                    <center><h4 class="text-warning">Apertura</h4></center>
+                                </div>
+                                <label class="col-xs-2 col-form-label">Monto</label>
+                                <div class="">
+                                    <input type="number" required class="form-control has-feedback-left" id="montoApertura" name="montoApertura" placeholder="Monto Apertura">
+                                </div>
+                                <div class="">
+                                    <input type="text" required class="form-control has-feedback-left" id="glosaApertura" name="glosaApertura" placeholder="Glosa">
+                                </div>
+                                <div class="">
+                                    <button class="form-control has-feedback-left btn btn-info" id="abrirCaja">Abrir Caja</button>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:none" id="modalRetiro">
+                                <div class="col-lg-12">
+                                    <center><h4 class="text-warning">Retiro</h4></center>
+                                </div>
+                                <label class="col-xs-2 col-form-label">Monto</label>
+                                <div class="">
+                                    <input type="number" required class="form-control has-feedback-left" id="montoRetiro" name="montoRetiro" placeholder="Monto Retiro">
+                                </div>
+                                <div class="">
+                                    <input type="text" required class="form-control has-feedback-left" id="glosaRetiro" name="glosaRetiro" placeholder="Glosa">
+                                </div>
+                                <div class="">
+                                    <button class="form-control has-feedback-left btn btn-info" id="retiroCaja">Retiro Caja</button>
+                                </div>
+                            </div>
+                            <div class="form-group row" style="display:none" id="modalCierre">
+                                <div class="col-lg-12">
+                                    <center><h4 class="text-warning">Cierre Caja</h4></center>
+                                </div>
+                                <label class="col-xs-2 col-form-label">Monto</label>
+                                <div class="">
+                                    <input type="text" required class="form-control has-feedback-left" id="glosaCierre" name="glosaCierre" placeholder="Glosa">
+                                </div>
+                                <div class="">
+                                    <button class="form-control has-feedback-left btn btn-info" id="cierreCaja">Cerrar Caja</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ln_solid"></div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row col-lg-12">
+@*<div class="row col-lg-12">
         <div class="">
             <div class="panel panel-inverse" data-sortable-id="ui-widget-3">
                 <div class="panel-heading">
-                    <h4 class="panel-title">Productos ingresados</h4>
-                    <div class="panel-heading-btn">
-
-                    </div>
+                    <h4 class="panel-title">Totales</h4>
                 </div>
                 <div class="panel-body">
-                    <!-- begin table-responsive -->
                     <div class="table-responsive">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th nowrap="" class="codigoTh">C&oacute;digo</th>
-                                    <th nowrap="" class="descripcionTh">Descripci&oacute;n</th>
-                                    <th nowrap="" class="cantidadTh">Cantidad</th>
-                                    <th nowrap="" class="unimedTh">Unidad Medida </th>
-                                    <th nowrap="" classnowrap="" class="precioTh">Precio</th>
-                                    <th nowrap="" class="subTotalTh">Total</th>
-                                    <th nowrap="" class="accionesTh">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody id="generaTabla"></tbody>
-                            
-                        </table>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table id="user" class="table table-condensed table-bordered col-md-2 float-right" style="margin-right:90px;"> 
+                        <table id="user" class="table table-condensed table-bordered col-md-2 float-right" style="margin-right:90px;">
                             <tbody>
                                 <tr>
                                     <td class="tg-0lax">
@@ -198,132 +208,132 @@
                 <!-- end panel-body -->
             </div>
         </div>
-        </div>
-        
-        <div id="divAlertaOkGeneracionNV" style="display: none" class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Nota de Venta Generada</h4>
-            <p>Nota de venta a sido generada con exito <label id="divAlertaOkGeneracionNVPendiente">(enviado a aprobacion)</label></p>
-            @*<div id="divAlertaOkGeneracionNVSoftland">
-                <p>N° Nota de venta (Softland): <label id="divAlertaOkGeneracionNVIdSoftland"></label></p>
-            </div>*@
-            <div id="divAlertaOkGeneracionNVInterno">
-                <p>N° Nota de venta (Interno): <label id="divAlertaOkGeneracionNVIdInterno"></label></p>
+    </div>*@
+
+<div id="divAlertaOkGeneracionNV" style="display: none" class="alert alert-success" role="alert">
+    <h4 class="alert-heading">Nota de Venta Generada</h4>
+    <p>Nota de venta a sido generada con exito <label id="divAlertaOkGeneracionNVPendiente">(enviado a aprobacion)</label></p>
+    @*<div id="divAlertaOkGeneracionNVSoftland">
+            <p>N° Nota de venta (Softland): <label id="divAlertaOkGeneracionNVIdSoftland"></label></p>
+        </div>*@
+    <div id="divAlertaOkGeneracionNVInterno">
+        <p>N° Nota de venta (Interno): <label id="divAlertaOkGeneracionNVIdInterno"></label></p>
+    </div>
+    <hr>
+    <p class="mb-0">Para volver a generar una nueva nota de venta, presione <a href="javascript:location.reload()">aqui</a>.</p>
+</div>
+<a id="aModalTallaColor" style="display: none" href="#modalTallaColor" class="btn btn-sm btn-success" data-toggle="modal">Talla Color</a>
+<div class="modal fade" id="modalTallaColor">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese Talla y Color</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
             </div>
-            <hr>
-            <p class="mb-0">Para volver a generar una nueva nota de venta, presione <a href="javascript:location.reload()">aqui</a>.</p>
-        </div>
-        <a id="aModalTallaColor" style="display: none" href="#modalTallaColor" class="btn btn-sm btn-success" data-toggle="modal">Talla Color</a>
-        <div class="modal fade" id="modalTallaColor">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese Talla y Color</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-lg-3">Bodegas</div>
+                    <div class="col-lg-9">
+                        <select id="modalTallaColorBodegas" class="form-control" style="display: none"></select>
                     </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-3">Bodegas</div>
-                            <div class="col-lg-9">
-                                <select id="modalTallaColorBodegas" class="form-control" style="display: none"></select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div id="modalTallaColorControles"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="modalTallaColorAgregarTallaColor" href="javascript:;" class="btn btn-success">Agregar Talla y Color</a>
-                        <a id="modalTallaColorCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div id="modalTallaColorControles"></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <a id="aModalDescuentos" style="display: none" href="#modalDescuentos" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
-        <div class="modal fade" id="modalDescuentos">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese descuentos</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modalDescuentosControles"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="modalDescuentosAgregarDescuentos" href="javascript:;" class="btn btn-success">Agregar Descuentos</a>
-                        <a id="modalDescuentosCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
-                </div>
+            <div class="modal-footer">
+                <a id="modalTallaColorAgregarTallaColor" href="javascript:;" class="btn btn-success">Agregar Talla y Color</a>
+                <a id="modalTallaColorCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
             </div>
         </div>
-        <a id="aModalDescuentosRealizados" style="display: none" href="#modalDescuentosRealizados" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
-        <div class="modal fade" id="modalDescuentosRealizados">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese descuentos</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modalDescuentosRealizadosControles"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
-                </div>
+    </div>
+</div>
+<a id="aModalDescuentos" style="display: none" href="#modalDescuentos" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
+<div class="modal fade" id="modalDescuentos">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese descuentos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalDescuentosControles"></div>
+            </div>
+            <div class="modal-footer">
+                <a id="modalDescuentosAgregarDescuentos" href="javascript:;" class="btn btn-success">Agregar Descuentos</a>
+                <a id="modalDescuentosCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
             </div>
         </div>
-        <a id="aModalAgregarDireccionDespacho" style="display: none" href="#modalAgregarDireccionDespacho" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
-        <div class="modal fade" id="modalAgregarDireccionDespacho">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese Direccion Despacho</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="table-responsive form-inline">
-                            <table class="table table-profile">
-                                <tbody>
-                                    <tr class="highlight">
-                                        <td>Codigo Cliente</td>
-                                        <td><label id="modalAgregarDireccionDespachoCodigoCliente">asdasd</label></td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td>Direccion</td>
-                                        <td>
-                                            <input type="text" id="modalAgregarDireccionDespachoDireccion" class="form-control" />
-                                        </td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td>Ciudad</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td>Comuna</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td colspan="2"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="modalAgregarDireccionDespachoAgregar" href="javascript:;" class="btn btn-success">Agregar Direccion Despacho</a>
-                        <a id="modalAgregarDireccionDespachoCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
-                </div>
+    </div>
+</div>
+<a id="aModalDescuentosRealizados" style="display: none" href="#modalDescuentosRealizados" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
+<div class="modal fade" id="modalDescuentosRealizados">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese descuentos</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div id="modalDescuentosRealizadosControles"></div>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
             </div>
         </div>
-        <!-- end row -->
-        <!-- end page container -->
-        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-        <script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
-        <script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
-        <script src="~/Content/assets/plugins/moment/moment.js"></script>
-        <script src="~/WebJs/Ventas/Ventas.js"></script>
-        <!-- ================== END PAGE LEVEL JS ================== -->
+    </div>
+</div>
+<a id="aModalAgregarDireccionDespacho" style="display: none" href="#modalAgregarDireccionDespacho" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
+<div class="modal fade" id="modalAgregarDireccionDespacho">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Ingrese Direccion Despacho</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive form-inline">
+                    <table class="table table-profile">
+                        <tbody>
+                            <tr class="highlight">
+                                <td>Codigo Cliente</td>
+                                <td><label id="modalAgregarDireccionDespachoCodigoCliente">asdasd</label></td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Direccion</td>
+                                <td>
+                                    <input type="text" id="modalAgregarDireccionDespachoDireccion" class="form-control" />
+                                </td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Ciudad</td>
+                                <td></td>
+                            </tr>
+                            <tr class="highlight">
+                                <td>Comuna</td>
+                                <td></td>
+                            </tr>
+                            <tr class="highlight">
+                                <td colspan="2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a id="modalAgregarDireccionDespachoAgregar" href="javascript:;" class="btn btn-success">Agregar Direccion Despacho</a>
+                <a id="modalAgregarDireccionDespachoCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- end row -->
+<!-- end page container -->
+<!-- ================== BEGIN PAGE LEVEL JS ================== -->
+<script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
+<script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
+<script src="~/Content/assets/plugins/moment/moment.js"></script>
+<script src="~/WebJs/Ventas/Ventas.js"></script>
+<!-- ================== END PAGE LEVEL JS ================== -->
