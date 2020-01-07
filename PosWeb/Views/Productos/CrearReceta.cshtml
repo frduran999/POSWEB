@@ -33,12 +33,12 @@
             columns:
             grid.Columns(
              grid.Column(columnName: "Nombre", header: "Nombre", format: @<text>@item.Nombre</text>),
-              grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modaEditarReceta" onclick="ObtenerReceta(@item.IdReceta)">
+              grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modaEditarReceta" onclick="obtenerReceta(@item.IdReceta)">
                 Editar<span class="fa fa-pencil"></span>
             </button>),
-             grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 0 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 0 ? "Deshabilitar":"Habilitar")"
-                                                                                      onclick="EliminarFamilia(@item.IdReceta,@item.Estado, @Html.Raw(item.Estado == 0 ? "false":"true"))">
-                @Html.Raw(item.Estado == 0 ? "Deshabilitar" : "Habilitar")<span class="fa fa-trash"></span>
+             grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-@Html.Raw(item.Estado == 1 ? "danger":"success")" type="button" tooltip="@Html.Raw(item.Estado == 0 ? "Deshabilitar":"Habilitar")"
+                                                                                      onclick="eliminarReceta(@item.IdReceta,@item.Estado, @Html.Raw(item.Estado == 0 ? "false":"true"))">
+                @Html.Raw(item.Estado == 1 ? "Deshabilitar" : "Habilitar")<span class="fa fa-trash"></span>
             </button>)))
         </div>
     </div>
