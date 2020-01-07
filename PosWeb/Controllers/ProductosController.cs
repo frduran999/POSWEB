@@ -73,10 +73,8 @@ namespace PosWeb.Controllers
                 RedirectToAction("SesionExpirada", "Error");
             }
 
-            //AQUIIII CAMBIAAAAR LISTADOOOOOO COMBOBOX
-            //IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
-            //ViewBag.ListadoReceta = ListaReceta;
-
+            IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
+            ViewBag.ListadoReceta = ListaReceta;
 
             IEnumerable<SelectListItem> ListaIngredientes = Acceso.ListaIngredientes().Select(c => new SelectListItem()
             {
@@ -340,6 +338,28 @@ namespace PosWeb.Controllers
                 return Json(idDetalle);
             }
             return Json(-1);
+        }
+
+        public JsonResult eliminarReceta(int _idReceta)
+        {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+
+            ObjetoReceta receta = new ObjetoReceta();
+            if (_idReceta != 0)
+            {
+                receta.IdReceta = _idReceta;
+                RespuestaModel result = Acceso.eliminarReceta(receta);
+
+                return (Json(result));
+            }
+            else
+            {
+                var validador = 0;
+                return Json(validador);
+            }
         }
 
         #endregion

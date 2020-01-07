@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    $("#modalMesas").show();
     var tablaFamilia = $("#tablaFamilia");
     //var htmlFamilia = "<tr>";
     //tablaFamilia.append(htmlFamilia);
@@ -14,7 +15,7 @@
                 $.each(data.list, function (index, value) {
                     var familia = value.Familia.replace(" ","");
                     var htmlBotones = "<tr><td>" +
-                        "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary' onclick='getProductos("+value.IdFamilia+")'" +
+                        "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary btn-xs' onclick='getProductos("+value.IdFamilia+")'" +
                         "id='"+familia+"' > " + value.Familia + "</button ></td ></tr>";
                     tablaFamilia.append(htmlBotones);
                 });
@@ -112,6 +113,8 @@
         });
     }
     //--- FUNCIONES CAJA ----------
+
+   
 });
 
 function getProductos(idFamilia) {
@@ -141,4 +144,8 @@ function getProductos(idFamilia) {
             }
         }
     });
+}
+
+function cerrarModal() {
+    $("#modalMesas").hide();
 }

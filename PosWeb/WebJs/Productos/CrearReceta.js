@@ -48,9 +48,55 @@
     }
 });
 var ingredientesList = [];
-    
 
+function eliminarReceta(idReceta) {
+    abrirConfirmacion('Eliminar', '¿Desea Eliminar Receta?', function () {
+        $.ajax({
+            type: 'POST',
+            url: 'eliminarReceta',
+            data: {
+                _idReceta: idReceta,
+            },
+            success: function (data) {
+                if (data == 0) {
+                    return;
+                }
+                if (data.Verificador) {
+                    location.reload();
+                }
+                else {
+                    alert("Usuario No Encontrado");
+                }
+            }
 
+        });
+    }, function () { }, true);
+}    
+
+function obtenerReceta(idReceta) {
+    $.ajax({
+        type: "GET",
+        url: "obtenerReceta",
+        data: { _idReceta: idReceta },
+        async: true,
+        success: function (data) {
+            if (data == 0) {
+                alert("Error");
+            } else {
+                $.each(data, function (index, value) {
+                    $.each(this, function (name, value) {
+                        $("#modFamilia").val(value.Familia);
+                        document.getElementById("modImpresoraundefined").value = value.Impresora;
+                        $("#IdFamilia").val(value.IdFamilia);
+                        if (value.Receta > 0) {
+                            document.getElementById("modTipoProd").checked = 1;
+                        }
+                    });
+                });
+            }
+        }
+    });
+}
 
 
 //var nuevaFila = document.createElement("TR");
