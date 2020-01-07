@@ -115,5 +115,10 @@ namespace BLL
         {
             return Acceso.grillaProductos(idFamilia);
         }
+
+        public RespuestaModel eliminarReceta(ObjetoReceta receta)
+        {
+            return Acceso.eliminarReceta(receta);
+        }
     }
 }

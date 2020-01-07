@@ -1,45 +1,130 @@
-﻿<!-- ================== BEGIN PAGE CSS STYLE ================== -->
+﻿<style>
+    .myButton {
+        background-color: #ffec64;
+        border-radius: 35px;
+        border: 2px solid #ffaa22;
+        display: inline-block;
+        cursor: pointer;
+        color: #333333;
+        font-family: Arial;
+        font-size: 28px;
+        padding: 32px 31px;
+        text-decoration: none;
+        text-shadow: 0px 1px 0px #ffee66;
+    }
+
+        .myButton:hover {
+            background-color: #ffab23;
+        }
+
+        .myButton:active {
+            position: relative;
+            top: 1px;
+        }
+</style>
+<!-- ================== BEGIN PAGE CSS STYLE ================== -->
 <!-- ================== END PAGE CSS STYLE ================== -->
 <!-- begin page-header -->
 <h1 class="page-header">Ventas</h1>
 <!-- end page-header -->
 <!-- begin row -->
+<div class="row col-lg-12">
+    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
+    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalMesas" id="">Mesas</button>
+    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button>
+    <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button>
+    <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button>
+</div>
+<br />
     <div class="row col-lg-12">
-        <div class="col-lg-12">
-            <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
-                <div class="panel-heading">
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
+        <div class="col-6">
+            <div class="panel-heading">
+                <h4 class="panel-title" style="background-color:white">Productos ingresados</h4>
+                <div class="panel-heading-btn">
+                    <div class="table-responsive table-bordered">
+                        <table id="table" class="table" style="background-color:white">
+                            <thead>
+                                <tr>
+                                    <th nowrap="" class="codigoTh">C&oacute;digo</th>
+                                    <th nowrap="" class="descripcionTh">Descripci&oacute;n</th>
+                                    <th nowrap="" class="cantidadTh">Cantidad</th>
+                                    <th nowrap="" class="unimedTh">Unidad Medida </th>
+                                    <th nowrap="" classnowrap="" class="precioTh">Precio</th>
+                                    <th nowrap="" class="subTotalTh">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="generaTabla"></tbody>
+                        </table>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="panel panel-inverse" data-sortable-id="">
                 <div class="panel-heading">
                     <h4 class="panel-title">Familias</h4>
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                     </div>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body col-12">
                     <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
-                    <div class="table-responsive form-inline">
-                        <table id="tablaFamilia" class="table table-profile"></table>
+                    <div class="table-responsive">
+                        <table id="tablaFamilia" class="table table-profile">
+                            <tr></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="col-lg-12">
+                <div class="panel panel-inverse">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">Productos</h4>
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-icon btn-circle btn-success btn-scroll-to-top fade" data-click="scroll-top"><i class="fa fa-angle-up"></i></a>
+                            @*<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>*@
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
+                        <div class="table-responsive">
+                            <table id="tablaProductos" class="table table-profile"></table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row col-lg-12">
-        <div class="col-lg-12">
-            <div class="panel panel-inverse" data-sortable-id="ui-widget-1">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Productos</h4>
-                    <div class="panel-heading-btn">
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                    </div>
+    <div class="modal" id="modalMesas" style="display:none">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Mesas</h4>
+                    <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-hidden="true">×</button>
                 </div>
-                <div class="panel-body">
-                    <input type="hidden" id="filtrarBusqueda" name="filtrarBusqueda" value="40">
-                    <div class="table-responsive form-inline">
-                        <table id="tablaProductos" class="table table-profile"></table>
-                    </div>
+                <div class="modal-body">
+                    <table>
+                        <tr>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                        </tr>
+                        <tr>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal" onclick="cerrarModal()">Cerrar</button>
                 </div>
             </div>
         </div>
@@ -130,200 +215,130 @@
         </div>
     </div>
 
-    <div class="row col-lg-12">
-        <div class="">
-            <div class="panel panel-inverse" data-sortable-id="ui-widget-3">
-                <div class="panel-heading">
-                    <h4 class="panel-title">Productos ingresados</h4>
-                    <div class="panel-heading-btn">
-
+    <div id="divAlertaOkGeneracionNV" style="display: none" class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Nota de Venta Generada</h4>
+        <p>Nota de venta a sido generada con exito <label id="divAlertaOkGeneracionNVPendiente">(enviado a aprobacion)</label></p>
+        @*<div id="divAlertaOkGeneracionNVSoftland">
+                <p>N° Nota de venta (Softland): <label id="divAlertaOkGeneracionNVIdSoftland"></label></p>
+            </div>*@
+        <div id="divAlertaOkGeneracionNVInterno">
+            <p>N° Nota de venta (Interno): <label id="divAlertaOkGeneracionNVIdInterno"></label></p>
+        </div>
+        <hr>
+        <p class="mb-0">Para volver a generar una nueva nota de venta, presione <a href="javascript:location.reload()">aqui</a>.</p>
+    </div>
+    <a id="aModalTallaColor" style="display: none" href="#modalTallaColor" class="btn btn-sm btn-success" data-toggle="modal">Talla Color</a>
+    <div class="modal fade" id="modalTallaColor">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingrese Talla y Color</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-3">Bodegas</div>
+                        <div class="col-lg-9">
+                            <select id="modalTallaColorBodegas" class="form-control" style="display: none"></select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div id="modalTallaColorControles"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="panel-body">
-                    <!-- begin table-responsive -->
-                    <div class="table-responsive">
-                        <table id="table" class="table">
-                            <thead>
-                                <tr>
-                                    <th nowrap="" class="codigoTh">C&oacute;digo</th>
-                                    <th nowrap="" class="descripcionTh">Descripci&oacute;n</th>
-                                    <th nowrap="" class="cantidadTh">Cantidad</th>
-                                    <th nowrap="" class="unimedTh">Unidad Medida </th>
-                                    <th nowrap="" classnowrap="" class="precioTh">Precio</th>
-                                    <th nowrap="" class="subTotalTh">Total</th>
-                                    <th nowrap="" class="accionesTh">&nbsp;</th>
-                                </tr>
-                            </thead>
-                            <tbody id="generaTabla"></tbody>
-                            
-                        </table>
-                    </div>
-                    
-                    <div class="table-responsive">
-                        <table id="user" class="table table-condensed table-bordered col-md-2 float-right" style="margin-right:90px;"> 
+                <div class="modal-footer">
+                    <a id="modalTallaColorAgregarTallaColor" href="javascript:;" class="btn btn-success">Agregar Talla y Color</a>
+                    <a id="modalTallaColorCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="aModalDescuentos" style="display: none" href="#modalDescuentos" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
+    <div class="modal fade" id="modalDescuentos">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingrese descuentos</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalDescuentosControles"></div>
+                </div>
+                <div class="modal-footer">
+                    <a id="modalDescuentosAgregarDescuentos" href="javascript:;" class="btn btn-success">Agregar Descuentos</a>
+                    <a id="modalDescuentosCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="aModalDescuentosRealizados" style="display: none" href="#modalDescuentosRealizados" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
+    <div class="modal fade" id="modalDescuentosRealizados">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingrese descuentos</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div id="modalDescuentosRealizadosControles"></div>
+                </div>
+                <div class="modal-footer">
+                    <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <a id="aModalAgregarDireccionDespacho" style="display: none" href="#modalAgregarDireccionDespacho" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
+    <div class="modal fade" id="modalAgregarDireccionDespacho">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ingrese Direccion Despacho</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive form-inline">
+                        <table class="table table-profile">
                             <tbody>
-                                <tr>
-                                    <td class="tg-0lax">
-                                        <input type="hidden" id="contador_registros" name="contador_registros">
-                                        <b><span> Sub-Total Neto</span></b>
-                                    </td>
-                                    <td style="text-align: right" class="tg-0lax">
-                                        <h4><label id="lbtotal">0</label></h4>
-                                        <input type="hidden" id="txttotal" name="txttotal">
+                                <tr class="highlight">
+                                    <td>Codigo Cliente</td>
+                                    <td><label id="modalAgregarDireccionDespachoCodigoCliente">asdasd</label></td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td>Direccion</td>
+                                    <td>
+                                        <input type="text" id="modalAgregarDireccionDespachoDireccion" class="form-control" />
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td class="tg-0lax">
-                                        <b><span> Impuesto</span></b>
-                                    </td>
-                                    <td style="text-align: right" class="tg-0lax">
-                                        <h4><label id="lbimpuesto">0</label></h4>
-                                        <input type="hidden" id="txtimpuesto" name="txtimpuesto">
-                                    </td>
+                                <tr class="highlight">
+                                    <td>Ciudad</td>
+                                    <td></td>
                                 </tr>
-                                <tr>
-                                    <td class="tg-0lax">
-                                        <b><span> Total Final</span></b>
-                                    </td>
-                                    <td style="text-align: right" class="tg-0lax">
-                                        <h4><label id="lbtotalfinal">0</label></h4>
-                                        <input type="hidden" id="txttotalfinal" name="txttotalfinal">
-                                    </td>
+                                <tr class="highlight">
+                                    <td>Comuna</td>
+                                    <td></td>
+                                </tr>
+                                <tr class="highlight">
+                                    <td colspan="2"></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <!-- end table-responsive -->
                 </div>
-                <!-- end panel-body -->
-            </div>
-        </div>
-        </div>
-        
-        <div id="divAlertaOkGeneracionNV" style="display: none" class="alert alert-success" role="alert">
-            <h4 class="alert-heading">Nota de Venta Generada</h4>
-            <p>Nota de venta a sido generada con exito <label id="divAlertaOkGeneracionNVPendiente">(enviado a aprobacion)</label></p>
-            @*<div id="divAlertaOkGeneracionNVSoftland">
-                <p>N° Nota de venta (Softland): <label id="divAlertaOkGeneracionNVIdSoftland"></label></p>
-            </div>*@
-            <div id="divAlertaOkGeneracionNVInterno">
-                <p>N° Nota de venta (Interno): <label id="divAlertaOkGeneracionNVIdInterno"></label></p>
-            </div>
-            <hr>
-            <p class="mb-0">Para volver a generar una nueva nota de venta, presione <a href="javascript:location.reload()">aqui</a>.</p>
-        </div>
-        <a id="aModalTallaColor" style="display: none" href="#modalTallaColor" class="btn btn-sm btn-success" data-toggle="modal">Talla Color</a>
-        <div class="modal fade" id="modalTallaColor">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese Talla y Color</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-lg-3">Bodegas</div>
-                            <div class="col-lg-9">
-                                <select id="modalTallaColorBodegas" class="form-control" style="display: none"></select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div id="modalTallaColorControles"></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="modalTallaColorAgregarTallaColor" href="javascript:;" class="btn btn-success">Agregar Talla y Color</a>
-                        <a id="modalTallaColorCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
+                <div class="modal-footer">
+                    <a id="modalAgregarDireccionDespachoAgregar" href="javascript:;" class="btn btn-success">Agregar Direccion Despacho</a>
+                    <a id="modalAgregarDireccionDespachoCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
                 </div>
             </div>
         </div>
-        <a id="aModalDescuentos" style="display: none" href="#modalDescuentos" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
-        <div class="modal fade" id="modalDescuentos">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese descuentos</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modalDescuentosControles"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="modalDescuentosAgregarDescuentos" href="javascript:;" class="btn btn-success">Agregar Descuentos</a>
-                        <a id="modalDescuentosCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a id="aModalDescuentosRealizados" style="display: none" href="#modalDescuentosRealizados" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
-        <div class="modal fade" id="modalDescuentosRealizados">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese descuentos</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div id="modalDescuentosRealizadosControles"></div>
-                    </div>
-                    <div class="modal-footer">
-                        <a href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <a id="aModalAgregarDireccionDespacho" style="display: none" href="#modalAgregarDireccionDespacho" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
-        <div class="modal fade" id="modalAgregarDireccionDespacho">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title">Ingrese Direccion Despacho</h4>
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="table-responsive form-inline">
-                            <table class="table table-profile">
-                                <tbody>
-                                    <tr class="highlight">
-                                        <td>Codigo Cliente</td>
-                                        <td><label id="modalAgregarDireccionDespachoCodigoCliente">asdasd</label></td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td>Direccion</td>
-                                        <td>
-                                            <input type="text" id="modalAgregarDireccionDespachoDireccion" class="form-control" />
-                                        </td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td>Ciudad</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td>Comuna</td>
-                                        <td></td>
-                                    </tr>
-                                    <tr class="highlight">
-                                        <td colspan="2"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <a id="modalAgregarDireccionDespachoAgregar" href="javascript:;" class="btn btn-success">Agregar Direccion Despacho</a>
-                        <a id="modalAgregarDireccionDespachoCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end row -->
-        <!-- end page container -->
-        <!-- ================== BEGIN PAGE LEVEL JS ================== -->
-        <script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
-        <script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
-        <script src="~/Content/assets/plugins/moment/moment.js"></script>
-        <script src="~/WebJs/Ventas/Ventas.js"></script>
-        <!-- ================== END PAGE LEVEL JS ================== -->
+    </div>
+    <!-- end row -->
+    <!-- end page container -->
+    <!-- ================== BEGIN PAGE LEVEL JS ================== -->
+    <script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
+    <script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
+    <script src="~/Content/assets/plugins/moment/moment.js"></script>
+    <script src="~/WebJs/Ventas/Ventas.js"></script>
+    <!-- ================== END PAGE LEVEL JS ================== -->

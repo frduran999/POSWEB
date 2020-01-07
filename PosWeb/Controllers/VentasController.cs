@@ -12,6 +12,7 @@ namespace PosWeb.Controllers
     public class VentasController : Controller
     {
         Control Acceso = new Control();
+
         public ActionResult Ventas()
         {
             if (SessionVariables.Session_Datos_Usuarios == null)
