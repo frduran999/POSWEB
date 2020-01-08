@@ -1,8 +1,19 @@
 ﻿$(document).ready(function () {
+    var tablaMesas = $("#tablaMesas");
+    var cont = 0;
+    for (var i = 1; i < 3; i++) {
+        var htmlMesas = "<tr id='linea" + i + "'>";
+        for (var j = 0; j < 4; j++) {
+            cont += 1;
+            htmlMesas += "<td><button id='mesa" + cont + "' class='btn-lg btn btn - primary myButton' onclick='guardarMesa("+cont+")'>mesa " + cont + "</button></td>";
+        }
+        htmlMesas += "</tr>";
+        tablaMesas.append(htmlMesas);
+    }
     $("#modalMesas").show();
+    
     var tablaFamilia = $("#tablaFamilia");
-    //var htmlFamilia = "<tr>";
-    //tablaFamilia.append(htmlFamilia);
+    $("#tablaDetalle").html("");
     $.ajax({
         type: "GET",
         url: "grillaFamilia",
@@ -19,8 +30,6 @@
                         "id='"+familia+"' > " + value.Familia + "</button ></td ></tr>";
                     tablaFamilia.append(htmlBotones);
                 });
-                //htmlFamilia = "</tr>"
-                //tablaFamilia.append(htmlFamilia);
             }
         }
     });
@@ -113,8 +122,8 @@
         });
     }
     //--- FUNCIONES CAJA ----------
+    
 
-   
 });
 
 function getProductos(idFamilia) {
@@ -140,12 +149,71 @@ function getProductos(idFamilia) {
                     tablaProductos.append(htmlBotonesProd);
                 });
                 htmlProductos = "</tr>"
-                htmlBotonesProd.append(htmlFamilia);
+                htmlBotonesProd.append(htmlProductos);
             }
         }
     });
 }
 
+var linea = 1;
+var total = 0;
+var dataDetalle = [];
+function detalleVenta(idProducto) {
+    var tablaDetalle = $("#tablaDetalle");
+    var cantidad = 1;
+    var htmlGrillaDetalle = "";
+    $.ajax({
+        type: "POST",
+        url: "detalleVenta",
+        data: { _idProducto: idProducto },
+        async: true,
+        success: function (data) {
+            if (data == 0) {
+                alert("Error");
+            } 
+            else {
+                $.each(data.list, function (index, value) {
+                    dataDetalle.push({ IdProducto: value.IdProducto, Cantidad: cantidad, Linea: linea });
+
+                    var totalLinea = value.Precio * cantidad;
+                    htmlGrillaDetalle += "<tr id='linea" + linea + "'><td>" + value.IdProducto + "</td>" +
+                        "<td>" + value.Producto + "</td><td>" + cantidad + "</td>" +
+                        "<td>" + value.UnidadMedida + "</td><td id='precio" + linea + "'>" + value.Precio + "</td>" +
+                        "<td>" + totalLinea + "</td>" +
+                        "<td><button class='btn btn-xs btn-danger' onclick='eliminarFila(" + linea + ")'>Eliminar</button></td></tr>";
+                    linea++;
+                    tablaDetalle.append(htmlGrillaDetalle);
+                    total += totalLinea; 
+                    $("#total").html("$" + total);
+                    $("#propina").html("$" + (total / 10));
+                    $("#totalPropina").html("$" + (total + (total / 10)));
+                });
+            }
+        }
+    });
+}
+
+function eliminarFila(linea) {
+    var totalLinea = $("#precio" + linea).html();
+    total -= parseInt(totalLinea);
+    var propina = total / 10;
+    var totalPropina = total + propina;
+    $("#total").html("$" + total);
+    $("#propina").html("$" + propina);
+    $("#totalPropina").html("$" + totalPropina);
+    dataDetalle.splice(dataDetalle.findIndex(v => v.Linea === linea), 1);
+    //dataDetalle.splice(linea,1);
+    $('#linea' + linea).remove();
+}
+
 function cerrarModal() {
+    $("#modalMesas").hide();
+}
+
+var numeroMesa = 0;
+function guardarMesa(numMesa) {
+    numeroMesa = numMesa;
+    $("#numMesa").html("&nbsp;N° Mesa: ("+numMesa+")");
+    $("#numMesa").show();
     $("#modalMesas").hide();
 }

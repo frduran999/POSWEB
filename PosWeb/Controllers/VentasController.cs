@@ -1,4 +1,5 @@
 ﻿using BLL;
+using PosWeb.UTIL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,9 @@ namespace PosWeb.Controllers
     {
         Control Acceso = new Control();
 
+        [Autorizacion]
         public ActionResult Ventas()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
             return View();
         }
 
@@ -53,9 +51,6 @@ namespace PosWeb.Controllers
             }
             if (_idFamilia != 0)
             {
-                ObjetoProducto tablaProductos = new ObjetoProducto();
-                List<ObjetoProducto> tablaProductoLista = new List<ObjetoProducto>();
-
                 var ListadoProductos = Acceso.grillaProductos(_idFamilia);
 
                 if (ListadoProductos != null)   
@@ -73,6 +68,33 @@ namespace PosWeb.Controllers
                 return null;
             }
             
+        }
+
+        public JsonResult detalleVenta(int _idProducto)
+        {
+            if (SessionVariables.Session_Datos_Usuarios == null)
+            {
+                RedirectToAction("SesionExpirada", "Error");
+            }
+            if (_idProducto != 0)
+            {
+                var listadoDetalle = Acceso.tablaDetalleVenta(_idProducto);
+
+                if (listadoDetalle != null)
+                {
+                    return Json(new { list = listadoDetalle }, JsonRequestBehavior.AllowGet);
+                }
+                else
+                {
+                    ViewBag.mensaje = 0;
+                    return Json(new { Mensaje = ViewBag.mensaje }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                return null;
+            }
+
         }
 
         #region Opc.Caja
