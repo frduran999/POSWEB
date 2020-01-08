@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PosWeb.UTIL;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,13 +10,10 @@ namespace PosWeb.Controllers
 {
     public class HomeController : Controller
     {
+        [Autorizacion]
         public ActionResult Index()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-            return View();
+           return View();
         }
     }
 }

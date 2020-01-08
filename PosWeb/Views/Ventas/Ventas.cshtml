@@ -25,7 +25,7 @@
 <!-- ================== BEGIN PAGE CSS STYLE ================== -->
 <!-- ================== END PAGE CSS STYLE ================== -->
 <!-- begin page-header -->
-<h1 class="page-header">Ventas</h1>
+@*<h1 class="page-header">Ventas</h1>*@
 <!-- end page-header -->
 <!-- begin row -->
 <div class="row col-lg-12">
@@ -39,10 +39,10 @@
     <div class="row col-lg-12">
         <div class="col-6">
             <div class="panel-heading">
-                <h4 class="panel-title" style="background-color:white">Productos ingresados</h4>
+                <h4 class="panel-title" style="background-color:white">Productos ingresados<label id="numMesa" style="display:none"></label></h4>
                 <div class="panel-heading-btn">
                     <div class="table-responsive table-bordered">
-                        <table id="table" class="table" style="background-color:white">
+                        <table id="tableDetalle" class="table" style="background-color:white">
                             <thead>
                                 <tr>
                                     <th nowrap="" class="codigoTh">C&oacute;digo</th>
@@ -51,12 +51,46 @@
                                     <th nowrap="" class="unimedTh">Unidad Medida </th>
                                     <th nowrap="" classnowrap="" class="precioTh">Precio</th>
                                     <th nowrap="" class="subTotalTh">Total</th>
+                                    <th nowrap="" class="subTotalTh">Eliminar</th>
                                 </tr>
                             </thead>
-                            <tbody id="generaTabla"></tbody>
+                            <tbody id="tablaDetalle"></tbody>
                         </table>
                     </div>
                 </div>
+            </div>
+            <div class="" style="display:flex;align-items:center;justify-content:center;padding-left:280px;">
+                <table class="table" style="background-color:white">
+                    <tr>
+                        <td>
+                            <b><label>Total</label></b>
+                        </td>
+                        <td>
+                            <b><label id="total">$0</label></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><label>Propina</label></b>
+                        </td>
+                        <td>
+                            <b><label id="propina">$0</label></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b><label>Total con propina</label></b>
+                        </td>
+                        <td>
+                            <b><label id="totalPropina">$0</label></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <button class="btn btn-lg btn-primary">Ticket</button>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="col-2">
@@ -106,21 +140,8 @@
                     <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-hidden="true">×</button>
                 </div>
                 <div class="modal-body">
-                    <table>
-                        <tr>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                        </tr>
-                        <tr>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                            <td><button class="btn-lg btn btn-primary myButton">mesa1</button></td>
-                        </tr>
+                    <table id="tablaMesas">
+                        
                     </table>
                 </div>
                 <div class="modal-footer">

@@ -1,13 +1,18 @@
 ﻿$(document).ready(function () {
     $('.combobox').combobox();
-    var table = $("#tablaIngredientes");
+    //var table = $("#tablaIngredientes");
 
     document.getElementById("agregarIngrediente").onclick = function () {
         var ingredientes = $("#Ingredientes").val();
         var cantidad = $("#Cantidad").val();
+
+        var select = document.getElementById("Ingredientes");
+        //var value = select.value; value del select
+        var text = select.options[select.selectedIndex].innerText; //texto del select
+
         ingredientesList.push({ IdProducto: ingredientes, Cantidad: cantidad});
 
-        var html = "<tr><td>" + ingredientes + "</td><td>" + cantidad + "</td>" +
+        var html = "<tr><td>" + text + "</td><td>" + cantidad + "</td>" +
             "<td><button class='btn btn-xs btn-danger'>eliminar</button></td></tr>";//<button class='btn btn-xs btn-warning'>Modificar</button>
         $("#tablaIngredientes").append(html);//jquery <---
         $("#Cantidad").val("");
@@ -98,7 +103,3 @@ function obtenerReceta(idReceta) {
     });
 }
 
-
-//var nuevaFila = document.createElement("TR");
-//nuevaFila.innerHTML = html;
-//document.getElementById("tablaIngredientes").append(html);//appendChild
