@@ -1,4 +1,5 @@
 ﻿using BLL;
+using PosWeb.UTIL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,9 @@ namespace PosWeb.Controllers
         #region Vistas
 
         [HttpGet]
+        [Autorizacion]
         public ActionResult AgregarProductos()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
             ViewBag.ListadoProductos = ListaProductos;
 
@@ -44,6 +41,7 @@ namespace PosWeb.Controllers
         }
 
         [HttpGet]
+        [Autorizacion]
         public ActionResult AgregarFamilia()
         {
             if (SessionVariables.Session_Datos_Usuarios == null)
@@ -66,6 +64,7 @@ namespace PosWeb.Controllers
         }
 
         [HttpGet]
+        [Autorizacion]
         public ActionResult CrearReceta()
         {
             if (SessionVariables.Session_Datos_Usuarios == null)

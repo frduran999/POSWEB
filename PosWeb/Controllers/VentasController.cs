@@ -1,4 +1,5 @@
 ﻿using BLL;
+using PosWeb.UTIL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,9 @@ namespace PosWeb.Controllers
     {
         Control Acceso = new Control();
 
+        [Autorizacion]
         public ActionResult Ventas()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
             return View();
         }
 
