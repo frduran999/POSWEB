@@ -67,11 +67,6 @@ namespace PosWeb.Controllers
         [Autorizacion]
         public ActionResult CrearReceta()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             IEnumerable<ObjetoReceta> ListaReceta = Acceso.ListadoReceta();
             ViewBag.ListadoReceta = ListaReceta;
 
@@ -92,11 +87,6 @@ namespace PosWeb.Controllers
         [HttpPost]
         public JsonResult AgregarFamilia(string _Familia, string _Impresora, string _Receta)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             ObjetoFamilia lfamilia = new ObjetoFamilia();
             if (!string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_Impresora) && !string.IsNullOrEmpty(_Receta))
             {
@@ -168,11 +158,6 @@ namespace PosWeb.Controllers
 
         public JsonResult EditarFamilia(string _Familia, string _IdFamilia, string _Impresora, string _Receta)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             var validador = 0;
             if (!string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_IdFamilia) && !string.IsNullOrEmpty(_Impresora) && !string.IsNullOrEmpty(_Receta))
             {
@@ -240,11 +225,6 @@ namespace PosWeb.Controllers
 
         public JsonResult ObtenerProductos(int _IdProducto)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             if (_IdProducto != 0)
             {
                 List<ObjetoProducto> lproducto = Acceso.ObtenerProducto(_IdProducto);
@@ -260,11 +240,6 @@ namespace PosWeb.Controllers
 
         public JsonResult EliminarProducto(int _IdProducto)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             ObjetoProducto Producto = new ObjetoProducto();
             if (_IdProducto != 0)
             {
