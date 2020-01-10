@@ -231,7 +231,7 @@ namespace BLL
 
         public int aperturaCaja(ObjetoCaja caja)
         {
-            int respuesta = 0;
+            int respuesta = 0; 
             try
             {
                 var Listado = new List<ObjetoProducto>();
@@ -360,6 +360,38 @@ namespace BLL
                 }
             }
             return Listado;
+        }
+
+        public RespuestaModel validaApertura(int idUsuario)
+        {
+            RespuestaModel resp = new RespuestaModel();
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("validaApertura", new System.Collections.Hashtable()
+                {
+                    {"idUsuario",idUsuario }
+                });
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+
+                        validador = data.Rows[i].Field<object>("Verificador");
+                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
+                    }
+                }
+                else
+                {
+                    resp = null;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }   
+            return resp;
+
         }
 
         #region Productos

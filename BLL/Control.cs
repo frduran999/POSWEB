@@ -130,5 +130,11 @@ namespace BLL
         {
             return Acceso.eliminarReceta(receta);
         }
+
+        public RespuestaModel validaApertura(int idUsuario)
+        {
+            return Acceso.validaApertura(idUsuario);
+        }
+
     }
 }

@@ -316,11 +316,6 @@ namespace PosWeb.Controllers
 
         public JsonResult eliminarReceta(int _idReceta)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             ObjetoReceta receta = new ObjetoReceta();
             if (_idReceta != 0)
             {

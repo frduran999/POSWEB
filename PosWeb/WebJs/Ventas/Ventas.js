@@ -24,10 +24,10 @@
                 tablaMesas.append(htmlMesas);
             }
         }
-    });    
-        
+    });
+
     $("#modalMesas").show();
-    
+
     var tablaFamilia = $("#tablaFamilia");
     $("#tablaDetalle").html("");
     $.ajax({
@@ -40,15 +40,41 @@
             } else {
                 $("#tablaFamilia").html("");
                 $.each(data.list, function (index, value) {
-                    var familia = value.Familia.replace(" ","");
+                    var familia = value.Familia.replace(" ", "");
                     var htmlBotones = "<tr><td>" +
-                        "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary btn-xs' onclick='getProductos("+value.IdFamilia+")'" +
-                        "id='"+familia+"' > " + value.Familia + "</button ></td ></tr>";
+                        "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary btn-xs' onclick='getProductos(" + value.IdFamilia + ")'" +
+                        "id='" + familia + "' > " + value.Familia + "</button ></td ></tr>";
                     tablaFamilia.append(htmlBotones);
                 });
             }
         }
     });
+
+    document.getElementById("guardarVenta").onclick = function () {
+        validaApertura();
+        if (estadoCaja <= 0) {
+            alert("Debe abrir caja");
+        }
+        else {
+            var totalPropina = $("#totalPropina").html();
+            var Propina = $("#propina").html();
+            dataCabecera.push({ NumMesa: numeroMesa, IdGarzon: idGarzon, Total: total, Propina: Propina })
+            if (total < 0 || total == "" && idGarzon == 0 || idGarzon == '') {
+                alert("Debe ingresar productos o Ingresar Garzon");
+            } else {
+                //alert("Generar Venta: " + totalPropina);
+                $.ajax({
+                    type: "POST",
+                    url: "generaVenta",
+                    data: { detalleVenta: dataDetalle, cabeceraVenta: dataCabecera },
+                    async: true,
+                    success: function (data) {
+
+                    }
+                });
+            }
+        }
+    }
 
     //--- MODAL ---- OPC.CAja-----
     document.getElementById("modalOpciones").onclick = function () {
@@ -57,6 +83,12 @@
         $("#montoRetiro").val("");
         $("#glosaRetiro").val("");
         $("#glosaCierre").val("");
+        validaApertura();
+        if (estadoCaja > 0) {
+            $("#aperturaCaja").hide();
+        } else {
+            $("#aperturaCaja").show();
+        }
     }
 
     document.getElementById("aperturaCaja").onclick = function () {
@@ -95,6 +127,7 @@
             success: function (data) {
                 if (data > 0) {
                     alert("Caja Abierta. Num°: " + data);
+                    aperturaCaja = data;//numero de caja apertura
                     location.reload();
                 }
                 else {
@@ -139,31 +172,9 @@
     }
     //--- FUNCIONES CAJA ----------
 
-    document.getElementById("guardarVenta").onclick = function () {
-        var totalPropina = $("#totalPropina").html();
-        var Propina = $("#propina").html();
-        dataCabecera.push({ NumMesa: numeroMesa, IdGarzon: idGarzon, Total: total, Propina: Propina })
-        if (total < 0 || total == "" && idGarzon == 0 || idGarzon == '') {
-            alert("Debe ingresar productos o Ingresar Garzon");
-        } else {
-            //alert("Generar Venta: " + totalPropina);
-            $.ajax({
-                type: "POST",
-                url: "generaVenta",
-                data: { detalleVenta: dataDetalle,cabeceraVenta:dataCabecera},
-                async: true,
-                success: function (data) {
-
-                }
-            });
-        }
-    }
-
 });
 
 var idGarzon = 1;
-
-
 function getProductos(idFamilia) {
     var tablaProductos = $("#tablaProductos");
     var htmlBotonesProd = "";
@@ -180,14 +191,14 @@ function getProductos(idFamilia) {
                 $("#tablaProductos").html("");
                 $.each(data.list, function (index, value) {
                     var producto = value.Producto.replace(" ", "");
-                    if (index == 0 || index == 2 || index == 4 || index == 6 || index == 8 || index == 10 ) {
+                    if (index == 0 || index == 2 || index == 4 || index == 6 || index == 8 || index == 10) {
                         htmlBotonesProd += "<tr>";
                     }
                     htmlBotonesProd += "<td><button value='" + value.IdProducto + "' class='form-control btn btn-primary' onclick='detalleVenta(" + value.IdProducto + ")'" +
                         "id='" + producto + "' > " + value.Producto + "</button ></td >";
                     if (index == 1 || index == 3 || index == 5 || index == 7 || index == 9 || index == 11) {
                         htmlBotonesProd += "</tr>";
-                    }  
+                    }
                 });
                 tablaProductos.append(htmlBotonesProd);
             }
@@ -211,7 +222,7 @@ function detalleVenta(idProducto) {
         success: function (data) {
             if (data == 0) {
                 alert("Error");
-            } 
+            }
             else {
                 $.each(data.list, function (index, value) {
                     if (value.IdReceta == '') {
@@ -219,12 +230,13 @@ function detalleVenta(idProducto) {
                     }
                     var totalLinea = value.Precio * cantidad;
                     htmlGrillaDetalle += "<tr id='linea" + linea + "'><td>" + value.IdProducto + "</td>" +
-                        "<td>" + value.Producto + "</td><td>" + cantidad + "</td>" +
+                        "<td>" + value.Producto + "</td><td id='cantidad" + linea + "'>" + cantidad + "</td>" +
                         "<td id='precio" + linea + "'>" + value.Precio + "</td>" +
-                        "<td>" + totalLinea + "</td>" +
+                        "<td id='totalLinea" + linea + "'>" + totalLinea + "</td>" +
                         "<td><button class='btn btn-xs btn-danger' onclick='eliminarFila(" + linea + ")'>Eliminar</button></td>" +
-                        "<td><button class='btn btn-xs btn-danger' onclick='agregarCantidad(" + linea + ")'>Agregar</button></td></tr > ";
-                    total += totalLinea; 
+                        "<td><button class='btn btn-sm btn-danger' onclick='restarCantidad(" + linea + ")'>-</button></td> " +
+                        "<td><button class='btn btn-sm btn-danger' onclick='agregarCantidad(" + linea + ")'>+</button></td></tr > ";
+                    total += totalLinea;
                     dataDetalle.push({
                         IdProducto: value.IdProducto, Cantidad: cantidad, Linea: linea, Desc: value.Producto
                         , TotalLinea: totalLinea, IdFamilia: value.IdFamilia, Precio: value.Precio
@@ -239,6 +251,41 @@ function detalleVenta(idProducto) {
             }
         }
     });
+}
+
+function agregarCantidad(linea) {
+    logicaCantidad(linea, 1);
+}
+
+function restarCantidad(linea) {
+    logicaCantidad(linea, -1);
+}
+
+function logicaCantidad(linea, valor) {
+    var cantidadActual = parseInt($("#cantidad" + linea).html());
+    cantidadActual = cantidadActual + valor;
+    $("#cantidad" + linea).html(cantidadActual);
+    dataDetalle.find(m => m.Linea === linea).Cantidad = cantidadActual;
+
+    var totalActual = parseInt($("#totalLinea" + linea).html());
+    var precio = parseInt($("#precio" + linea).html());
+    totalActual = precio * cantidadActual;
+    $("#totalLinea" + linea).html(totalActual);
+    dataDetalle.find(m => m.Linea === linea).ToTalLinea = totalActual;
+
+    var totalFinal = 0;
+    var totales = dataDetalle.map(m => m.Cantidad * m.TotalLinea);
+    for (i = 0; i < totales.length; i++) {
+        totalFinal = totalFinal + totales[i];
+    }
+    total = totalFinal;
+    $("#total").html("$" + total);
+
+    var propina = $("#propina").html();
+    propina = total / 10;
+    $("#propina").html(propina);
+
+    $("#totalPropina").html("$" + (total + propina));
 }
 
 function eliminarFila(linea) {
@@ -261,8 +308,25 @@ function cerrarModal() {
 var numeroMesa = 0;
 function guardarMesa(numMesa) {
     numeroMesa = numMesa;
-    $("#numMesa").html("&nbsp;N° Mesa: ("+numMesa+")");
+    $("#numMesa").html("&nbsp;N° Mesa: (" + numMesa + ")");
     $("#numMesa").show();
     $("#modalMesas").modal('hide');
     $("#modalMesas").hide();
+}
+
+var estadoCaja = 0;
+function validaApertura() {
+    $.ajax({
+        type: "GET",
+        url: "validaApertura",
+        data: {},
+        async: true,
+        success: function (result) {
+            if (result.Validador == true) {
+                estadoCaja = 1;
+            } else {
+                estadoCaja = 0;
+            }
+        }
+    });
 }

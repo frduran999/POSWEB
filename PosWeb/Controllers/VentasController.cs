@@ -28,10 +28,6 @@ namespace PosWeb.Controllers
 
         public JsonResult grillaFamilia()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
             ObjetoFamilia tablaFamilia = new ObjetoFamilia();
             List<ObjetoFamilia> tablaFamiliaLista = new List<ObjetoFamilia>();
 
@@ -51,10 +47,6 @@ namespace PosWeb.Controllers
 
         public JsonResult grillaProductos(int _idFamilia)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
             if (_idFamilia != 0)
             {
                 var ListadoProductos = Acceso.grillaProductos(_idFamilia);
@@ -78,7 +70,6 @@ namespace PosWeb.Controllers
 
         public JsonResult detalleVenta(int _idProducto)
         {
-
             if (_idProducto != 0)
             {
                 var listadoDetalle = Acceso.tablaDetalleVenta(_idProducto);
@@ -187,6 +178,14 @@ namespace PosWeb.Controllers
             {
                 return null;
             }
+        }
+
+        public JsonResult validaApertura()
+        {
+            var idUsuario = SessionVariables.Session_Datos_Usuarios.IdUsuario;
+            RespuestaModel result = Acceso.validaApertura(idUsuario);
+            
+            return Json(result);
         }
 
         #endregion
