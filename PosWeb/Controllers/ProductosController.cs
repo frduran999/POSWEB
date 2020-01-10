@@ -44,18 +44,13 @@ namespace PosWeb.Controllers
         [Autorizacion]
         public ActionResult AgregarFamilia()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
+            //List<string> Impresoras = new List<string>();
+            //foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
+            //{
+            //    Impresoras.Add(strPrinter);
+            //}
 
-            List<string> Impresoras = new List<string>();
-            foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-            {
-                Impresoras.Add(strPrinter);
-            }
-
-            ViewBag.Impresoras = Impresoras;
+            //ViewBag.Impresoras = Impresoras;
 
             IEnumerable<ObjetoFamilia> ListaFamilia = Acceso.ListadoFamilia();
             ViewBag.ListadoFamilia = ListaFamilia;

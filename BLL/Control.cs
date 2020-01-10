@@ -136,5 +136,10 @@ namespace BLL
             return Acceso.validaApertura(idUsuario);
         }
 
+        public RespuestaModel cierreCaja(int idUsuario, string glosaCierre)
+        {
+            return Acceso.cierreCaja(idUsuario, glosaCierre);
+        }
+
     }
 }

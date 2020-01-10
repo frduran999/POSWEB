@@ -172,7 +172,10 @@ namespace PosWeb.Controllers
         {
             if (!string.IsNullOrEmpty(_glosaCierre))
             {
-                return Json(1);
+                var idUsuario = SessionVariables.Session_Datos_Usuarios.IdUsuario;
+                RespuestaModel result = Acceso.cierreCaja(idUsuario,_glosaCierre);
+
+                return Json(result);
             }
             else
             {

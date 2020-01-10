@@ -23,6 +23,7 @@ namespace BLL
             {
                 for (var i = 0; i < data.Rows.Count; i++)
                 {
+                    //return UTIL.Mapper.BindData<ObjetoUsuario>(data);
                     var validador = new object();
 
                     validador = data.Rows[i].Field<object>("Id");
@@ -390,6 +391,42 @@ namespace BLL
             {
                 throw;
             }   
+            return resp;
+
+        }
+
+        public RespuestaModel cierreCaja(int idUsuario, string glosaCierre)
+        {
+            RespuestaModel resp = new RespuestaModel();
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("cierreCaja", new System.Collections.Hashtable()
+                {
+                    {"idUsuario",idUsuario },
+                    {"glosaCierre",glosaCierre }
+                });
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+
+                        validador = data.Rows[i].Field<object>("Verificador");
+                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
+
+                        validador = data.Rows[i].Field<object>("Mensaje");
+                        resp.Mensaje = validador != null ? data.Rows[i].Field<string>("Mensaje") : "NO ASIGNADO";
+                    }
+                }
+                else
+                {
+                    resp = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
             return resp;
 
         }

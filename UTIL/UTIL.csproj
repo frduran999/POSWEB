@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mapper.cs" />
     <Compile Include="Objetos\ObjetoCabVenta.cs" />
     <Compile Include="Objetos\ObjetoCaja.cs" />
     <Compile Include="Objetos\ObjetoImpresora.cs" />

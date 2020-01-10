@@ -84,13 +84,8 @@ grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn 
                                                 <div class="">
                                                     <div>
                                                         <select name="Impresora" id="Impresora" class="combobox">
-                                                            @{
-                                                                foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-                                                                {
-                                                                    <option value="@strPrinter" selected>@strPrinter</option>
-                                                                }
-                                                            }
                                                             <option selected value=""> -- Seleccione Impresora -- </option>
+                                                            <option selected value="PDF24"> PDF24 </option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -157,13 +152,8 @@ grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn 
                                                 <div class="">
                                                     <div>
                                                         <select name="modImpresora" id="modImpresora" class="combobox">
-                                                            <option value=""> -- Seleccione Impresora -- </option>
-                                                            @{
-                                                                foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-                                                                {
-                                                                    <option value="@strPrinter">@strPrinter</option>
-                                                                }
-                                                            }
+                                                            <option selected value=""> -- Seleccione Impresora -- </option>
+                                                            <option selected value="PDF24"> PDF24 </option>
                                                         </select>
                                                     </div>
                                                 </div>

@@ -84,11 +84,6 @@
         $("#glosaRetiro").val("");
         $("#glosaCierre").val("");
         validaApertura();
-        if (estadoCaja > 0) {
-            $("#aperturaCaja").hide();
-        } else {
-            $("#aperturaCaja").show();
-        }
     }
 
     document.getElementById("aperturaCaja").onclick = function () {
@@ -119,56 +114,76 @@
     document.getElementById("abrirCaja").onclick = function () {
         var montoApertura = $("#montoApertura").val();
         var glosaApertura = $("#glosaApertura").val();
-        $.ajax({
-            type: "POST",
-            url: "aperturaCaja",
-            data: { _montoApertura: montoApertura, _glosaApertura: glosaApertura },
-            async: true,
-            success: function (data) {
-                if (data > 0) {
-                    alert("Caja Abierta. Num°: " + data);
-                    aperturaCaja = data;//numero de caja apertura
-                    location.reload();
+        if (montoApertura == '' && glosaApertura == '') {
+            alert("Debe Ingresar Datos");
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "aperturaCaja",
+                data: { _montoApertura: montoApertura, _glosaApertura: glosaApertura },
+                async: true,
+                success: function (data) {
+                    if (data > 0) {
+                        alert("Caja Abierta. Num°: " + data);
+                        $("#modalCierre").show();
+                        location.reload();
+                    }
+                    else {
+                        alert("Caja Abierta");
+                    }
+                    if (data == -1) {
+                        alert("Debe llenar datos obligatorios");
+                    }
                 }
-                else {
-                    alert("Caja Abierta");
-                }
-                if (data == -1) {
-                    alert("Debe llenar datos obligatorios");
-                }
-            }
-        });
+            });
+        }
+        
     }
 
     document.getElementById("retiroCaja").onclick = function () {
         var montoRetiro = $("#montoRetiro").val();
         var glosaRetiro = $("#glosaRetiro").val();
-        $.ajax({
-            type: "POST",
-            url: "retiroCaja",
-            data: { _montoRetiro: montoRetiro, _glosaRetiro: glosaRetiro },
-            async: true,
-            success: function (data) {
-                if (data == 1) {
-                    alert("hola");
+        if (montoRetiro == '' && glosaRetiro == '') {
+            alert("Debe Ingresar Datos");
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "retiroCaja",
+                data: { _montoRetiro: montoRetiro, _glosaRetiro: glosaRetiro },
+                async: true,
+                success: function (data) {
+                    if (data == 1) {
+                        alert("hola");
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     document.getElementById("cierreCaja").onclick = function () {
         var glosaCierre = $("#glosaCierre").val();
-        $.ajax({
-            type: "POST",
-            url: "cierreCaja",
-            data: { _glosaCierre: glosaCierre },
-            async: true,
-            success: function (data) {
-                if (data == 1) {
-                    alert("hola");
+        if (glosaCierre == '') {
+            alert('Debe Ingresar Datos');
+        } else {
+            $.ajax({
+                type: "POST",
+                url: "cierreCaja",
+                data: { _glosaCierre: glosaCierre },
+                async: true,
+                success: function (result) {
+                    if (result.Verificador == true) {
+                        estadoCaja = 0;
+                        $("#aperturaCaja").show();
+                        $("#cerrarCaja").hide();
+                        $("#retirarCaja").hide();
+                        $("#modalCierre").hide();
+                        alert(result.Mensaje);
+                    } else {
+                        estadoCaja = 0;
+                    }
                 }
-            }
-        });
+            });
+        }
     }
     //--- FUNCIONES CAJA ----------
 
@@ -289,7 +304,7 @@ function logicaCantidad(linea, valor) {
 }
 
 function eliminarFila(linea) {
-    var totalLinea = $("#precio" + linea).html();
+    var totalLinea = $("#totalLinea" + linea).html();
     total -= parseInt(totalLinea);
     var propina = total / 10;
     var totalPropina = total + propina;
@@ -317,15 +332,21 @@ function guardarMesa(numMesa) {
 var estadoCaja = 0;
 function validaApertura() {
     $.ajax({
-        type: "GET",
+        type: "POST",
         url: "validaApertura",
         data: {},
         async: true,
         success: function (result) {
-            if (result.Validador == true) {
+            if (result.Verificador == true) {
                 estadoCaja = 1;
+                $("#aperturaCaja").hide();
+                //$("#cerrarCaja").show();
+                //$("#retirarCaja").show();
             } else {
                 estadoCaja = 0;
+                $("#aperturaCaja").show();
+                $("#cerrarCaja").hide();
+                $("#retirarCaja").hide();
             }
         }
     });
