@@ -31,7 +31,7 @@
 <div class="row col-lg-12">
     <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalMesas" id="">Mesas</button>
-    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button>
+    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEmpleados" id="modalOpciones">Garzones</button>
     <button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button>
     <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opciones</button>
 </div>
@@ -48,7 +48,6 @@
                                     <th nowrap="" class="codigoTh">C&oacute;digo</th>
                                     <th nowrap="" class="descripcionTh">Descripci&oacute;n</th>
                                     <th nowrap="" class="cantidadTh">Cantidad</th>
-                                    <th nowrap="" class="unimedTh">Unidad Medida </th>
                                     <th nowrap="" classnowrap="" class="precioTh">Precio</th>
                                     <th nowrap="" class="subTotalTh">Total</th>
                                     <th nowrap="" class="subTotalTh">Eliminar</th>
@@ -59,7 +58,7 @@
                     </div>
                 </div>
             </div>
-            <div class="" style="display:flex;align-items:center;justify-content:center;padding-left:280px;">
+            <div class="table-responsive" style="display:flex;align-items:center;justify-content:center;padding-left:280px;">
                 <table class="table" style="background-color:white">
                     <tr>
                         <td>
@@ -87,7 +86,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <button class="btn btn-lg btn-primary">Ticket</button>
+                            <button class="btn btn-lg btn-primary" id="guardarVenta">Ticket</button>
                         </td>
                     </tr>
                 </table>
@@ -134,16 +133,17 @@
 
     <div class="modal" id="modalMesas" style="display:none">
         <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content">
+            <div class="modal-content ">
                 <div class="modal-header">
                     <h4 class="modal-title">Mesas</h4>
                     <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-hidden="true">×</button>
                 </div>
-                <div class="modal-body">
-                    <table id="tablaMesas">
-                        
-                    </table>
+                <div class="modal-body" style="height: 450px; overflow-y: auto;">
+                    <div class="table-responsive">
+                        <table id="tablaMesas"></table>
+                    </div>
                 </div>
+               
                 <div class="modal-footer">
                     <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal" onclick="cerrarModal()">Cerrar</button>
                 </div>

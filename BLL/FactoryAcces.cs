@@ -331,6 +331,37 @@ namespace BLL
             return Listado;
         }
 
+        public List<ObjetoMesa> ObtenerMesas()
+        {
+            var Listado = new List<ObjetoMesa>();
+            var data = new Conector().EjecutarProcedimiento("obtenerMesas", new System.Collections.Hashtable()
+            {});
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoMesa();
+
+                    validador = data.Rows[i].Field<object>("id");
+                    resultadoListado.Id = validador != null ? data.Rows[i].Field<int>("id") : -1;
+
+                    validador = data.Rows[i].Field<object>("numero");
+                    resultadoListado.Numero= validador != null ? data.Rows[i].Field<int>("numero") : -1;
+
+                    validador = data.Rows[i].Field<object>("tipo");
+                    resultadoListado.Tipo= validador != null ? data.Rows[i].Field<string>("tipo") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("estado");
+                    resultadoListado.Estado= validador != null ? data.Rows[i].Field<int>("estado") : -1;
+                    
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         #region Productos
 
         public List<ObjetoProducto> ObtenerProducto(int IdProducto)
