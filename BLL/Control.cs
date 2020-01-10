@@ -80,6 +80,10 @@ namespace BLL
         #endregion
 
 
+        public List<ObjetoMesa> ObtenerMesas()
+        {
+            return Acceso.ObtenerMesas();
+        }
 
         public List<ObjetoReceta> ListadoReceta()
         {

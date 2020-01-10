@@ -20,6 +20,12 @@ namespace PosWeb.Controllers
             return View();
         }
 
+        public JsonResult obtenerMesa()
+        {
+            List<ObjetoMesa> lmesas = Acceso.ObtenerMesas();
+            return Json(new { list = lmesas }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult grillaFamilia()
         {
             if (SessionVariables.Session_Datos_Usuarios == null)
@@ -72,10 +78,7 @@ namespace PosWeb.Controllers
 
         public JsonResult detalleVenta(int _idProducto)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
+
             if (_idProducto != 0)
             {
                 var listadoDetalle = Acceso.tablaDetalleVenta(_idProducto);
@@ -95,6 +98,40 @@ namespace PosWeb.Controllers
                 return null;
             }
 
+        }
+
+        public JsonResult generaVenta(List<ObjetoVenta> detalleVenta, List<ObjetoCabVenta> cabeceraVenta)
+        {
+            var resultadoCab = 0;
+            var resultadoDet = 0;
+            ObjetoCabVenta cabecera = new ObjetoCabVenta();
+            ObjetoVenta detalle = new ObjetoVenta();
+            foreach (var Cab in cabeceraVenta)
+            {
+                cabecera.IdGarzon = Cab.IdGarzon;
+                cabecera.NumMesa = Cab.NumMesa;
+                string[] propina = Cab.Propina.Split('$');
+                cabecera.Propina = propina[1];
+                cabecera.Total = Cab.Total;
+                //resultadoCab = Acceso.grabaCabVenta(cabecera);
+            }
+            if (resultadoCab > 0)
+            {
+                foreach (var Detalle in detalleVenta)
+                {
+                    detalle.IdProducto = Detalle.IdProducto;
+                    detalle.Cantidad = Detalle.Cantidad;
+                    detalle.Linea = Detalle.Linea;
+                    detalle.Desc = Detalle.Desc;
+                    detalle.TotalLinea = Detalle.TotalLinea;
+                    detalle.IdFamilia = Detalle.IdFamilia;
+                    detalle.Precio = Detalle.Precio;
+                    detalle.IdReceta = Detalle.IdReceta;
+                    detalle.IdCab = resultadoCab;
+                    //resultadoDet = Acceso.grabaDetalleVenta(detalle);
+                }
+            }
+            return Json(-1);
         }
 
         #region Opc.Caja

@@ -42,14 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Objetos\ObjetoCabVenta.cs" />
     <Compile Include="Objetos\ObjetoCaja.cs" />
     <Compile Include="Objetos\ObjetoImpresora.cs" />
     <Compile Include="Objetos\ObjetoMenu.cs" />
     <Compile Include="Objetos\ObjetoFamilia.cs" />
+    <Compile Include="Objetos\ObjetoMesa.cs" />
     <Compile Include="Objetos\ObjetoPerfil.cs" />
     <Compile Include="Objetos\ObjetoProducto.cs" />
     <Compile Include="Objetos\ObjetoReceta.cs" />
     <Compile Include="Objetos\ObjetoUsuario.cs" />
+    <Compile Include="Objetos\ObjetoVenta.cs" />
     <Compile Include="Objetos\RespuestaModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SessionVariables.cs" />
