@@ -23,24 +23,24 @@
         <br />
     </div>
     <div class="table-responsive">
-        @{
-            var grid = new WebGrid(ListaProductos, canPage: false);
-        }
-        @grid.GetHtml(
-        htmlAttributes: new { id = "dataTable" },
-        tableStyle: "table",
-        columns:
-        grid.Columns(
-        grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.IdProducto</text>),
-                                    grid.Column(columnName: "Producto", header: "Producto", format: @<text>@item.Producto</text>),
-                                                          grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
-                                                                                  grid.Column(columnName: "Unidad Medida", header: "Unidad Medida", format: @<text>@item.UnidadMedida</text>),
-                                                            grid.Column(columnName: "Precio", header: "Precio", format: @<text>@item.Precio</text>),
-                                                                                                                        grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarProducto" onclick="ObtenerProductos(@item.IdProducto)">
-                                                                                                                            Editar<span class="fa fa-pencil"></span>
-                                                                                                                        </button>),
-                                                                                                                                              grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-danger" onclick="EliminarProducto(@item.IdProducto)">Deshabilitar &nbsp;<span class="fa fa-trash"></span></button>)))
-    </div>
+@{
+var grid = new WebGrid(ListaProductos, canPage: false);
+}
+@grid.GetHtml(
+htmlAttributes: new { id = "dataTable" },
+tableStyle: "table",
+columns:
+grid.Columns(
+grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.IdProducto</text>),
+grid.Column(columnName: "Producto", header: "Producto", format: @<text>@item.Producto</text>),
+grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
+grid.Column(columnName: "Unidad Medida", header: "Unidad Medida", format: @<text>@item.UnidadMedida</text>),
+grid.Column(columnName: "Precio", header: "Precio", format: @<text>@item.Precio</text>),
+grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarProducto" onclick="ObtenerProductos(@item.IdProducto)">
+Editar<span class="fa fa-pencil"></span>
+</button>),
+grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-danger" onclick="EliminarProducto(@item.IdProducto)">Deshabilitar &nbsp;<span class="fa fa-trash"></span></button>)))
+</div>
 
     <div id="AgregarProducto" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">

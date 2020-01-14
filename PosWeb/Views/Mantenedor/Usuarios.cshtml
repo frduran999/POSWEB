@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+<div class="panel panel-inverse table-responsive">
+    <div class="panel-heading">
+        <h4 class="panel-title">Listado Productos</h4>
+        <div class="panel-heading-btn">
+            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+        </div>
+
+    </div>
+    <div>
+        <br />
+        <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#agregarUsuario">Agregar Usuario</button>
+        </div>
+            <br />
+    </div>
+
+    <div class="table-responsive">
+@*@{
+var grid = new WebGrid(ListaProductos, canPage: false);
+}
+@grid.GetHtml(
+htmlAttributes: new { id = "dataTable" },
+tableStyle: "table",
+columns:
+grid.Columns(
+grid.Column(columnName: "IdProducto", header: "IdProducto", format: @<text>@item.IdProducto</text>),
+grid.Column(columnName: "Producto", header: "Producto", format: @<text>@item.Producto</text>),
+grid.Column(columnName: "Familia", header: "Familia", format: @<text>@item.Familia</text>),
+grid.Column(columnName: "Unidad Medida", header: "Unidad Medida", format: @<text>@item.UnidadMedida</text>),
+grid.Column(columnName: "Precio", header: "Precio", format: @<text>@item.Precio</text>),
+grid.Column(columnName: "Editar", header: "Editar", format: @<button class="btn btn-warning btn-m" data-toggle="modal" data-target="#modalEditarProducto" onclick="ObtenerProductos(@item.IdProducto)">
+Editar<span class="fa fa-pencil"></span>
+</button>),
+grid.Column(columnName: "Eliminar", header: "Eliminar", format: @<button class="btn btn-danger" onclick="EliminarProducto(@item.IdProducto)">Deshabilitar &nbsp;<span class="fa fa-trash"></span></button>)))*@
+    </div>
+</div>
+
+<div id="agregarUsuario" class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-primary">Agregar Producto</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="x_content">
+                    <br />
+                    <div class="form-horizontal form-label-left input_mask">
+                        <div class="ln_solid"></div>
+                        <div class="form-group">
+                            <div style="display:flex;align-items:flex-end;justify-content:flex-end;">
+                                <button class="btn btn-primary" type="submit" id="CrearProducto">Grabar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

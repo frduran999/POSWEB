@@ -1,4 +1,5 @@
-﻿<style>
+﻿@using UTIL;
+<style>
     .myButton {
         background-color: #ffec64;
         border-radius: 35px;
@@ -28,15 +29,18 @@
 @*<h1 class="page-header">Ventas</h1>*@
 <!-- end page-header -->
 <!-- begin row -->
+@if (SessionVariables.Session_Datos_Usuarios.Perfil == 1)
+{
+    <div class="row col-lg-12">
+        <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
+        <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalMesas" id="">Mesas</button>
+        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEmpleados" id="modalOpciones">Garzones</button>
+        <label id="nombreGarzon"></label>
+    </div>
+    <br />
+}
 <div class="row col-lg-12">
-    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
-    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalMesas" id="">Mesas</button>
-    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEmpleados" id="modalOpciones">Garzones</button>
-    <label id="nombreGarzon"></label>
-</div>
-<br />
-<div class="row col-lg-12">
-    <div class="col-6">
+    <div class="col-5">
         <div class="panel-heading">
             <h4 class="panel-title" style="background-color:white">Productos ingresados<label id="numMesa" style="display:none"></label></h4>
             <div class="panel-heading-btn">
@@ -50,8 +54,6 @@
                                 <th nowrap="" class="subTotalTh">Total</th>
                                 <th nowrap="" class="agregadoTh">Agregado</th>
                                 <th nowrap="" class="eliminarTh">Eliminar</th>
-                                <th nowrap="" class="agregarTh">Agregar</th>
-                                <th nowrap="" class="quitarTh">Quitar</th>
                             </tr>
                         </thead>
                         <tbody id="tablaDetalle"></tbody>
@@ -93,7 +95,7 @@
             </table>
         </div>
     </div>
-    <div class="col-2">
+    <div class="col-3">
         <div class="panel panel-inverse" data-sortable-id="">
             <div class="panel-heading">
                 <h4 class="panel-title">Familias</h4>
@@ -146,8 +148,11 @@
             </div>
 
             <div class="modal-footer">
-                <button type="button" id="btnCerrarModal" class="btn btn-success" data-toggle="modal" data-target="#agregarMesa">Agregar Mesa</button>
-                <button type="button" id="btnCerrarModal" class="btn btn-danger" data-toggle="modal" data-target="#eliminarMesa">Eliminar</button>
+                @if (SessionVariables.Session_Datos_Usuarios.Perfil == 1)
+                {
+                    <button type="button" id="btnCerrarModal" class="btn btn-success" data-toggle="modal" data-target="#agregarMesa">Agregar Mesa</button>
+                    <button type="button" id="btnCerrarModal" class="btn btn-danger" data-toggle="modal" data-target="#eliminarMesa">Eliminar</button>
+                }
                 <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal" onclick="cerrarModal()">Cerrar</button>
             </div>
         </div>
