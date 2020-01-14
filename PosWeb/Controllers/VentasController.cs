@@ -17,6 +17,12 @@ namespace PosWeb.Controllers
         [Autorizacion]
         public ActionResult Ventas()
         {
+            IEnumerable<SelectListItem> listGarzones = Acceso.listarGarzones().Select(c => new SelectListItem()
+            {
+                Text = c.Nombre,
+                Value = c.IdEmpleado.ToString()
+            }).ToList();
+            ViewBag.garzones = listGarzones;
             return View();
         }
 
@@ -36,7 +42,6 @@ namespace PosWeb.Controllers
             if (ListadoFamilia != null)
             {
                 return Json(new { list = ListadoFamilia }, JsonRequestBehavior.AllowGet);
-                //return Json(new { list = ListadoFamilia, Mensaje = ViewBag.mensaje }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -123,6 +128,35 @@ namespace PosWeb.Controllers
                 }
             }
             return Json(-1);
+        }
+
+        public JsonResult agregarMesa(string _numMesa, string _tipo)
+        {
+            var respuesta = 0;
+            ObjetoMesa mesas = new ObjetoMesa();
+            if (!string.IsNullOrEmpty(_numMesa) && !string.IsNullOrEmpty(_tipo))
+            {
+                mesas.Numero = int.Parse(_numMesa);
+                mesas.Tipo = _tipo;
+                
+                respuesta = Acceso.agregarMesa(mesas);
+                if (respuesta == -666)
+                {
+                    return Json(respuesta);
+                }
+                if (respuesta > 0)
+                {
+                    return Json(respuesta);
+                }
+                else
+                {
+                    return Json(-2);
+                }
+            }
+            else
+            {
+                return Json(-1);
+            }
         }
 
         #region Opc.Caja

@@ -1,4 +1,5 @@
 ﻿$(document).ready(function () {
+    
     var tablaMesas = $("#tablaMesas");
     var cont = 0;
     var htmlMesas = "";
@@ -25,7 +26,6 @@
             }
         }
     });
-
     $("#modalMesas").show();
 
     var tablaFamilia = $("#tablaFamilia");
@@ -57,12 +57,12 @@
         }
         else {
             var totalPropina = $("#totalPropina").html();
+            var idGarzon = Parseint(document.getElementById("idGarzon").value);
             var Propina = $("#propina").html();
             dataCabecera.push({ NumMesa: numeroMesa, IdGarzon: idGarzon, Total: total, Propina: Propina })
             if (total < 0 || total == "" && idGarzon == 0 || idGarzon == '') {
                 alert("Debe ingresar productos o Ingresar Garzon");
             } else {
-                //alert("Generar Venta: " + totalPropina);
                 $.ajax({
                     type: "POST",
                     url: "generaVenta",
@@ -186,10 +186,8 @@
         }
     }
     //--- FUNCIONES CAJA ----------
-
 });
 
-var idGarzon = 1;
 function getProductos(idFamilia) {
     var tablaProductos = $("#tablaProductos");
     var htmlBotonesProd = "";
@@ -244,13 +242,14 @@ function detalleVenta(idProducto) {
                         value.IdReceta = -1;
                     }
                     var totalLinea = value.Precio * cantidad;
-                    htmlGrillaDetalle += "<tr id='linea" + linea + "'><td>" + value.IdProducto + "</td>" +
+                    htmlGrillaDetalle += "<tr id='linea" + linea + "'>" +
                         "<td>" + value.Producto + "</td><td id='cantidad" + linea + "'>" + cantidad + "</td>" +
                         "<td id='precio" + linea + "'>" + value.Precio + "</td>" +
                         "<td id='totalLinea" + linea + "'>" + totalLinea + "</td>" +
+                        "<td><button class='btn btn-xs btn-danger' onclick='agregadoProd(" + linea + ")'>Agregado</button></td> " +
                         "<td><button class='btn btn-xs btn-danger' onclick='eliminarFila(" + linea + ")'>Eliminar</button></td>" +
-                        "<td><button class='btn btn-sm btn-danger' onclick='restarCantidad(" + linea + ")'>-</button></td> " +
-                        "<td><button class='btn btn-sm btn-danger' onclick='agregarCantidad(" + linea + ")'>+</button></td></tr > ";
+                        "<td><button class='btn btn-xs btn-danger' onclick='agregarCantidad(" + linea + ")'>+</button></td> " +
+                        "<td><button class='btn btn-xs btn-danger' onclick='restarCantidad(" + linea + ")'>-</button></td></tr > ";
                     total += totalLinea;
                     dataDetalle.push({
                         IdProducto: value.IdProducto, Cantidad: cantidad, Linea: linea, Desc: value.Producto
@@ -351,3 +350,60 @@ function validaApertura() {
         }
     });
 }
+
+function agregarMesa() {
+    var tablaMesas = $("#tablaMesas");
+    var numeroMesa = $("#numMesaNueva").val();
+    var tipoMesa = 'Interior';
+    $.ajax({
+        type: "POST",
+        url: "agregarMesa",
+        data: { _numMesa: numeroMesa, _tipo: tipoMesa },
+        async: true,
+        success: function (data) {
+            if (data == -666) {
+                alert("Mesa ya existe");
+            }
+            if (data == -1) {
+                alert("Debe ingresar numero de mesa");
+            }
+            if (data > 0) {
+                $.ajax({
+                    type: "GET",
+                    url: "obtenerMesa",
+                    data: {},
+                    async: true,
+                    success: function (data) {
+                        if (data == 0) {
+                            alert("Error");
+                        } else {
+                            htmlMesas = "";
+                            tablaMesas.empty();
+                            tablaMesas.hide();
+                            $.each(data.list, function (index, value) {
+                                if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                                    htmlMesas += "<tr id='linea" + value.Numero + "'>";
+                                }
+                                htmlMesas += "<td><button id='mesa" + value.Numero + "' class='btn-lg btn btn - primary myButton'" +
+                                    "onclick = 'guardarMesa(" + value.Numero + ")' > mesa " + value.Numero + "</button ></td > ";
+                                if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                                    htmlMesas += "</tr>";
+                                }
+                            });
+                            tablaMesas.append(htmlMesas);
+                        }
+                        tablaMesas.show();
+                        $("#agregarMesa").modal('hide');
+                    }
+                });
+            }
+        }
+    });
+}
+
+function imprimir() {
+    window.print();
+}
+            
+        
+    

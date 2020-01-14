@@ -134,6 +134,30 @@ namespace BLL
             return Listado;
         }
 
+        public List<ObjetoEmpleado> listarGarzones()
+        {
+            var Listado = new List<ObjetoEmpleado>();
+            var data = new Conector().EjecutarProcedimiento("listarGarzones", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoEmpleado();
+
+                    validador = data.Rows[i].Field<object>("id");
+                    resultadoListado.IdEmpleado = validador != null ? data.Rows[i].Field<int>("id") : -1;
+
+                    validador = data.Rows[i].Field<object>("nombre");
+                    resultadoListado.Nombre = validador != null ? data.Rows[i].Field<string>("nombre") : "NO ASIGNADO";
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         public int grabaReceta(string receta)
         {
             int respuesta = 0;
@@ -513,6 +537,29 @@ namespace BLL
             }
             return Listado;
         }
+
+        public int agregarMesa(ObjetoMesa mesas)
+        {
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("agregarMesas", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"numMesa", mesas.Numero},
+                                                                                                {"tipoMesa",mesas.Tipo }
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
+
 
         public int AgregarProducto(ObjetoProducto producto)
         {

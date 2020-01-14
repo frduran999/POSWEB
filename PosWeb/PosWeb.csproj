@@ -2486,6 +2486,7 @@
     <Content Include="Content\assets\plugins\slimscroll\README.md" />
     <Content Include="Content\assets\plugins\gritter\README.markdown" />
     <Content Include="WebJs\Ventas\Ventas.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\PosWeb20200109110951 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
@@ -2517,6 +2518,7 @@
     <Content Include="Views\Ventas\Ventas.cshtml" />
     <Content Include="Views\Error\SesionExpirada.cshtml" />
     <Content Include="Views\Caja\Caja.cshtml" />
+    <Content Include="Views\Error\pruebaprint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

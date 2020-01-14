@@ -45,6 +45,7 @@
     <Compile Include="Mapper.cs" />
     <Compile Include="Objetos\ObjetoCabVenta.cs" />
     <Compile Include="Objetos\ObjetoCaja.cs" />
+    <Compile Include="Objetos\ObjetoEmpleado.cs" />
     <Compile Include="Objetos\ObjetoImpresora.cs" />
     <Compile Include="Objetos\ObjetoMenu.cs" />
     <Compile Include="Objetos\ObjetoFamilia.cs" />

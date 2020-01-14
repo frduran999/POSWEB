@@ -44,14 +44,6 @@ namespace PosWeb.Controllers
         [Autorizacion]
         public ActionResult AgregarFamilia()
         {
-            //List<string> Impresoras = new List<string>();
-            //foreach (String strPrinter in System.Drawing.Printing.PrinterSettings.InstalledPrinters)
-            //{
-            //    Impresoras.Add(strPrinter);
-            //}
-
-            //ViewBag.Impresoras = Impresoras;
-
             IEnumerable<ObjetoFamilia> ListaFamilia = Acceso.ListadoFamilia();
             ViewBag.ListadoFamilia = ListaFamilia;
 
@@ -188,11 +180,6 @@ namespace PosWeb.Controllers
         [HttpPost]
         public JsonResult AgregarProductos(string _Producto, string _Familia, string _Umedida, string _Precio, string _Receta)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
-
             ObjetoProducto producto = new ObjetoProducto();
             if (!string.IsNullOrEmpty(_Producto) && !string.IsNullOrEmpty(_Familia) && !string.IsNullOrEmpty(_Umedida) && !string.IsNullOrEmpty(_Precio) && !string.IsNullOrEmpty(_Receta))
             {
