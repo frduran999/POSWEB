@@ -17,6 +17,12 @@ namespace PosWeb.Controllers
         [Autorizacion]
         public ActionResult Ventas()
         {
+            IEnumerable<SelectListItem> listGarzones = Acceso.listarGarzones().Select(c => new SelectListItem()
+            {
+                Text = c.Nombre,
+                Value = c.IdEmpleado.ToString()
+            }).ToList();
+            ViewBag.garzones = listGarzones;
             return View();
         }
 
@@ -28,10 +34,6 @@ namespace PosWeb.Controllers
 
         public JsonResult grillaFamilia()
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
             ObjetoFamilia tablaFamilia = new ObjetoFamilia();
             List<ObjetoFamilia> tablaFamiliaLista = new List<ObjetoFamilia>();
 
@@ -40,7 +42,6 @@ namespace PosWeb.Controllers
             if (ListadoFamilia != null)
             {
                 return Json(new { list = ListadoFamilia }, JsonRequestBehavior.AllowGet);
-                //return Json(new { list = ListadoFamilia, Mensaje = ViewBag.mensaje }, JsonRequestBehavior.AllowGet);
             }
             else
             {
@@ -51,10 +52,6 @@ namespace PosWeb.Controllers
 
         public JsonResult grillaProductos(int _idFamilia)
         {
-            if (SessionVariables.Session_Datos_Usuarios == null)
-            {
-                RedirectToAction("SesionExpirada", "Error");
-            }
             if (_idFamilia != 0)
             {
                 var ListadoProductos = Acceso.grillaProductos(_idFamilia);
@@ -78,7 +75,6 @@ namespace PosWeb.Controllers
 
         public JsonResult detalleVenta(int _idProducto)
         {
-
             if (_idProducto != 0)
             {
                 var listadoDetalle = Acceso.tablaDetalleVenta(_idProducto);
@@ -134,6 +130,35 @@ namespace PosWeb.Controllers
             return Json(-1);
         }
 
+        public JsonResult agregarMesa(string _numMesa, string _tipo)
+        {
+            var respuesta = 0;
+            ObjetoMesa mesas = new ObjetoMesa();
+            if (!string.IsNullOrEmpty(_numMesa) && !string.IsNullOrEmpty(_tipo))
+            {
+                mesas.Numero = int.Parse(_numMesa);
+                mesas.Tipo = _tipo;
+                
+                respuesta = Acceso.agregarMesa(mesas);
+                if (respuesta == -666)
+                {
+                    return Json(respuesta);
+                }
+                if (respuesta > 0)
+                {
+                    return Json(respuesta);
+                }
+                else
+                {
+                    return Json(-2);
+                }
+            }
+            else
+            {
+                return Json(-1);
+            }
+        }
+
         #region Opc.Caja
 
         public JsonResult aperturaCaja(string _montoApertura, string _glosaApertura)
@@ -181,12 +206,23 @@ namespace PosWeb.Controllers
         {
             if (!string.IsNullOrEmpty(_glosaCierre))
             {
-                return Json(1);
+                var idUsuario = SessionVariables.Session_Datos_Usuarios.IdUsuario;
+                RespuestaModel result = Acceso.cierreCaja(idUsuario,_glosaCierre);
+
+                return Json(result);
             }
             else
             {
                 return null;
             }
+        }
+
+        public JsonResult validaApertura()
+        {
+            var idUsuario = SessionVariables.Session_Datos_Usuarios.IdUsuario;
+            RespuestaModel result = Acceso.validaApertura(idUsuario);
+            
+            return Json(result);
         }
 
         #endregion

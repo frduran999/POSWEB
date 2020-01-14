@@ -23,6 +23,7 @@ namespace BLL
             {
                 for (var i = 0; i < data.Rows.Count; i++)
                 {
+                    //return UTIL.Mapper.BindData<ObjetoUsuario>(data);
                     var validador = new object();
 
                     validador = data.Rows[i].Field<object>("Id");
@@ -133,6 +134,30 @@ namespace BLL
             return Listado;
         }
 
+        public List<ObjetoEmpleado> listarGarzones()
+        {
+            var Listado = new List<ObjetoEmpleado>();
+            var data = new Conector().EjecutarProcedimiento("listarGarzones", new System.Collections.Hashtable());
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoEmpleado();
+
+                    validador = data.Rows[i].Field<object>("id");
+                    resultadoListado.IdEmpleado = validador != null ? data.Rows[i].Field<int>("id") : -1;
+
+                    validador = data.Rows[i].Field<object>("nombre");
+                    resultadoListado.Nombre = validador != null ? data.Rows[i].Field<string>("nombre") : "NO ASIGNADO";
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         public int grabaReceta(string receta)
         {
             int respuesta = 0;
@@ -231,7 +256,7 @@ namespace BLL
 
         public int aperturaCaja(ObjetoCaja caja)
         {
-            int respuesta = 0;
+            int respuesta = 0; 
             try
             {
                 var Listado = new List<ObjetoProducto>();
@@ -362,6 +387,74 @@ namespace BLL
             return Listado;
         }
 
+        public RespuestaModel validaApertura(int idUsuario)
+        {
+            RespuestaModel resp = new RespuestaModel();
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("validaApertura", new System.Collections.Hashtable()
+                {
+                    {"idUsuario",idUsuario }
+                });
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+
+                        validador = data.Rows[i].Field<object>("Verificador");
+                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
+                    }
+                }
+                else
+                {
+                    resp = null;
+                }
+            }
+            catch(Exception ex)
+            {
+                throw;
+            }   
+            return resp;
+
+        }
+
+        public RespuestaModel cierreCaja(int idUsuario, string glosaCierre)
+        {
+            RespuestaModel resp = new RespuestaModel();
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("cierreCaja", new System.Collections.Hashtable()
+                {
+                    {"idUsuario",idUsuario },
+                    {"glosaCierre",glosaCierre }
+                });
+                if (data.Rows.Count > 0)
+                {
+                    for (var i = 0; i < data.Rows.Count; i++)
+                    {
+                        var validador = new object();
+
+                        validador = data.Rows[i].Field<object>("Verificador");
+                        resp.Verificador = validador != null ? data.Rows[i].Field<bool>("Verificador") : false;
+
+                        validador = data.Rows[i].Field<object>("Mensaje");
+                        resp.Mensaje = validador != null ? data.Rows[i].Field<string>("Mensaje") : "NO ASIGNADO";
+                    }
+                }
+                else
+                {
+                    resp = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            return resp;
+
+        }
+
         #region Productos
 
         public List<ObjetoProducto> ObtenerProducto(int IdProducto)
@@ -444,6 +537,29 @@ namespace BLL
             }
             return Listado;
         }
+
+        public int agregarMesa(ObjetoMesa mesas)
+        {
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("agregarMesas", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"numMesa", mesas.Numero},
+                                                                                                {"tipoMesa",mesas.Tipo }
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
+
 
         public int AgregarProducto(ObjetoProducto producto)
         {

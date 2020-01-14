@@ -12,5 +12,10 @@ namespace PosWeb.Controllers
         {
             return View();
         }
+
+        public ActionResult pruebaprint()
+        {
+            return View();
+        }
     }
 }

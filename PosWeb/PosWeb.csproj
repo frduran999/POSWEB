@@ -122,6 +122,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CajaController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
@@ -2392,6 +2393,7 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="WebJs\Base.js" />
+    <Content Include="WebJs\Caja\Caja.js" />
     <Content Include="WebJs\Login\Login.js" />
     <Content Include="WebJs\Productos\AgregarFamilia.js" />
     <Content Include="WebJs\Productos\AgregarProducto.js" />
@@ -2484,6 +2486,8 @@
     <Content Include="Content\assets\plugins\slimscroll\README.md" />
     <Content Include="Content\assets\plugins\gritter\README.markdown" />
     <Content Include="WebJs\Ventas\Ventas.js" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\PosWeb20200109110951 - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -2513,6 +2517,8 @@
     <Content Include="Views\Productos\CrearReceta.cshtml" />
     <Content Include="Views\Ventas\Ventas.cshtml" />
     <Content Include="Views\Error\SesionExpirada.cshtml" />
+    <Content Include="Views\Caja\Caja.cshtml" />
+    <Content Include="Views\Error\pruebaprint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

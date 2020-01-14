@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Caja";
+}
+
+<div class="form-horizontal form-label-left input_mask">
+    <div class="form-horizontal form-bordered">
+        <div class="form-group row">
+            <div class="col-3">
+                <button class="form-control has-feedback-left btn btn-primary" id="aperturaCaja">Apertura Caja</button>
+            </div>
+            <div class="col-2">
+                <button class="form-control has-feedback-left btn btn-primary" id="retirarCaja">Retiro Caja</button>
+            </div>
+            <div class="col-2">
+                <button class="form-control has-feedback-left btn btn-primary" id="cerrarCaja">Cierre Caja</button>
+            </div>
+        </div>
+    </div>
+    <hr />
+    <form class="form-horizontal form-bordered">
+        <div class="form-group row" style="display:none" id="modalApertura">
+            <div class="col-lg-12">
+                <center><h4 class="text-warning">Apertura</h4></center>
+            </div>
+            <label class="col-xs-2 col-form-label">Monto</label>
+            <div class="">
+                <input type="number" required class="form-control has-feedback-left" id="montoApertura" name="montoApertura" placeholder="Monto Apertura">
+            </div>
+            <div class="">
+                <input type="text" required class="form-control has-feedback-left" id="glosaApertura" name="glosaApertura" placeholder="Glosa">
+            </div>
+            <div class="">
+                <button class="form-control has-feedback-left btn btn-info" id="abrirCaja">Abrir Caja</button>
+            </div>
+        </div>
+        <div class="form-group row" style="display:none" id="modalRetiro">
+            <div class="col-lg-12">
+                <center><h4 class="text-warning">Retiro</h4></center>
+            </div>
+            <label class="col-xs-2 col-form-label">Monto</label>
+            <div class="">
+                <input type="number" required class="form-control has-feedback-left" id="montoRetiro" name="montoRetiro" placeholder="Monto Retiro">
+            </div>
+            <div class="">
+                <input type="text" required class="form-control has-feedback-left" id="glosaRetiro" name="glosaRetiro" placeholder="Glosa">
+            </div>
+            <div class="">
+                <button class="form-control has-feedback-left btn btn-info" id="retiroCaja">Retiro Caja</button>
+            </div>
+        </div>
+        <div class="form-group row" style="display:none" id="modalCierre">
+            <div class="col-lg-12">
+                <center><h4 class="text-warning">Cierre Caja</h4></center>
+            </div>
+            <label class="col-xs-2 col-form-label">Monto</label>
+            <div class="">
+                <input type="text" required class="form-control has-feedback-left" id="glosaCierre" name="glosaCierre" placeholder="Glosa">
+            </div>
+            <div class="">
+                <button class="form-control has-feedback-left btn btn-info" id="cierreCaja">Cerrar Caja</button>
+            </div>
+        </div>
+    </form>
+    <div class="ln_solid"></div>
+</div>
+<script src="~/WebJs/Caja/Caja.js"></script>

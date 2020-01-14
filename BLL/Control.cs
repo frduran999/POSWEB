@@ -79,6 +79,10 @@ namespace BLL
 
         #endregion
 
+        public int agregarMesa(ObjetoMesa mesas)
+        {
+            return Acceso.agregarMesa(mesas);
+        }
 
         public List<ObjetoMesa> ObtenerMesas()
         {
@@ -93,6 +97,11 @@ namespace BLL
         public List<ObjetoProducto> ListaIngredientes()
         {
             return Acceso.ListaIngredientes();
+        }
+
+        public List<ObjetoEmpleado> listarGarzones()
+        {
+            return Acceso.listarGarzones();
         }
 
         public int grabaReceta(string receta)
@@ -130,5 +139,16 @@ namespace BLL
         {
             return Acceso.eliminarReceta(receta);
         }
+
+        public RespuestaModel validaApertura(int idUsuario)
+        {
+            return Acceso.validaApertura(idUsuario);
+        }
+
+        public RespuestaModel cierreCaja(int idUsuario, string glosaCierre)
+        {
+            return Acceso.cierreCaja(idUsuario, glosaCierre);
+        }
+
     }
 }
