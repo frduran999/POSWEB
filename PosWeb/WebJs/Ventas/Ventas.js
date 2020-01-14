@@ -1,7 +1,29 @@
-﻿$(document).ready(function () {
-    
+﻿function validaApertura() {
+    $.ajax({
+        type: "POST",
+        url: "validaApertura",
+        data: {},
+        async: true,
+        success: function (result) {
+            if (result.Verificador == true) {
+                estadoCaja = 1;
+                $("#aperturaCaja").hide();
+                //$("#cerrarCaja").show();
+                //$("#retirarCaja").show();
+            } else {
+                estadoCaja = 0;
+                $("#aperturaCaja").show();
+                $("#cerrarCaja").hide();
+                $("#retirarCaja").hide();
+            }
+        }
+    });
+}
+$(document).ready(validaApertura);
+
+$(document).ready(function () {
+    var estadoCaja = 0;
     var tablaMesas = $("#tablaMesas");
-    var cont = 0;
     var htmlMesas = "";
     $.ajax({
         type: "GET",
@@ -39,25 +61,37 @@
                 alert("Error");
             } else {
                 $("#tablaFamilia").html("");
+                var htmlBotones = "";
+                var par = 0;
+                var impar = 1;
                 $.each(data.list, function (index, value) {
                     var familia = value.Familia.replace(" ", "");
-                    var htmlBotones = "<tr><td>" +
+                    if (index == par) {
+                        htmlBotones += "<tr>";
+                    } else {
+                        par = par + 2;
+                    }
+                        htmlBotones += "<td>" +
                         "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary btn-xs' onclick='getProductos(" + value.IdFamilia + ")'" +
-                        "id='" + familia + "' > " + value.Familia + "</button ></td ></tr>";
-                    tablaFamilia.append(htmlBotones);
+                        "id='" + familia + "' > " + value.Familia + "</button ></td >";
+                    if (index == impar) {
+                        htmlBotones += "</tr>";
+                    } else {
+                        impar = impar + 2;
+                    }
                 });
+                tablaFamilia.append(htmlBotones);
             }
         }
     });
 
     document.getElementById("guardarVenta").onclick = function () {
-        validaApertura();
-        if (estadoCaja <= 0) {
+        if (estadoCaja == 1) {
             alert("Debe abrir caja");
         }
         else {
             var totalPropina = $("#totalPropina").html();
-            var idGarzon = Parseint(document.getElementById("idGarzon").value);
+            var idGarzon = parseInt(document.getElementById("idGarzon").value);
             var Propina = $("#propina").html();
             dataCabecera.push({ NumMesa: numeroMesa, IdGarzon: idGarzon, Total: total, Propina: Propina })
             if (total < 0 || total == "" && idGarzon == 0 || idGarzon == '') {
@@ -83,7 +117,6 @@
         $("#montoRetiro").val("");
         $("#glosaRetiro").val("");
         $("#glosaCierre").val("");
-        validaApertura();
     }
 
     document.getElementById("aperturaCaja").onclick = function () {
@@ -125,8 +158,11 @@
                 success: function (data) {
                     if (data > 0) {
                         alert("Caja Abierta. Num°: " + data);
-                        $("#modalCierre").show();
-                        location.reload();
+                        estadoCaja = 1;
+                        $("#aperturaCaja").hide();
+                        $("#modalApertura").hide();
+                        $("#retirarCaja").show();
+                        $("#cerrarCaja").show();
                     }
                     else {
                         alert("Caja Abierta");
@@ -207,7 +243,7 @@ function getProductos(idFamilia) {
                     if (index == 0 || index == 2 || index == 4 || index == 6 || index == 8 || index == 10) {
                         htmlBotonesProd += "<tr>";
                     }
-                    htmlBotonesProd += "<td><button value='" + value.IdProducto + "' class='form-control btn btn-primary' onclick='detalleVenta(" + value.IdProducto + ")'" +
+                    htmlBotonesProd += "<td><button value='" + value.IdProducto + "' class='form-control btn btn-primary btn-xs' onclick='detalleVenta(" + value.IdProducto + ")'" +
                         "id='" + producto + "' > " + value.Producto + "</button ></td >";
                     if (index == 1 || index == 3 || index == 5 || index == 7 || index == 9 || index == 11) {
                         htmlBotonesProd += "</tr>";
@@ -272,7 +308,10 @@ function agregarCantidad(linea) {
 }
 
 function restarCantidad(linea) {
-    logicaCantidad(linea, -1);
+    var cantidadActual = parseInt($("#cantidad" + linea).html());
+    if (cantidadActual != 1) {
+        logicaCantidad(linea, -1);
+    }
 }
 
 function logicaCantidad(linea, valor) {
@@ -328,28 +367,8 @@ function guardarMesa(numMesa) {
     $("#modalMesas").hide();
 }
 
-var estadoCaja = 0;
-function validaApertura() {
-    $.ajax({
-        type: "POST",
-        url: "validaApertura",
-        data: {},
-        async: true,
-        success: function (result) {
-            if (result.Verificador == true) {
-                estadoCaja = 1;
-                $("#aperturaCaja").hide();
-                //$("#cerrarCaja").show();
-                //$("#retirarCaja").show();
-            } else {
-                estadoCaja = 0;
-                $("#aperturaCaja").show();
-                $("#cerrarCaja").hide();
-                $("#retirarCaja").hide();
-            }
-        }
-    });
-}
+
+
 
 function agregarMesa() {
     var tablaMesas = $("#tablaMesas");

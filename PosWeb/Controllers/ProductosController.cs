@@ -20,9 +20,11 @@ namespace PosWeb.Controllers
         [Autorizacion]
         public ActionResult AgregarProductos()
         {
+            //datos de las tablas JQUERY
             IEnumerable<ObjetoProducto> ListaProductos = Acceso.ListadoProductos();
             ViewBag.ListadoProductos = ListaProductos;
 
+            //datos para select HTML
             IEnumerable<SelectListItem> ListaFamilia = Acceso.ListadoFamilia().Select(c => new SelectListItem()
             {
                 Text = c.Familia,
@@ -30,6 +32,7 @@ namespace PosWeb.Controllers
             }).ToList();
             ViewBag.Familia = ListaFamilia;
 
+            //datos para select HTML
             IEnumerable<SelectListItem> ListaReceta = Acceso.ListadoReceta().Select(c => new SelectListItem()
             {
                 Text = c.Nombre,
