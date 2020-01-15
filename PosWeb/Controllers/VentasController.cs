@@ -32,6 +32,12 @@ namespace PosWeb.Controllers
             return Json(new { list = lmesas }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult obtenerGarzones()
+        {
+            List<ObjetoEmpleado> lgarzones = Acceso.obtenerGarzones();
+            return Json(new { list = lgarzones }, JsonRequestBehavior.AllowGet);
+        }
+
         public JsonResult grillaFamilia()
         {
             ObjetoFamilia tablaFamilia = new ObjetoFamilia();
@@ -140,6 +146,90 @@ namespace PosWeb.Controllers
                 mesas.Tipo = _tipo;
                 
                 respuesta = Acceso.agregarMesa(mesas);
+                if (respuesta == -666)
+                {
+                    return Json(respuesta);
+                }
+                if (respuesta > 0)
+                {
+                    return Json(respuesta);
+                }
+                else
+                {
+                    return Json(-2);
+                }
+            }
+            else
+            {
+                return Json(-1);
+            }
+        }
+
+        public JsonResult eliminarMesa(string _numeroMesa)
+        {
+            var respuesta = 0;
+            ObjetoMesa mesas = new ObjetoMesa();
+            if (!string.IsNullOrEmpty(_numeroMesa))
+            {
+                mesas.Numero = int.Parse(_numeroMesa);
+
+                respuesta = Acceso.eliminarMesa(mesas);
+                if (respuesta == -666)
+                {
+                    return Json(respuesta);
+                }
+                if (respuesta > 0)
+                {
+                    return Json(respuesta);
+                }
+                else
+                {
+                    return Json(-2);
+                }
+            }
+            else
+            {
+                return Json(-1);
+            }
+        }
+
+        public JsonResult agregarGarzon(string _nombreGarzon)
+        {
+            var respuesta = 0;
+            ObjetoEmpleado garzon = new ObjetoEmpleado();
+            if (!string.IsNullOrEmpty(_nombreGarzon))
+            {
+                garzon.Nombre = _nombreGarzon;
+
+                respuesta = Acceso.agregarGarzon(garzon);
+                if (respuesta == -666)
+                {
+                    return Json(respuesta);
+                }
+                if (respuesta > 0)
+                {
+                    return Json(respuesta);
+                }
+                else
+                {
+                    return Json(-2);
+                }
+            }
+            else
+            {
+                return Json(-1);
+            }
+        }
+
+        public JsonResult eliminarGarzon(string _idGarzon)
+        {
+            var respuesta = 0;
+            ObjetoEmpleado garzon = new ObjetoEmpleado();
+            if (!string.IsNullOrEmpty(_idGarzon))
+            {
+                garzon.IdEmpleado = int.Parse(_idGarzon);
+
+                respuesta = Acceso.eliminarGarzon(garzon);
                 if (respuesta == -666)
                 {
                     return Json(respuesta);

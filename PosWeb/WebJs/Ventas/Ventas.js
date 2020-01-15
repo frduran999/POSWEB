@@ -22,6 +22,8 @@
 $(document).ready(validaApertura);
 
 $(document).ready(function () {
+    $('.combobox').combobox();
+
     var estadoCaja = 0;
     var tablaMesas = $("#tablaMesas");
     var htmlMesas = "";
@@ -50,37 +52,28 @@ $(document).ready(function () {
     });
     $("#modalMesas").show();
 
-    var tablaFamilia = $("#tablaFamilia");
-    $("#tablaDetalle").html("");
+    var tablaGarzones = $("#tablaGarzones");
+    var htmlGarzones = "";
     $.ajax({
         type: "GET",
-        url: "grillaFamilia",
+        url: "obtenerGarzones",
+        data: {},
         async: true,
         success: function (data) {
             if (data == 0) {
                 alert("Error");
             } else {
-                $("#tablaFamilia").html("");
-                var htmlBotones = "";
-                var par = 0;
-                var impar = 1;
                 $.each(data.list, function (index, value) {
-                    var familia = value.Familia.replace(" ", "");
-                    if (index == par) {
-                        htmlBotones += "<tr>";
-                    } else {
-                        par = par + 2;
+                    if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                        htmlGarzones += "<tr id='linea" + value.IdEmpleado + "'>";
                     }
-                        htmlBotones += "<td>" +
-                        "<button value='" + value.IdFamilia + "' class='form-control btn btn-primary btn-xs' onclick='getProductos(" + value.IdFamilia + ")'" +
-                        "id='" + familia + "' > " + value.Familia + "</button ></td >";
-                    if (index == impar) {
-                        htmlBotones += "</tr>";
-                    } else {
-                        impar = impar + 2;
+                    htmlGarzones += "<td><button id='numGarzon" + value.IdEmpleado + "' class='btn-lg btn btn - primary myButton'" +
+                        "onclick = 'guardarGarzon(" + value.IdEmpleado + ")' >" + value.Nombre + "</button ></td > ";
+                    if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                        htmlGarzones += "</tr>";
                     }
                 });
-                tablaFamilia.append(htmlBotones);
+                tablaGarzones.append(htmlGarzones);
             }
         }
     });
@@ -367,8 +360,12 @@ function guardarMesa(numMesa) {
     $("#modalMesas").hide();
 }
 
-
-
+var numeroGarzon = 0;
+function guardarGarzon(numGarzon) {
+    numeroGarzon = numGarzon;
+    $("#modalGarzon").modal('hide');
+    $("#modalGarzon").hide();
+}
 
 function agregarMesa() {
     var tablaMesas = $("#tablaMesas");
@@ -381,7 +378,34 @@ function agregarMesa() {
         async: true,
         success: function (data) {
             if (data == -666) {
-                alert("Mesa ya existe");
+                $.ajax({
+                    type: "GET",
+                    url: "obtenerMesa",
+                    data: {},
+                    async: true,
+                    success: function (data) {
+                        if (data == 0) {
+                            alert("Error");
+                        } else {
+                            htmlMesas = "";
+                            tablaMesas.empty();
+                            tablaMesas.hide();
+                            $.each(data.list, function (index, value) {
+                                if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                                    htmlMesas += "<tr id='linea" + value.Numero + "'>";
+                                }
+                                htmlMesas += "<td><button id='mesa" + value.Numero + "' class='btn-lg btn btn - primary myButton'" +
+                                    "onclick = 'guardarMesa(" + value.Numero + ")' > mesa " + value.Numero + "</button ></td > ";
+                                if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                                    htmlMesas += "</tr>";
+                                }
+                            });
+                            tablaMesas.append(htmlMesas);
+                        }
+                        tablaMesas.show();
+                        $("#agregarMesa").modal('hide');
+                    }
+                });
             }
             if (data == -1) {
                 alert("Debe ingresar numero de mesa");
@@ -413,6 +437,186 @@ function agregarMesa() {
                         }
                         tablaMesas.show();
                         $("#agregarMesa").modal('hide');
+                    }
+                });
+            }
+        }
+    });
+}
+
+function eliminarMesa() {
+    var tablaMesas = $("#tablaMesas");
+    var numeroMesa = $("#modNumMesa").val();
+    $.ajax({
+        type: "POST",
+        url: "eliminarMesa",
+        data: { _numeroMesa: numeroMesa },
+        async: true,
+        success: function (data) {
+            if (data == -666) {
+                alert("Mesa Ingresada no es Valida");
+            }
+            if (data == -1) {
+                alert("Debe Ingresar Numero de Mesa");
+            }
+            if (data > 0) {
+                alert("Mesa Eliminada");
+                $.ajax({
+                    type: "GET",
+                    url: "obtenerMesa",
+                    data: {},
+                    async: true,
+                    success: function (data) {
+                        if (data == 0) {
+                            alert("Error");
+                        } else {
+                            htmlMesas = "";
+                            tablaMesas.empty();
+                            tablaMesas.hide();
+                            $.each(data.list, function (index, value) {
+                                if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                                    htmlMesas += "<tr id='linea" + value.Numero + "'>";
+                                }
+                                htmlMesas += "<td><button id='mesa" + value.Numero + "' class='btn-lg btn btn - primary myButton'" +
+                                    "onclick = 'guardarMesa(" + value.Numero + ")' > mesa " + value.Numero + "</button ></td > ";
+                                if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                                    htmlMesas += "</tr>";
+                                }
+                            });
+                            tablaMesas.append(htmlMesas);
+                        }
+                        tablaMesas.show();
+                        $("#eliminarMesa").modal('hide');
+                    }
+                });
+            }
+        }
+    });
+}
+
+function agregarGarzon() {
+    var tablaGarzones = $("#tablaGarzones");
+    var nombreGarzon = $("#idNombreGarzon").val();
+    $.ajax({
+        type: "POST",
+        url: "agregarGarzon",
+        data: { _nombreGarzon: nombreGarzon },
+        async: true,
+        success: function (data) {
+            if (data == -666) {
+                alert("Nombre de Garzon Existente");
+                $.ajax({
+                    type: "GET",
+                    url: "obtenerGarzones",
+                    data: {},
+                    async: true,
+                    success: function (data) {
+                        if (data == 0) {
+                            alert("Error");
+                        } else {
+                            htmlGarzones = "";
+                            tablaGarzones.empty();
+                            tablaGarzones.hide();
+                            $.each(data.list, function (index, value) {
+                                if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                                    htmlGarzones += "<tr id='linea" + value.IdEmpleado + "'>";
+                                }
+                                htmlGarzones += "<td><button id='numGarzon" + value.IdEmpleado + "' class='btn-lg btn btn - primary myButton'" +
+                                    "onclick = 'guardarGarzon(" + value.IdEmpleado + ")' >" + value.Nombre + "</button ></td > ";
+                                if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                                    htmlGarzones += "</tr>";
+                                }
+                            });
+                            tablaGarzones.append(htmlGarzones);
+                            location.reload();
+                        }
+                        tablaGarzones.show();
+                        $("#agregarGarzon").modal('hide');
+                    }
+                });
+            }
+            if (data == -1) {
+                alert("Debe Nombre de Garzon");
+            }
+            if (data > 0) {
+                alert("Garzon fue Agregado");
+                $.ajax({
+                    type: "GET",
+                    url: "obtenerGarzones",
+                    data: {},
+                    async: true,
+                    success: function (data) {
+                        if (data == 0) {
+                            alert("Error");
+                        } else {
+                            htmlGarzones = "";
+                            tablaGarzones.empty();
+                            tablaGarzones.hide();
+                            $.each(data.list, function (index, value) {
+                                if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                                    htmlGarzones += "<tr id='linea" + value.idEmpleado + "'>";
+                                }
+                                htmlGarzones += "<td><button id='mesa" + value.idEmpleado + "' class='btn-sm btn btn-primary myButton'" +
+                                    "onclick = 'guardarGarzon(" + value.idEmpleado + ")' >" + value.Nombre + "</button ></td > ";
+                                if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                                    htmlGarzones += "</tr>";
+                                }
+                            });
+                            tablaGarzones.append(htmlGarzones);
+                            location.reload();
+                        }
+                        //tablaGarzones.show();
+                        //$("#agregarGarzon").modal('hide');
+                    }
+                });
+            }
+        }
+    });
+}
+
+function eliminaGarzon() {
+    var tablaGarzones = $("#tablaGarzones");
+    var idGarzon = $("#modIdGarzon").val();
+    $.ajax({
+        type: "POST",
+        url: "eliminarGarzon",
+        data:{ _idGarzon: idGarzon },
+        async: true,
+        success: function (data) {
+            if (data == -666) {
+                alert("Garzon Ingresada no es Valido");
+            }
+            if (data == -1) {
+                alert("Debe Ingresar Garzon");
+            }
+            if (data > 0) {
+                alert("Garzon fue Agregado");
+                $.ajax({
+                    type: "GET",
+                    url: "obtenerGarzones",
+                    data: {},
+                    async: true,
+                    success: function (data) {
+                        if (data == 0) {
+                            alert("Error");
+                        } else {
+                            htmlGarzones = "";
+                            tablaGarzones.empty();
+                            tablaGarzones.hide();
+                            $.each(data.list, function (index, value) {
+                                if (index == 0 || index == 4 || index == 8 || index == 12 || index == 16 || index == 20) {
+                                    htmlGarzones += "<tr id='linea" + value.IdEmpleado + "'>";
+                                }
+                                htmlGarzones += "<td><button id='numGarzon" + value.IdEmpleado + "' class='btn-lg btn btn - primary myButton'" +
+                                    "onclick = 'guardarGarzon(" + value.IdEmpleado + ")' >" + value.Nombre + "</button ></td > ";
+                                if (index == 3 || index == 7 || index == 11 || index == 15 || index == 19) {
+                                    htmlGarzones += "</tr>";
+                                }
+                            });
+                            tablaGarzones.append(htmlGarzones);
+                        }
+                        tablaGarzones.show();
+                        $("#eliminarGarzon").modal('hide');
                     }
                 });
             }
