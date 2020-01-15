@@ -387,6 +387,37 @@ namespace BLL
             return Listado;
         }
 
+        public List<ObjetoEmpleado> obtenerGarzones()
+        {
+            var Listado = new List<ObjetoEmpleado>();
+            var data = new Conector().EjecutarProcedimiento("obtenerGarzones", new System.Collections.Hashtable()
+            { });
+
+            if (data.Rows.Count > 0)
+            {
+                for (var i = 0; i < data.Rows.Count; i++)
+                {
+                    var validador = new object();
+                    var resultadoListado = new ObjetoEmpleado();
+
+                    validador = data.Rows[i].Field<object>("id");
+                    resultadoListado.IdEmpleado = validador != null ? data.Rows[i].Field<int>("id") : -1;
+
+                    validador = data.Rows[i].Field<object>("nombre");
+                    resultadoListado.Nombre = validador != null ? data.Rows[i].Field<string>("nombre") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("cargo");
+                    resultadoListado.Cargo = validador != null ? data.Rows[i].Field<string>("cargo") : "NO ASIGNADO";
+
+                    validador = data.Rows[i].Field<object>("estado");
+                    resultadoListado.Estado = validador != null ? data.Rows[i].Field<int>("estado") : -1;
+
+                    Listado.Add(resultadoListado);
+                }
+            }
+            return Listado;
+        }
+
         public RespuestaModel validaApertura(int idUsuario)
         {
             RespuestaModel resp = new RespuestaModel();
@@ -560,6 +591,68 @@ namespace BLL
             return respuesta;
         }
 
+        public int agregarGarzon(ObjetoEmpleado garzon)
+        {
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("agregarGarzon", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"nombreGarzon", garzon.Nombre}
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
+
+        public int eliminarMesa(ObjetoMesa mesas)
+        {
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("eliminarMesa", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"numMesa", mesas.Numero}
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
+
+        public int eliminarGarzon(ObjetoEmpleado garzon)
+        {
+            int respuesta = 0;
+            try
+            {
+                var data = new Conector().EjecutarProcedimiento("eliminarGarzon", new System.Collections.Hashtable()
+                                                                                            {
+                                                                                                {"idEmpleado", garzon.IdEmpleado}
+                });
+                if (data.Rows.Count > 0)
+                {
+                    respuesta = int.Parse(data.Rows[0][0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                new CapturaExcepciones(ex);
+            }
+            return respuesta;
+        }
 
         public int AgregarProducto(ObjetoProducto producto)
         {

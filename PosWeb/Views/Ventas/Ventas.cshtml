@@ -24,6 +24,7 @@
         }
 </style>
 <!-- ================== BEGIN PAGE CSS STYLE ================== -->
+<link href="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/css/bootstrap-combobox.css" rel="stylesheet" />
 <!-- ================== END PAGE CSS STYLE ================== -->
 <!-- begin page-header -->
 @*<h1 class="page-header">Ventas</h1>*@
@@ -34,7 +35,7 @@
     <div class="row col-lg-12">
         <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#modalOpcCaja" id="modalOpciones">Opc. Caja</button>
         <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalMesas" id="">Mesas</button>
-        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalEmpleados" id="modalOpciones">Garzones</button>
+        <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modalGarzon" id="modalGarzones">Garzones</button>
         <label id="nombreGarzon"></label>
     </div>
     <br />
@@ -150,8 +151,33 @@
             <div class="modal-footer">
                 @if (SessionVariables.Session_Datos_Usuarios.Perfil == 1)
                 {
-                    <button type="button" id="btnCerrarModal" class="btn btn-success" data-toggle="modal" data-target="#agregarMesa">Agregar Mesa</button>
-                    <button type="button" id="btnCerrarModal" class="btn btn-danger" data-toggle="modal" data-target="#eliminarMesa">Eliminar</button>
+                    <button type="button" id="addMesa" class="btn btn-success" data-toggle="modal" data-target="#agregarMesa">Agregar Mesa</button>
+                    <button type="button" id="delMesa" class="btn btn-danger" data-toggle="modal" data-target="#eliminarMesa">Eliminar</button>
+                }
+                <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal" onclick="cerrarModal()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="modalGarzon" style="display:none">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h4 class="modal-title">Garzones</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-hidden="true">×</button>
+            </div>
+            <div class="modal-body" style="height: 320px; overflow-y: auto;">
+                <div class="table-responsive">
+                    <table id="tablaGarzones"></table>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                @if (SessionVariables.Session_Datos_Usuarios.Perfil == 1)
+                {
+                    <button type="button" id="addGarzon" class="btn btn-success" data-toggle="modal" data-target="#agregarGarzon">Agregar Garzon</button>
+                    <button type="button" id="delGarzon" class="btn btn-danger" data-toggle="modal" data-target="#eliminarGarzon">Eliminar</button>
                 }
                 <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal" onclick="cerrarModal()">Cerrar</button>
             </div>
@@ -178,6 +204,7 @@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" onclick="agregarMesa()">Agregar</button>
+                <button type="button" id="btnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -194,13 +221,80 @@
                     <div class="form-group row">
                         <label class="col-xs-3 col-form-label">Num Mesa</label>
                         <div class="col-xs-4">
-                            <input type="number" required class="form-control has-feedback-left" id="Familia" name="Familia" placeholder="Numero Mesa">
+                            <input type="number" required class="form-control has-feedback-left" id="modNumMesa" name="modNumMesa" placeholder="Numero Mesa">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" id="btnCerrarModal" class="btn btn-danger" data-dismiss="modal">Eliminar</button>
+                <button type="button" id="btnCerrarModal" class="btn btn-danger" onclick="eliminarMesa()">Eliminar</button>
+                <button type="button" id="btnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="agregarGarzon" style="display:none">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-primary">Agregar Garzon</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="x_content">
+                    <br />
+                    <div class="form-horizontal form-label-left input_mask">
+                        <form class="form-horizontal form-bordered">
+                            <div class="form-group row">
+                                <label class="col-xs-2 col-form-label">Nombre:</label>
+                                <div class="">
+                                    <input type="text" required class="form-control has-feedback-left" id="idNombreGarzon" name="idNombreGarzon" placeholder="Nombre Garzon">
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ln_solid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="agregarGarzon()">Agregar</button>
+                <button type="button" id="btnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="eliminarGarzon" style="display:none">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="text-primary">Eliminar Garzon</h4>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="x_content">
+                    <br />
+                    <div class="form-horizontal form-label-left input_mask">
+                        <form class="form-horizontal form-bordered">
+                            <div class="form-group row">
+                                <label class="col-xs-2 col-form-label"> Garzones</label>
+                                <div class="">
+                                    @Html.DropDownList("Empleados", (IEnumerable<SelectListItem>)ViewBag.garzones, "Seleccione...", new { @class = "combobox", @ID = "modIdGarzon", @Name = "modIdGarzon" })
+                                </div>
+                            </div>
+                        </form>
+                        <div class="ln_solid"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="eliminaGarzon()">Eliminar </button>
+                <button type="button" id="btnCerrarModal" class="btn btn-warning" data-dismiss="modal">Cerrar</button>
             </div>
         </div>
     </div>
@@ -290,30 +384,7 @@
     </div>
 </div>
 
-<div class="modal" id="modalEmpleados" style="display:none">
-    <div class="modal-dialog modal-dialog-centered modal-sm">
-        <div class="modal-content ">
-            <div class="modal-header">
-                <h4 class="modal-title">Garzones</h4>
-                <button type="button" class="close" data-dismiss="modal" onclick="cerrarModal()" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body" style="height: 150px; overflow-y: auto;">
-                <form class="form-horizontal form-bordered">
-                    <div class="form-group row">
-                        <label class="col-xs-4 col-form-label"> Garzones</label>
-                        <div class="">
-                            @Html.DropDownList("Garzones", (IEnumerable<SelectListItem>)ViewBag.garzones, "Seleccione...", new { @class = "combobox", @ID = "idGarzon", @Name = "idGarzon" })
-                        </div>
-                    </div>
-                </form>
-            </div>
 
-            <div class="modal-footer">
-                <button type="button" id="btnCerrarModal" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div id="divAlertaOkGeneracionNV" style="display: none" class="alert alert-success" role="alert">
     <h4 class="alert-heading">Nota de Venta Generada</h4>
@@ -327,34 +398,7 @@
     <hr>
     <p class="mb-0">Para volver a generar una nueva nota de venta, presione <a href="javascript:location.reload()">aqui</a>.</p>
 </div>
-<a id="aModalTallaColor" style="display: none" href="#modalTallaColor" class="btn btn-sm btn-success" data-toggle="modal">Talla Color</a>
-<div class="modal fade" id="modalTallaColor">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Ingrese Talla y Color</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-lg-3">Bodegas</div>
-                    <div class="col-lg-9">
-                        <select id="modalTallaColorBodegas" class="form-control" style="display: none"></select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div id="modalTallaColorControles"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a id="modalTallaColorAgregarTallaColor" href="javascript:;" class="btn btn-success">Agregar Talla y Color</a>
-                <a id="modalTallaColorCerrar" href="javascript:;" class="btn btn-white" data-dismiss="modal">Cerrar</a>
-            </div>
-        </div>
-    </div>
-</div>
+
 <a id="aModalDescuentos" style="display: none" href="#modalDescuentos" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
 <div class="modal fade" id="modalDescuentos">
     <div class="modal-dialog">
@@ -373,6 +417,7 @@
         </div>
     </div>
 </div>
+
 <a id="aModalDescuentosRealizados" style="display: none" href="#modalDescuentosRealizados" class="btn btn-sm btn-success" data-toggle="modal">Descuentos</a>
 <div class="modal fade" id="modalDescuentosRealizados">
     <div class="modal-dialog">
@@ -390,6 +435,7 @@
         </div>
     </div>
 </div>
+
 <a id="aModalAgregarDireccionDespacho" style="display: none" href="#modalAgregarDireccionDespacho" class="btn btn-sm btn-success" data-toggle="modal">Agregar Direccion Despacho</a>
 <div class="modal fade" id="modalAgregarDireccionDespacho">
     <div class="modal-dialog">
@@ -440,5 +486,6 @@
 <script src="~/Content/assets/plugins/jquery-migrate/dist/jquery-migrate.min.js"></script>
 <script src="~/Content/assets/plugins/jquery-mockjax/dist/jquery.mockjax.min.js"></script>
 <script src="~/Content/assets/plugins/moment/moment.js"></script>
+<script src="~/Content/assets/plugins/danielfarrell/bootstrap-combobox/js/bootstrap-combobox.js"></script>
 <script src="~/WebJs/Ventas/Ventas.js"></script>
 <!-- ================== END PAGE LEVEL JS ================== -->

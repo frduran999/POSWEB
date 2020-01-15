@@ -84,9 +84,29 @@ namespace BLL
             return Acceso.agregarMesa(mesas);
         }
 
+        public int eliminarMesa(ObjetoMesa mesas)
+        {
+            return Acceso.eliminarMesa(mesas);
+        }
+
+        public int eliminarGarzon(ObjetoEmpleado garzon)
+        {
+            return Acceso.eliminarGarzon(garzon);
+        }
+
         public List<ObjetoMesa> ObtenerMesas()
         {
             return Acceso.ObtenerMesas();
+        }
+
+        public List<ObjetoEmpleado> obtenerGarzones()
+        {
+            return Acceso.obtenerGarzones();
+        }
+
+        public int agregarGarzon(ObjetoEmpleado garzon)
+        {
+            return Acceso.agregarGarzon(garzon);
         }
 
         public List<ObjetoReceta> ListadoReceta()
